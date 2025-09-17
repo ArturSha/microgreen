@@ -7,7 +7,6 @@ export const MainLayout = () => {
   return (
     <>
       <section className={style.layout}>
-        <header>hello micro</header>
         <Suspense>
           <Outlet />
         </Suspense>

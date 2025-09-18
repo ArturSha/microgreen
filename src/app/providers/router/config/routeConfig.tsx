@@ -1,7 +1,7 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../../../App";
-import { LoginPage } from "../../../../pages/login";
 import { Suspense } from "react";
+import { createBrowserRouter } from "react-router-dom";
+import { LoginPage } from "@/pages/login";
+import App from "../../../App";
 
 export const router = createBrowserRouter([
   {

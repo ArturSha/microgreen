@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { MainLayout } from './layouts';
+import './styles/reset.css';
 import './styles/App.css';
 
 function App() {

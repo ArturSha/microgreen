@@ -1,6 +1,10 @@
-import style from "./LoginPage.module.css";
+import style from './LoginPage.module.css';
 
 const LoginPage = () => {
-  return <section className={style.loginPage}>this is login page</section>;
+  return (
+    <section className={style.loginPage}>
+      <form action=""></form>
+    </section>
+  );
 };
 export default LoginPage;

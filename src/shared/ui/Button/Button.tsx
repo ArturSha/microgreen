@@ -9,21 +9,14 @@ interface ButtonI extends ButtonProps {
   variant?: Variant;
 }
 
+const variantClasses: Record<string, string> = {
+  primary: style.primary,
+  secondary: style.secondary,
+  danger: style.danger,
+};
+
 export const Button = (props: ButtonI) => {
   const { className, variant = 'primary', ...rest } = props;
 
-  return (
-    <Btn
-      className={classNames(
-        style.button,
-        {
-          [style.primary]: variant === 'primary',
-          [style.secondary]: variant === 'secondary',
-          [style.danger]: variant === 'danger',
-        },
-        className,
-      )}
-      {...rest}
-    />
-  );
+  return <Btn className={classNames(style.button, variantClasses[variant], className)} {...rest} />;
 };

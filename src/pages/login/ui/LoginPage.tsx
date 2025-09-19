@@ -37,7 +37,7 @@ const LoginPage = () => {
     <section className={style.loginPage}>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <input type="password" placeholder="Введите пароль" {...register('password')} />
-        <div>
+        <div className={style.btnContainer}>
           <Button type="submit">Войти</Button>
           <Button variant="danger" type="button" onClick={handleClearBtn}>
             Очистить

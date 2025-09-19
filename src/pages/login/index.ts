@@ -1,1 +1,1 @@
-export {LoginPage} from './ui/LoginPage.lazy'
+export { LoginPage } from './ui/LoginPage.lazy';

@@ -1,15 +1,15 @@
-import { Suspense } from "react";
-import { createBrowserRouter } from "react-router-dom";
-import { LoginPage } from "@/pages/login";
-import App from "../../../App";
+import { Suspense } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
+import { LoginPage } from '@/pages/login';
+import App from '../../../App';
 
 export const router = createBrowserRouter([
   {
     element: <App />,
-    path: "/",
+    path: '/',
     children: [
       {
-        path: "/microgreen/",
+        path: '/microgreen/',
         element: (
           <Suspense fallback="loading...">
             <LoginPage />

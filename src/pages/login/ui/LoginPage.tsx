@@ -1,4 +1,5 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { Button } from '@/shared/ui/Button';
 import style from './LoginPage.module.css';
 
 interface InputI {
@@ -37,10 +38,10 @@ const LoginPage = () => {
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <input type="password" placeholder="Введите пароль" {...register('password')} />
         <div>
-          <button type="submit">Войти</button>
-          <button type="button" onClick={handleClearBtn}>
+          <Button type="submit">Войти</Button>
+          <Button variant="danger" type="button" onClick={handleClearBtn}>
             Очистить
-          </button>
+          </Button>
         </div>
         {errors.password && <p>{errors.password.message}</p>}
       </form>

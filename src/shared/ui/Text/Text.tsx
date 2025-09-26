@@ -1,12 +1,12 @@
 import classNames from 'classnames';
-import { type ElementType, type ComponentPropsWithoutRef, type ReactNode } from 'react';
+import { type ElementType, type ComponentProps, type ReactNode } from 'react';
 import style from './Text.module.css';
 
 type TextProps<T extends ElementType> = {
   as?: T;
   children: ReactNode;
   className?: string;
-} & ComponentPropsWithoutRef<T>;
+} & ComponentProps<T>;
 
 export const Text = <T extends ElementType = 'p'>({
   as,

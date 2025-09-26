@@ -29,9 +29,7 @@ export const Input = ({ error, className, ref, type = 'text', ...props }: InputP
           />
         )}
       </div>
-      {error && <Text className={style.errorMessage}>{error}</Text>}
+      {error && <Text variant="error">{error}</Text>}
     </div>
   );
 };
-
-Input.displayName = 'Input';

@@ -1,23 +1,27 @@
+import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useLazyGetUserQuery } from '@/entities/auth';
 import { Button } from '@/shared/ui/Button';
+import { Checkbox } from '@/shared/ui/Checkbox';
 import { Input } from '@/shared/ui/Input';
+import { Text } from '@/shared/ui/Text';
 import style from './LoginPage.module.css';
 
-interface InputI {
+interface LoginI {
   password: string;
   username: string;
 }
 
 const LoginPage = () => {
   const [getUserTrigger] = useLazyGetUserQuery();
+  const [isChecked, setIsChecked] = useState(false);
   const {
     register,
     handleSubmit,
     setError,
     resetField,
     formState: { errors },
-  } = useForm<InputI>();
+  } = useForm<LoginI>();
 
   const handleClearBtn = () => {
     resetField('password', {
@@ -25,7 +29,9 @@ const LoginPage = () => {
     });
   };
 
-  const onSubmit: SubmitHandler<InputI> = async (data) => {
+  console.log(isChecked);
+
+  const onSubmit: SubmitHandler<LoginI> = async (data) => {
     const { password } = data;
     try {
       await getUserTrigger(password).unwrap();
@@ -38,6 +44,7 @@ const LoginPage = () => {
   };
   return (
     <section className={style.loginPage}>
+      <Text as="h1">Войти</Text>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <Input
           type="text"
@@ -51,14 +58,17 @@ const LoginPage = () => {
           placeholder="Введите пароль"
           autoComplete="current-password"
           {...register('password')}
+          error={errors.password && errors.password.message}
         />
+        <Checkbox checked={isChecked} onChange={setIsChecked}>
+          Сохранить пароль
+        </Checkbox>
         <div className={style.btnContainer}>
           <Button type="submit">Войти</Button>
           <Button variant="danger" type="button" onClick={handleClearBtn}>
             Очистить
           </Button>
         </div>
-        {errors.password && <p>{errors.password.message}</p>}
       </form>
     </section>
   );

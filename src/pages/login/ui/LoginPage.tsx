@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useLazyGetUserQuery } from '@/entities/auth';
+import { LocalStorageHelper } from '@/shared/helpers';
 import { Button } from '@/shared/ui/Button';
 import { Checkbox } from '@/shared/ui/Checkbox';
 import { Input } from '@/shared/ui/Input';
@@ -12,29 +13,41 @@ interface LoginI {
   username: string;
 }
 
+const savedPassword = LocalStorageHelper.getItem<string>('password');
+
 const LoginPage = () => {
   const [getUserTrigger, { isFetching }] = useLazyGetUserQuery();
-  const [isChecked, setIsChecked] = useState(false);
+  const [isRememberPassword, setIsRememberPassword] = useState(!!savedPassword);
   const {
     register,
     handleSubmit,
     setError,
     resetField,
     formState: { errors },
-  } = useForm<LoginI>();
+  } = useForm<LoginI>({
+    defaultValues: {
+      password: savedPassword || '',
+    },
+  });
 
   const handleClearBtn = () => {
     resetField('password', {
       defaultValue: '',
     });
+    if (isRememberPassword) {
+      LocalStorageHelper.setItem('password', '');
+    }
   };
-
-  console.log(isChecked);
 
   const onSubmit: SubmitHandler<LoginI> = async (data) => {
     const { password } = data;
     try {
       await getUserTrigger(password).unwrap();
+      if (isRememberPassword) {
+        LocalStorageHelper.setItem('password', password);
+      } else {
+        LocalStorageHelper.setItem('password', '');
+      }
     } catch {
       setError('password', {
         type: 'manual',
@@ -60,7 +73,7 @@ const LoginPage = () => {
           {...register('password')}
           error={errors.password && errors.password.message}
         />
-        <Checkbox checked={isChecked} onChange={setIsChecked}>
+        <Checkbox checked={isRememberPassword} onChange={setIsRememberPassword}>
           Сохранить пароль
         </Checkbox>
         <div className={style.btnContainer}>

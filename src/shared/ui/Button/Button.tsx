@@ -26,10 +26,27 @@ const variantClasses: Record<Variant, string> = {
 };
 
 export const Button = (props: ButtonI) => {
-  const { className, variant = 'primary', iconPosition = 'left', icon, children, ...rest } = props;
+  const {
+    className,
+    variant = 'primary',
+    iconPosition = 'left',
+    icon,
+    disabled,
+    children,
+    ...rest
+  } = props;
 
   return (
-    <Btn className={classNames(style.button, variantClasses[variant], className)} {...rest}>
+    <Btn
+      className={classNames(
+        style.button,
+        variantClasses[variant],
+        { [style.disabled]: disabled },
+        className,
+      )}
+      disabled={disabled}
+      {...rest}
+    >
       {icon && iconPosition === 'left' && icons[icon]}
       {children}
       {icon && iconPosition === 'right' && icons[icon]}

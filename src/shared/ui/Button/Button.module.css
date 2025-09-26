@@ -26,4 +26,8 @@
   border: 0;
   background: transparent;
 }
+
+.disabled {
+  cursor: not-allowed;
+}
  

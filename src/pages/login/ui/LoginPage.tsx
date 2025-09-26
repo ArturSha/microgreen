@@ -13,7 +13,7 @@ interface LoginI {
 }
 
 const LoginPage = () => {
-  const [getUserTrigger] = useLazyGetUserQuery();
+  const [getUserTrigger, { isFetching }] = useLazyGetUserQuery();
   const [isChecked, setIsChecked] = useState(false);
   const {
     register,
@@ -64,7 +64,9 @@ const LoginPage = () => {
           Сохранить пароль
         </Checkbox>
         <div className={style.btnContainer}>
-          <Button type="submit">Войти</Button>
+          <Button disabled={isFetching} type="submit">
+            Войти
+          </Button>
           <Button variant="danger" type="button" onClick={handleClearBtn}>
             Очистить
           </Button>

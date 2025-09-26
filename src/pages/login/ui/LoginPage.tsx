@@ -64,7 +64,7 @@ const LoginPage = () => {
           Сохранить пароль
         </Checkbox>
         <div className={style.btnContainer}>
-          <Button disabled={isFetching} type="submit">
+          <Button disabled={isFetching} isLoading={isFetching} type="submit">
             Войти
           </Button>
           <Button variant="danger" type="button" onClick={handleClearBtn}>

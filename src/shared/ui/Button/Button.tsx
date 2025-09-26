@@ -7,10 +7,12 @@ import style from './Button.module.css';
 
 type Variant = 'primary' | 'secondary' | 'danger' | 'clear';
 type IconType = 'eyeClosed' | 'eye';
+
 interface ButtonI extends ComponentProps<'button'> {
   className?: string;
   variant?: Variant;
   icon?: IconType;
+  isLoading?: boolean;
   iconPosition?: 'left' | 'right';
 }
 
@@ -32,24 +34,25 @@ export const Button = (props: ButtonI) => {
     iconPosition = 'left',
     icon,
     disabled,
+    isLoading,
     children,
     ...rest
   } = props;
 
   return (
     <Btn
-      className={classNames(
-        style.button,
-        variantClasses[variant],
-        { [style.disabled]: disabled },
-        className,
-      )}
+      className={classNames(style.button, variantClasses[variant], className)}
       disabled={disabled}
       {...rest}
     >
       {icon && iconPosition === 'left' && icons[icon]}
       {children}
       {icon && iconPosition === 'right' && icons[icon]}
+      {isLoading && (
+        <div className={style.loaderContainer}>
+          <span className={style.loading} />
+        </div>
+      )}
     </Btn>
   );
 };

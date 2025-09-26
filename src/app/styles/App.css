@@ -1,17 +1,8 @@
 :root {
     /* color palette */
     --color-red-500:#f00;
-    --color-orange-500:#EC5B37;
-    --color-orange-400:#ee6e4e;
-    --color-orange-300:#e88e77;
-    --color-orange-200:#edb5a7;
     --color-white-500:#fff;
     --color-black-500:#000;
-    --color-gray-700:#494949;
-    --color-gray-600:#636363;
-    --color-gray-500:#7F7F7F;
-    --color-gray-400:#C1C1C1;
-    --color-gray-350:#E6E6E6;
     --color-gray-300:#F6F6F3;
     --color-green-500:#62CE45;
     --color-blue-500:#146cef;

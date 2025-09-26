@@ -1,15 +1,16 @@
-import { Button as Btn, type ButtonProps } from '@headlessui/react';
+import { Button as Btn } from '@headlessui/react';
 import classNames from 'classnames';
+import type { ComponentProps } from 'react';
 import style from './Button.module.css';
 
 type Variant = 'primary' | 'secondary' | 'danger';
 
-interface ButtonI extends ButtonProps {
+interface ButtonI extends ComponentProps<'button'> {
   className?: string;
   variant?: Variant;
 }
 
-const variantClasses: Record<string, string> = {
+const variantClasses: Record<Variant, string> = {
   primary: style.primary,
   secondary: style.secondary,
   danger: style.danger,

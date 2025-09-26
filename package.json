@@ -13,6 +13,7 @@
     "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
     "lint:css": "npx stylelint \"**/*.css\"",
     "lint:css:fix": "npx stylelint \"**/*.css\" --fix",
+    "prettier": "npx prettier --write **/*.{ts,tsx}",
     "preview": "vite preview",
     "prepare": "husky"
   },
@@ -23,7 +24,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.62.0",
-    "react-redux": "^9.2.0",
+    "react-redux": "^9.2.0", 
     "react-router-dom": "^7.9.1"
   },
   "devDependencies": {

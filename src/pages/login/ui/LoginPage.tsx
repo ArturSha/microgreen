@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { useLazyGetUserQuery } from '@/entities/auth';
+import { setIsLoggedIn, useLazyGetUserQuery } from '@/entities/auth';
 import { LocalStorageHelper } from '@/shared/helpers';
+import { useAppDispatch } from '@/shared/model';
 import { Button } from '@/shared/ui/Button';
 import { Checkbox } from '@/shared/ui/Checkbox';
 import { Input } from '@/shared/ui/Input';
@@ -18,6 +19,8 @@ const savedPassword = LocalStorageHelper.getItem<string>('password');
 const LoginPage = () => {
   const [getUserTrigger, { isFetching }] = useLazyGetUserQuery();
   const [isRememberPassword, setIsRememberPassword] = useState(!!savedPassword);
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -43,6 +46,7 @@ const LoginPage = () => {
     const { password } = data;
     try {
       await getUserTrigger(password).unwrap();
+      dispatch(setIsLoggedIn());
       if (isRememberPassword) {
         LocalStorageHelper.setItem('password', password);
       } else {

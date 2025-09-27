@@ -1,1 +1,1 @@
-export const getRouteLogin = () => '/';
+export const getRouteLogin = () => '/microgreen/';

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { setIsLoggedIn, useLazyGetUserQuery } from '@/entities/auth';
+import { getRouteMain } from '@/shared/const/router';
 import { LocalStorageHelper } from '@/shared/helpers';
 import { useAppDispatch } from '@/shared/model';
 import { Button } from '@/shared/ui/Button';
@@ -20,6 +22,7 @@ const LoginPage = () => {
   const [getUserTrigger, { isFetching }] = useLazyGetUserQuery();
   const [isRememberPassword, setIsRememberPassword] = useState(!!savedPassword);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -52,6 +55,7 @@ const LoginPage = () => {
       } else {
         LocalStorageHelper.setItem('password', '');
       }
+      navigate(getRouteMain(), { replace: true });
     } catch {
       setError('password', {
         type: 'manual',

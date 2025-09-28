@@ -1,0 +1,115 @@
+.logoLoaderOverlay {
+  position: fixed;
+  inset:0;
+  display:block;
+  padding-top:2rem;
+  padding-left: 2rem;
+  width:100%;
+  height:100%;
+  background:#efefef;
+  opacity:.6;
+}
+
+.logoLoader {
+  position: fixed;
+  inset:50% 0 0;
+  display:block;
+  margin:0 auto;
+  width:7.5rem;
+  height:7.5rem;
+
+}
+
+.logoLoader span {
+  position: fixed;
+  inset:70% 0 0;
+  display:block;
+  margin:0 auto;
+  width:8.5rem;
+  color:var(--color-green-400);
+  text-align:center;
+  text-transform: uppercase;
+  letter-spacing:1px;
+}
+
+@keyframes opacitychange{
+  0%, 100%{
+    opacity: .5;
+    transform: scale(1);
+  }
+
+  60%{
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+.greenFlowerDrop {
+  position: absolute;
+  width: auto;
+  height:7.5rem;
+  fill: #77bc1f;
+}
+
+.greenFlowerOne {
+  position: absolute;
+  width: auto;
+  height:7.5rem;
+  fill: #77bc1f;
+  animation: opacitychange 2s ease-in-out 1.12s infinite;
+  opacity:.5;
+}
+
+.greenFlowerTwo {
+  position: absolute;
+  width: auto;
+  height:7.5rem;
+  fill: #77bc1f;
+  animation: opacitychange 2s ease-in-out 1.4s infinite;
+  opacity:.5;
+}
+
+.greenFlowerThree {
+  position: absolute;
+  width: auto;
+  height:7.5rem;
+  fill: #77bc1f;
+  animation: opacitychange 2s ease-in-out 1.68s infinite;
+  opacity:.5;
+}
+
+.greenFlowerFour {
+  position: absolute;
+  width: auto;
+  height:7.5rem;
+  fill: #77bc1f;
+  animation: opacitychange 2s ease-in-out infinite;
+  opacity:.5;
+}
+
+.greenFlowerFive {
+  position: absolute;
+  width: auto;
+  height:7.5rem;
+  fill: #77bc1f;
+  animation: opacitychange 2s ease-in-out .28s infinite;
+  opacity:.5;
+}
+
+.greenFlowerSix {
+  position: absolute;
+  width: auto;
+  height:7.5rem;
+  fill: #77bc1f;
+  animation: opacitychange 2s ease-in-out .56s infinite;
+  opacity:.5;
+}
+
+.greenFlowerSeven {
+  position: absolute;
+  width: auto;
+  height:7.5rem;
+  fill: #77bc1f;
+  animation: opacitychange 2s ease-in-out .84s infinite;
+  opacity:.5;
+}

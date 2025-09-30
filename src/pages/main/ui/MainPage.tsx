@@ -1,10 +1,23 @@
-import { Loader } from '@/shared/ui/Loader';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@/shared/ui/Tabs';
 import style from './MainPage.module.css';
 
 const MainPage = () => {
   return (
     <section className={style.mainPage}>
-      <Loader />
+      <TabGroup>
+        <TabList>
+          <Tab>Заказы</Tab>
+          <Tab>Заведения</Tab>
+          <Tab>Наличие</Tab>
+          <Tab>Долги</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel></TabPanel>
+          <TabPanel></TabPanel>
+          <TabPanel></TabPanel>
+          <TabPanel></TabPanel>
+        </TabPanels>
+      </TabGroup>
     </section>
   );
 };

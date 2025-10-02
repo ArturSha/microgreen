@@ -26,6 +26,7 @@
   
   .title {
     margin-bottom: 2.3rem;
+    text-align: center;
     font-weight: var(--font-weight-600);
     font-size: var(--font-size-l);
   }
@@ -47,10 +48,10 @@
 
   .closeBtn {
     position: absolute;
-    top: 1rem;
+    top: -1rem;
     right: 1rem;
     color: var(--color-green-500);
-    font-size: var(--font-size-l);
+    font-size: var(--font-size-xl);
 }
 
   .error {

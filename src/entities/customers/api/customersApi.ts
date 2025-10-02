@@ -1,4 +1,5 @@
 import { baseApi } from '@/shared/api';
+import type { AddCustomerI } from '../model/types/addCustomer';
 
 export const customersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -8,13 +9,14 @@ export const customersApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
-    postClient: build.mutation<string, string>({
-      query: () => ({
+    postClient: build.mutation<string, AddCustomerI>({
+      query: (body) => ({
         url: `/clients`,
         method: 'POST',
+        body,
       }),
     }),
   }),
 });
 
-export const { useLazyGetClientListQuery, usePostClientMutation } = customersApi;
+export const { useGetClientListQuery, usePostClientMutation } = customersApi;

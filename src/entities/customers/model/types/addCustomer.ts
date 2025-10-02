@@ -1,7 +1,7 @@
 export interface AddCustomerI {
   name: string;
   contactPerson?: string;
-  phone?: number;
+  phone?: string;
   address?: string;
   notes?: string;
 }

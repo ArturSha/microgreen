@@ -20,13 +20,16 @@ export const AddCustomer = () => {
     if (!data.name) {
       return;
     }
+
     const postData: AddCustomerI = {
       name: data.name,
       address: data.address,
       contactPerson: data.contactPerson,
       phone: data.phone,
       notes: data.notes,
+      debt: 0,
     };
+
     try {
       await postClient(postData).unwrap();
       setIsOpen(false);

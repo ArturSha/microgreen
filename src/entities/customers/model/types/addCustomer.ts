@@ -4,4 +4,5 @@ export interface AddCustomerI {
   phone?: string;
   address?: string;
   notes?: string;
+  debt?: number;
 }

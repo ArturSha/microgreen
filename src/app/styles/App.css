@@ -6,13 +6,14 @@
     --color-gray-300:#F6F6F3;
     --color-gray-400:#dadad8;
     --color-gray-500:#a0a0a0;
-    --color-brown-300:#efdcae;
+    --color-brown-400:#f2e4c4;
+    --color-brown-500:#dcc99c;
     --color-green-500:#62CE45;
     --color-green-600:#2a5b1e;
     --color-green-400:#050605;
     --color-blue-500:#146cef;
 
-    /* dimensions */;
+    /* dimensions */
     --font-weight-400: 400;
     --font-weight-500: 500;
     --font-weight-600: 600;

@@ -1,4 +1,4 @@
-import { useGetClientListQuery } from '@/entities/customer';
+import { CustomerCard, useGetClientListQuery } from '@/entities/customer';
 import style from './CustomerList.module.css';
 
 export const CustomerList = () => {
@@ -10,7 +10,7 @@ export const CustomerList = () => {
     <div className={style.customerList}>
       <ul>
         {data.map((customer) => (
-          <li>{customer.name} </li>
+          <CustomerCard data={customer} key={customer.id} />
         ))}
       </ul>
     </div>

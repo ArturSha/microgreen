@@ -6,8 +6,8 @@ interface CustomerProps {
   data: Customer;
 }
 
-export const CustomerCard = (props: CustomerProps) => {
-  const { name, debt } = props.data;
+export const CustomerCard = ({ data }: CustomerProps) => {
+  const { name, debt } = data;
   return (
     <div className={style.customerCard}>
       <Text as="span">{name}</Text>

@@ -1,4 +1,5 @@
-import { AddCustomer } from '@/entities/customers';
+import { AddCustomer } from '@/features/addCustomer';
+import { CustomerList } from '@/features/customerList';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@/shared/ui/Tabs';
 import style from './MainPage.module.css';
 
@@ -16,6 +17,7 @@ const MainPage = () => {
           <TabPanel className={style.tabPanel}></TabPanel>
           <TabPanel className={style.tabPanel}>
             <AddCustomer />
+            <CustomerList />
           </TabPanel>
           <TabPanel></TabPanel>
           <TabPanel></TabPanel>

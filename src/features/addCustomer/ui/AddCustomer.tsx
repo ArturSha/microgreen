@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { usePostClientMutation, type CustomerPostForm } from '@/entities/customer';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
 import { Input } from '@/shared/ui/Input';
-import { usePostClientMutation } from '../../api/customersApi';
-import type { AddCustomerI } from '../../model/types/addCustomer';
 import style from './AddCustomer.module.css';
 
 export const AddCustomer = () => {
@@ -12,21 +11,19 @@ export const AddCustomer = () => {
   const [postClient] = usePostClientMutation();
 
   const handleDialogState = () => setIsOpen((prev) => !prev);
-  const { register, handleSubmit, reset } = useForm<AddCustomerI>();
+  const { register, handleSubmit, reset } = useForm<CustomerPostForm>();
 
-  const onSubmit = async (data: AddCustomerI) => {
-    console.log(data);
-
+  const onSubmit = async (data: CustomerPostForm) => {
     if (!data.name) {
       return;
     }
 
-    const postData: AddCustomerI = {
+    const postData: CustomerPostForm = {
       name: data.name,
-      address: data.address,
-      contactPerson: data.contactPerson,
-      phone: data.phone,
-      notes: data.notes,
+      ...(data.address ? { address: data.address } : {}),
+      ...(data.contactPerson ? { contactPerson: data.contactPerson } : {}),
+      ...(data.phone ? { phone: data.phone } : {}),
+      ...(data.notes ? { notes: data.notes } : {}),
       debt: 0,
     };
 
@@ -51,7 +48,7 @@ export const AddCustomer = () => {
         title="Данные о заказчике"
       >
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-          <Input placeholder="Название заведения" {...register('name')} />
+          <Input placeholder="Название заведения" {...register('name', { required: true })} />
           <Input placeholder="Адрес" {...register('address')} />
           <Input placeholder="Контактное лицо" {...register('contactPerson')} />
           <Input placeholder="Номер телефона" type="tel" {...register('phone')} />

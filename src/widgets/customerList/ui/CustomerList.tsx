@@ -1,4 +1,4 @@
-import { EditCustomer } from '@/features/editCustomer';
+import { CustomerEditorForm } from '@/features/manageCustomer';
 import { CustomerCard, useGetClientListQuery } from '@/entities/customer';
 import style from './CustomerList.module.css';
 
@@ -13,8 +13,7 @@ export const CustomerList = () => {
         {data.map((customer) => (
           <CustomerCard data={customer} key={customer.id}>
             <div className={style.wrapper}>
-              <EditCustomer id={customer.id} />
-              <EditCustomer id={customer.id} />
+              <CustomerEditorForm id={customer.id} client={customer} variant="put" />
             </div>
           </CustomerCard>
         ))}

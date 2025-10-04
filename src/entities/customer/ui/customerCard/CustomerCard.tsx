@@ -22,7 +22,7 @@ export const CustomerCard = ({ data, children }: CustomerProps) => {
       <PopoverPanel anchor="bottom">
         <div className={style.popoverContainer}>
           <div>
-            <Text>{name} </Text>
+            <Text bold>{name}</Text>
             {address && <Text>{address}</Text>}
             {contactPerson && <Text>{contactPerson}</Text>}
             {phone && <Text>{phone}</Text>}

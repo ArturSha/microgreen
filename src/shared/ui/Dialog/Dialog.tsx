@@ -35,43 +35,41 @@ export const Dialog = (props: DialogProps) => {
   } = props;
 
   return (
-    <>
-      <HeadlessDialog
-        open={isOpen}
-        onClose={() => {
-          if (!isLoading) {
-            onClose();
-          }
-        }}
-        className={style.container}
-      >
-        <div className={style.backdrop}>
-          <DialogPanel
-            className={classNames(style.panel, panelClassName)}
-            style={{ maxWidth: `${maxWidth}` }}
-          >
-            {title && <DialogTitle className={style.title}>{title}</DialogTitle>}
-            {subtitle && <Description className={style.subtitle}>{subtitle}</Description>}
+    <HeadlessDialog
+      open={isOpen}
+      onClose={() => {
+        if (!isLoading) {
+          onClose();
+        }
+      }}
+      className={style.container}
+    >
+      <div className={style.backdrop}>
+        <DialogPanel
+          className={classNames(style.panel, panelClassName)}
+          style={{ maxWidth: `${maxWidth}` }}
+        >
+          {title && <DialogTitle className={style.title}>{title}</DialogTitle>}
+          {subtitle && <Description className={style.subtitle}>{subtitle}</Description>}
 
-            {closeButton && (
-              <Button
-                className={style.closeBtn}
-                variant="clear"
-                onClick={() => onClose()}
-                disabled={isLoading}
-              >
-                &times;
-              </Button>
-            )}
-            {errorText && (
-              <Text variant="error" className={style.error}>
-                {errorText}
-              </Text>
-            )}
-            <div className={classNames(style.actions, className)}>{children}</div>
-          </DialogPanel>
-        </div>
-      </HeadlessDialog>
-    </>
+          {closeButton && (
+            <Button
+              className={style.closeBtn}
+              variant="clear"
+              onClick={() => onClose()}
+              disabled={isLoading}
+            >
+              &times;
+            </Button>
+          )}
+          {errorText && (
+            <Text variant="error" className={style.error}>
+              {errorText}
+            </Text>
+          )}
+          <div className={classNames(style.actions, className)}>{children}</div>
+        </DialogPanel>
+      </div>
+    </HeadlessDialog>
   );
 };

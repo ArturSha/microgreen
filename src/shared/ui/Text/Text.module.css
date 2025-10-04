@@ -2,3 +2,7 @@
     color: var(--color-red-500);
     font-size: var(--font-size-xxs);
 }
+
+.bold {
+    font-weight: var(--font-weight-700);
+}

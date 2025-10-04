@@ -28,7 +28,16 @@ export const customersApi = baseApi.injectEndpoints({
       transformResponse: (response: CustomerResponse) => mapCustomer(response),
       invalidatesTags: [ApiTags.CLIENTS],
     }),
+    putClient: build.mutation<Customer, { body: CustomerPostForm; id: string }>({
+      query: ({ body, id }) => ({
+        url: `/clients/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      transformResponse: (response: CustomerResponse) => mapCustomer(response),
+      invalidatesTags: [ApiTags.CLIENTS],
+    }),
   }),
 });
 
-export const { useGetClientListQuery, usePostClientMutation } = customersApi;
+export const { useGetClientListQuery, usePostClientMutation, usePutClientMutation } = customersApi;

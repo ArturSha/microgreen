@@ -9,6 +9,7 @@ type TextProps<T extends ElementType> = {
   children: ReactNode;
   className?: string;
   variant?: Variant;
+  bold?: boolean;
 } & Omit<ComponentProps<T>, 'as' | 'children' | 'className'>;
 
 const styles: Record<Variant, string> = {
@@ -20,13 +21,17 @@ export const Text = <T extends ElementType = 'p'>({
   as,
   children,
   className,
+  bold,
   variant = 'default',
   ...rest
 }: TextProps<T>) => {
   const Component = as || 'p';
 
   return (
-    <Component className={classNames(style.text, styles[variant], className)} {...rest}>
+    <Component
+      className={classNames(style.text, styles[variant], { [style.bold]: bold }, className)}
+      {...rest}
+    >
       {children}
     </Component>
   );

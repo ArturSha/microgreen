@@ -1,17 +1,38 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { usePostClientMutation, type CustomerPostForm } from '@/entities/customer';
+import {
+  usePostClientMutation,
+  usePutClientMutation,
+  type CustomerPostForm,
+} from '@/entities/customer';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
 import { Input } from '@/shared/ui/Input';
-import style from './AddCustomer.module.css';
+import style from './CustomerEditorForm.module.css';
 
-export const AddCustomer = () => {
+type CustomerEditorFormProps =
+  | {
+      variant: 'post';
+      id?: never;
+      client?: never;
+    }
+  | {
+      variant: 'put';
+      id: string;
+      client: CustomerPostForm;
+    };
+
+export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
+  const { variant, id, client } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [postClient] = usePostClientMutation();
+
+  const [postClientTrigger] = usePostClientMutation();
+  const [putClientTrigger] = usePutClientMutation();
 
   const handleDialogState = () => setIsOpen((prev) => !prev);
-  const { register, handleSubmit, reset } = useForm<CustomerPostForm>();
+  const { register, handleSubmit, reset } = useForm<CustomerPostForm>({
+    defaultValues: variant === 'put' && client ? client : {},
+  });
 
   const onSubmit = async (data: CustomerPostForm) => {
     if (!data.name) {
@@ -24,21 +45,26 @@ export const AddCustomer = () => {
       ...(data.contactPerson ? { contactPerson: data.contactPerson } : {}),
       ...(data.phone ? { phone: data.phone } : {}),
       ...(data.notes ? { notes: data.notes } : {}),
-      debt: 0,
+      debt: variant === 'put' ? client.debt : 0,
     };
 
     try {
-      await postClient(postData).unwrap();
-      setIsOpen(false);
+      if (id) {
+        await putClientTrigger({ body: postData, id }).unwrap();
+      } else {
+        await postClientTrigger(postData).unwrap();
+      }
       reset();
+      setIsOpen(false);
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <>
       <Button className={style.width} onClick={handleDialogState}>
-        Добавить новое заведение
+        {variant === 'post' ? 'Добавить новое заведение' : 'Редактировать заведение'}
       </Button>
       <Dialog
         maxWidth="40rem"

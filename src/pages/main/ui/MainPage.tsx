@@ -1,5 +1,5 @@
 import { CustomerList } from '@/widgets/customerList';
-import { AddCustomer } from '@/features/addCustomer';
+import { CustomerEditorForm } from '@/features/manageCustomer';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@/shared/ui/Tabs';
 import style from './MainPage.module.css';
 
@@ -16,7 +16,7 @@ const MainPage = () => {
         <TabPanels>
           <TabPanel className={style.tabPanel}></TabPanel>
           <TabPanel className={style.tabPanel}>
-            <AddCustomer />
+            <CustomerEditorForm variant="post" />
             <CustomerList />
           </TabPanel>
           <TabPanel></TabPanel>

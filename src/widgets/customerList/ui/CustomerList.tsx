@@ -1,3 +1,4 @@
+import { EditCustomer } from '@/features/editCustomer';
 import { CustomerCard, useGetClientListQuery } from '@/entities/customer';
 import style from './CustomerList.module.css';
 
@@ -7,10 +8,15 @@ export const CustomerList = () => {
     return null;
   }
   return (
-    <div className={style.customerList}>
+    <div>
       <ul>
         {data.map((customer) => (
-          <CustomerCard data={customer} key={customer.id} />
+          <CustomerCard data={customer} key={customer.id}>
+            <div className={style.wrapper}>
+              <EditCustomer id={customer.id} />
+              <EditCustomer id={customer.id} />
+            </div>
+          </CustomerCard>
         ))}
       </ul>
     </div>

@@ -1,5 +1,5 @@
+import { CustomerList } from '@/widgets/customerList';
 import { AddCustomer } from '@/features/addCustomer';
-import { CustomerList } from '@/features/customerList';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@/shared/ui/Tabs';
 import style from './MainPage.module.css';
 

@@ -41,7 +41,7 @@
 .loaderContainer {
   position: absolute;
   inset: 0;
-  background-color: var(--color-blue-500);
+  background-color: var(--color-green-600);
 }
 
 .loading {

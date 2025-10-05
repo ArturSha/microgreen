@@ -11,13 +11,14 @@ interface DeleteCustomerProps {
 
 export const DeleteCustomer = ({ id, name }: DeleteCustomerProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isError, setIsError] = useState('');
   const [deleteTrigger, { isLoading }] = useDeleteClientMutation();
   const submit = async () => {
     try {
       await deleteTrigger({ id }).unwrap();
       setIsModalOpen(false);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      setIsError('Упс... Что-от пошло не так');
     }
   };
 
@@ -38,6 +39,7 @@ export const DeleteCustomer = ({ id, name }: DeleteCustomerProps) => {
         maxWidth="40rem"
         className={style.container}
         isLoading={isLoading}
+        errorText={isError}
       >
         <Button variant="danger" onClick={submit} isLoading={isLoading} disabled={isLoading}>
           Удалить

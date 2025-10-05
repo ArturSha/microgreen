@@ -62,12 +62,12 @@ export const Dialog = (props: DialogProps) => {
               &times;
             </Button>
           )}
+          <div className={classNames(style.actions, className)}>{children}</div>
           {errorText && (
             <Text variant="error" className={style.error}>
               {errorText}
             </Text>
           )}
-          <div className={classNames(style.actions, className)}>{children}</div>
         </DialogPanel>
       </div>
     </HeadlessDialog>

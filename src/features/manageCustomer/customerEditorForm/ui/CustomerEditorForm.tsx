@@ -5,9 +5,12 @@ import {
   usePutClientMutation,
   type CustomerPostForm,
 } from '@/entities/customer';
+import type { ValidationErrorResponse } from '@/shared/api/types/validationErrorResponse';
+import { handleServerErrors } from '@/shared/lib/handleServerErrors';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
 import { Input } from '@/shared/ui/Input';
+import { Text } from '@/shared/ui/Text';
 import style from './CustomerEditorForm.module.css';
 
 type CustomerEditorFormProps =
@@ -25,16 +28,25 @@ type CustomerEditorFormProps =
 export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
   const { variant, id, client } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const [clientError, setClientError] = useState('');
 
   const [postClientTrigger] = usePostClientMutation();
   const [putClientTrigger] = usePutClientMutation();
 
   const handleDialogState = () => setIsOpen((prev) => !prev);
-  const { register, handleSubmit, reset } = useForm<CustomerPostForm>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm<CustomerPostForm>({
     defaultValues: variant === 'put' && client ? client : {},
   });
 
   const onSubmit = async (data: CustomerPostForm) => {
+    clearErrors();
     if (!data.name) {
       return;
     }
@@ -57,7 +69,13 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
       reset();
       setIsOpen(false);
     } catch (error) {
-      console.log(error);
+      const err = error as ValidationErrorResponse;
+      if (err.data.name === 'ValidationError') {
+        handleServerErrors(err.data.list, setError);
+      } else {
+        console.error(error);
+        setClientError('Что-то пошло не так, звоните Артуру :)');
+      }
     }
   };
 
@@ -74,12 +92,26 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
         title="Данные о заказчике"
       >
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-          <Input placeholder="Название заведения" {...register('name', { required: true })} />
-          <Input placeholder="Адрес" {...register('address')} />
-          <Input placeholder="Контактное лицо" {...register('contactPerson')} />
-          <Input placeholder="Номер телефона" type="tel" {...register('phone')} />
-          <Input placeholder="Заметка" {...register('notes')} />
+          <Input
+            placeholder="Название заведения"
+            {...register('name', { required: 'Это поле является обязательным' })}
+            error={errors.name?.message}
+          />
+          <Input placeholder="Адрес" {...register('address')} error={errors.address?.message} />
+          <Input
+            placeholder="Контактное лицо"
+            {...register('contactPerson')}
+            error={errors.contactPerson?.message}
+          />
+          <Input
+            placeholder="Номер телефона"
+            type="tel"
+            {...register('phone')}
+            error={errors.phone?.message}
+          />
+          <Input placeholder="Заметка" {...register('notes')} error={errors.notes?.message} />
           <Button type="submit">Сохранить</Button>
+          {clientError && <Text variant="error">{clientError}</Text>}
         </form>
       </Dialog>
     </>

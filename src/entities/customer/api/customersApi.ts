@@ -34,10 +34,21 @@ export const customersApi = baseApi.injectEndpoints({
         method: 'PUT',
         body,
       }),
-      transformResponse: (response: CustomerResponse) => mapCustomer(response),
+      invalidatesTags: [ApiTags.CLIENTS],
+    }),
+    deleteClient: build.mutation<Customer, { id: string }>({
+      query: ({ id }) => ({
+        url: `/clients/${id}`,
+        method: 'DELETE',
+      }),
       invalidatesTags: [ApiTags.CLIENTS],
     }),
   }),
 });
 
-export const { useGetClientListQuery, usePostClientMutation, usePutClientMutation } = customersApi;
+export const {
+  useGetClientListQuery,
+  usePostClientMutation,
+  usePutClientMutation,
+  useDeleteClientMutation,
+} = customersApi;

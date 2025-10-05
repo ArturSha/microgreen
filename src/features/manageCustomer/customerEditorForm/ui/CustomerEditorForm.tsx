@@ -70,8 +70,8 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
       setIsOpen(false);
     } catch (error) {
       const err = error as ValidationErrorResponse;
-      if (err.data.name === 'ValidationError') {
-        handleServerErrors(err.data.list, setError);
+      if (err?.data?.name === 'ValidationError') {
+        handleServerErrors(err.data?.list, setError);
       } else {
         console.error(error);
         setClientError('Что-то пошло не так, звоните Артуру :)');

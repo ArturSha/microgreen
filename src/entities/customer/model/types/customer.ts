@@ -28,7 +28,3 @@ export interface CustomerResponse {
   _tags: string;
   _version: number;
 }
-
-export interface CustomerGetParams {
-  metafields: boolean;
-}

@@ -1,15 +1,10 @@
-import { ApiTags, baseApi } from '@/shared/api';
+import { ApiTags, baseApi, type BaseGetParams } from '@/shared/api';
 import { mapCustomer } from '../lib/mapCustomer';
-import type {
-  Customer,
-  CustomerGetParams,
-  CustomerPostForm,
-  CustomerResponse,
-} from '../model/types/customer';
+import type { Customer, CustomerPostForm, CustomerResponse } from '../model/types/customer';
 
 export const customersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getClientList: build.query<Customer[], CustomerGetParams>({
+    getClientList: build.query<Customer[], BaseGetParams>({
       query: (params) => ({
         url: '/clients',
         method: 'GET',

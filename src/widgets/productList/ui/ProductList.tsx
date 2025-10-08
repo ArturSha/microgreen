@@ -7,7 +7,7 @@ export const ProductList = () => {
   return (
     <div className={style.productList}>
       {data?.map((product) => (
-        <ProductCard name={product.name} />
+        <ProductCard product={product} />
       ))}
     </div>
   );

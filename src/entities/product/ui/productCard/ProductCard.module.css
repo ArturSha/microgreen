@@ -1,0 +1,41 @@
+.productCard {
+    display: grid;
+    grid-template-columns: 1fr 5rem 14rem;
+    align-items: stretch;
+    background-color: var(--color-brown-400);
+}
+
+
+.cell {
+    display: flex;
+    align-items: center;
+    border: .1rem solid var(--color-gray-500);
+}
+
+.cell:first-of-type {
+    padding-left: .8rem;
+}
+
+.cell:nth-child(2) {
+    justify-content: center;
+}
+
+.controlPanel {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: .1rem solid var(--color-gray-500);
+}
+
+.controlPanel button {
+    padding: .2rem;
+    color: var(--color-gray-500);
+    font-weight: var(--font-weight-700);
+    font-size: var(--font-size-l);
+}
+
+.popoverContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

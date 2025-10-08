@@ -6,7 +6,7 @@ import {
   type CustomerPostForm,
 } from '@/entities/customer';
 import type { ValidationErrorResponse } from '@/shared/api/types/validationErrorResponse';
-import { handleServerErrors } from '@/shared/lib/handleServerErrors';
+import { handleServerErrors } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
 import { Input } from '@/shared/ui/Input';

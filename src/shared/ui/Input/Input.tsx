@@ -16,7 +16,11 @@ export const Input = ({ error, className, ref, type = 'text', ...props }: InputP
       <div className={style.inputWrapper}>
         <input
           ref={ref}
-          className={classNames(style.input, { [style.error]: error }, className)}
+          className={classNames(
+            style.input,
+            { [style.error]: error, [style.marginRight]: type === 'password' },
+            className,
+          )}
           type={inputType}
           {...props}
         />

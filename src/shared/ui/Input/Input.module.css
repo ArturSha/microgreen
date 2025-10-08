@@ -9,10 +9,13 @@
 
 .input {
     padding: .6rem;
-    padding-right: 4rem;
     width: 100%;
     border: .2rem solid var(--color-green-500);
     border-radius: .4rem;
+}
+
+.marginRight {
+    padding-right: 4rem;
 }
 
 .toggleButton {

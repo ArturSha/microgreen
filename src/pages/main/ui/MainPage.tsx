@@ -1,6 +1,7 @@
 import { CustomerList } from '@/widgets/customerList';
 import { ProductList } from '@/widgets/productList';
 import { CustomerEditorForm } from '@/features/manageCustomer';
+import { ProductForm } from '@/features/manageProduct';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@/shared/ui/Tabs';
 import style from './MainPage.module.css';
 
@@ -21,6 +22,7 @@ const MainPage = () => {
             <CustomerList />
           </TabPanel>
           <TabPanel>
+            <ProductForm />
             <ProductList />
           </TabPanel>
           <TabPanel></TabPanel>

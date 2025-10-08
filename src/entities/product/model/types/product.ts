@@ -5,7 +5,7 @@ export interface Product {
   id: string;
 }
 
-// export type ProductPostForm = Omit<Product, 'id' | 'createdAt' | 'updatedAt'>;
+export type ProductPostForm = Omit<Product, 'id'>;
 
 export interface ProductResponse {
   name: string;

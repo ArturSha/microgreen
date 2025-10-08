@@ -1,6 +1,6 @@
 import { ApiTags, baseApi, type BaseGetParams } from '@/shared/api';
 import { mapCustomer } from '../lib/mapProduct';
-import type { Product, ProductResponse } from '../model/types/product';
+import type { Product, ProductPostForm, ProductResponse } from '../model/types/product';
 
 export const productApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -13,7 +13,16 @@ export const productApi = baseApi.injectEndpoints({
       transformResponse: (response: ProductResponse[]) => response.map(mapCustomer),
       providesTags: [ApiTags.PRODUCT],
     }),
+    postProduct: build.mutation<Product, ProductPostForm>({
+      query: (body) => ({
+        url: '/products',
+        method: 'POST',
+        body,
+      }),
+      transformResponse: (response: ProductResponse) => mapCustomer(response),
+      invalidatesTags: [ApiTags.PRODUCT],
+    }),
   }),
 });
 
-export const { useGetProductsListQuery } = productApi;
+export const { useGetProductsListQuery, usePostProductMutation } = productApi;

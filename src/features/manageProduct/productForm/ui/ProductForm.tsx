@@ -20,7 +20,7 @@ export const ProductForm = () => {
     formState: { errors },
   } = useForm<ProductPostForm>();
 
-  const [postProductTrigger] = usePostProductMutation();
+  const [postProductTrigger, { isLoading }] = usePostProductMutation();
 
   const onSubmit = async (data: ProductPostForm) => {
     clearErrors();
@@ -48,6 +48,7 @@ export const ProductForm = () => {
         isOpen={isOpen}
         closeButton
         maxWidth="40rem"
+        isLoading={isLoading}
         className={style.productForm}
       >
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
@@ -68,7 +69,9 @@ export const ProductForm = () => {
             {...register('quantity')}
             error={errors.quantity?.message}
           />
-          <Button type="submit">Сохранить</Button>
+          <Button isLoading={isLoading} disabled={isLoading} type="submit">
+            Сохранить
+          </Button>
         </form>
         {clientError && <Text variant="error">{clientError}</Text>}
       </Dialog>

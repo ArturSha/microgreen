@@ -21,11 +21,11 @@ const MainPage = () => {
             <CustomerEditorForm variant="post" />
             <CustomerList />
           </TabPanel>
-          <TabPanel>
+          <TabPanel className={style.tabPanel}>
             <ProductForm />
             <ProductList />
           </TabPanel>
-          <TabPanel></TabPanel>
+          <TabPanel className={style.tabPanel}></TabPanel>
         </TabPanels>
       </TabGroup>
     </section>

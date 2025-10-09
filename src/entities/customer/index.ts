@@ -4,5 +4,5 @@ export {
   usePutClientMutation,
   useDeleteClientMutation,
 } from './api/customersApi';
-export { type CustomerPostForm } from './model/types/customer';
+export type { CustomerPostForm, Customer } from './model/types/customer';
 export { CustomerCard } from './ui/customerCard/CustomerCard';

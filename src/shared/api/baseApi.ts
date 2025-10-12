@@ -15,6 +15,7 @@ const baseQuery = fetchBaseQuery({
 export const baseApi = createApi({
   tagTypes: Object.values(ApiTags) as ApiTag[],
   reducerPath: 'api',
+  keepUnusedDataFor: 600,
   baseQuery,
   endpoints: () => ({}),
 });

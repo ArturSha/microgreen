@@ -1,7 +1,7 @@
 import { CustomerList } from '@/widgets/customerList';
 import { ProductList } from '@/widgets/productList';
 import { CustomerEditorForm } from '@/features/manageCustomer';
-import { CreateOrder } from '@/features/manageOrder';
+import { CreateOrderForm } from '@/features/manageOrder';
 import { ProductForm } from '@/features/manageProduct';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@/shared/ui/Tabs';
 import style from './MainPage.module.css';
@@ -18,7 +18,7 @@ const MainPage = () => {
         </TabList>
         <TabPanels>
           <TabPanel className={style.tabPanel}>
-            <CreateOrder />
+            <CreateOrderForm />
           </TabPanel>
           <TabPanel className={style.tabPanel}>
             <CustomerEditorForm variant="post" />

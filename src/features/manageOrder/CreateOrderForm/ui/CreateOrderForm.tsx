@@ -3,6 +3,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { CustomerSelect } from '@/entities/customer';
 import type { OrderPostForm } from '@/entities/order';
 import { ProductQuantity, useGetProductsListQuery } from '@/entities/product';
+import { CURRENCY } from '@/shared/const';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
 import { Text } from '@/shared/ui/Text';
@@ -63,8 +64,9 @@ export const CreateOrderForm = () => {
               );
             })}
             <Text>
-              Стоимость заказа
-              {products.reduce((acc, p) => acc + p.price * p.quantity, 0)}
+              {'Стоимость заказа: ' +
+                products.reduce((acc, p) => acc + p.price * p.quantity, 0) +
+                CURRENCY}
             </Text>
 
             <div className={style.btnContainer}>

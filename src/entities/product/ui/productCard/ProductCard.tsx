@@ -1,3 +1,4 @@
+import { CURRENCY } from '@/shared/const';
 import { Button } from '@/shared/ui/Button';
 import { Text } from '@/shared/ui/Text';
 import type { Product } from '../../model/types/product';
@@ -15,7 +16,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         {name}
       </Text>
       <Text className={style.cell} as="span">
-        {price} &#8382;
+        {price} {CURRENCY}
       </Text>
       <div className={style.controlPanel}>
         <Button variant="clear">-</Button>

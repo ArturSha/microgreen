@@ -6,6 +6,7 @@
 
 .quantityControls {
     display: flex;
+    gap: .6rem;
 }
 
 .quantityInput {

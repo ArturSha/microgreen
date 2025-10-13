@@ -1,5 +1,6 @@
 import { Controller, useFormContext, type FieldValues, type Path } from 'react-hook-form';
 import { Select, selectStyle } from '@/shared/ui/Select';
+import { Text } from '@/shared/ui/Text';
 import { useGetClientListQuery } from '../../api/customersApi';
 
 interface CustomerSelectProps<T extends FieldValues> {
@@ -19,16 +20,20 @@ export const CustomerSelect = <T extends FieldValues>({ name }: CustomerSelectPr
     <Controller
       name={name}
       control={control}
-      render={({ field }) => (
-        <Select
-          {...field}
-          styles={selectStyle}
-          isLoading={isLoading}
-          options={formattedOptions}
-          placeholder="Выбрать заведение"
-          onChange={(option) => field.onChange(option?.value)}
-          value={formattedOptions?.find((opt) => opt.value?.id === field.value?.id) || null}
-        />
+      rules={{ required: { message: 'Это поле является обязательным', value: true } }}
+      render={({ field, fieldState: { error } }) => (
+        <>
+          <Select
+            {...field}
+            styles={selectStyle}
+            isLoading={isLoading}
+            options={formattedOptions}
+            placeholder="Выбрать заведение"
+            onChange={(option) => field.onChange(option?.value)}
+            value={formattedOptions?.find((opt) => opt.value?.id === field.value?.id) || null}
+          />
+          {error && <Text variant="error">{error.message}</Text>}
+        </>
       )}
     />
   );

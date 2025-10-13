@@ -17,9 +17,9 @@ export const selectStyle = {
   }),
   input: (baseStyles) => ({
     ...baseStyles,
-    paddingTop: window.innerWidth < 768 ? '0' : '2px',
-    paddingBottom: window.innerWidth < 768 ? '0' : '2px',
-    fontSize: window.innerWidth < 768 ? '1.6rem' : '2rem',
+    paddingTop: window.innerWidth < 768 ? '0' : '0',
+    paddingBottom: window.innerWidth < 768 ? '0' : '0',
+    fontSize: window.innerWidth < 768 ? '1.4rem' : '1.6rem',
   }),
   option: (baseStyles, state) => ({
     ...baseStyles,
@@ -54,6 +54,6 @@ export const selectStyle = {
   }),
   dropdownIndicator: (baseStyles) => ({
     ...baseStyles,
-    padding: window.innerWidth < 768 ? '4px' : '8px',
+    padding: window.innerWidth < 768 ? '2px' : '4px',
   }),
 };

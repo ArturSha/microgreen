@@ -1,0 +1,13 @@
+.productRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quantityControls {
+    display: flex;
+}
+
+.quantityInput {
+    max-width: 6rem;
+}

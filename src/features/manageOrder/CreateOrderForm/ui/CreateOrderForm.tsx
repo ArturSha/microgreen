@@ -43,27 +43,29 @@ export const CreateOrderForm = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         closeButton
+        panelClassName={style.panel}
       >
         <FormProvider {...methods}>
           <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
             <CustomerSelect name="customer" />
+            <div className={style.productContainer}>
+              {productList?.map((product) => {
+                const item = products?.find((p) => p.name === product.name);
+                const quantity = item?.quantity || 0;
 
-            {productList?.map((product) => {
-              const item = products?.find((p) => p.name === product.name);
-              const quantity = item?.quantity || 0;
-
-              return (
-                <ProductQuantity
-                  key={product.id}
-                  product={product}
-                  quantity={quantity}
-                  products={products}
-                  setValue={setValue}
-                  onChange={handleQuantityChange}
-                />
-              );
-            })}
-            <Text>
+                return (
+                  <ProductQuantity
+                    key={product.id}
+                    product={product}
+                    quantity={quantity}
+                    products={products}
+                    setValue={setValue}
+                    onChange={handleQuantityChange}
+                  />
+                );
+              })}
+            </div>
+            <Text className={style.padding10}>
               {'Стоимость заказа: ' +
                 products.reduce((acc, p) => acc + p.price * p.quantity, 0) +
                 CURRENCY}

@@ -2,10 +2,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: .4rem 1rem;
+    border-bottom: .1rem solid var(--color-black-500);
 }
 
 .quantityControls {
     display: flex;
+    align-items: center;
     gap: .6rem;
 }
 

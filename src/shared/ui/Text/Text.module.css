@@ -6,3 +6,11 @@
 .bold {
     font-weight: var(--font-weight-700);
 }
+
+.black {
+    color: var(--color-black-500);
+}
+
+.green {
+    color: var(--color-green-600);
+}

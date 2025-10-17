@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 
-const baseColor = '#62CE45';
+const baseColor = '#2a5b1e';
 
 export const selectStyle = {
   control: (baseStyles, state) => ({

@@ -4,11 +4,25 @@ import { Button } from '../Button';
 import { Text } from '../Text';
 import style from './Input.module.css';
 
+type Variant = 'primary' | 'secondary';
 interface InputProps extends ComponentProps<'input'> {
   error?: string;
+  variant?: Variant;
 }
 
-export const Input = ({ error, className, ref, type = 'text', ...props }: InputProps) => {
+const variants: Record<Variant, string> = {
+  primary: style.primary,
+  secondary: style.secondary,
+};
+
+export const Input = ({
+  error,
+  className,
+  ref,
+  type = 'text',
+  variant = 'primary',
+  ...props
+}: InputProps) => {
   const [show, setShow] = useState<boolean>(false);
   const inputType = type === 'password' && show ? 'text' : type;
   return (
@@ -17,7 +31,7 @@ export const Input = ({ error, className, ref, type = 'text', ...props }: InputP
         <input
           ref={ref}
           className={classNames(
-            style.input,
+            variants[variant],
             { [style.error]: error, [style.marginRight]: type === 'password' },
             className,
           )}

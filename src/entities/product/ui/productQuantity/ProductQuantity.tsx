@@ -29,7 +29,7 @@ export const ProductQuantity = ({
       <div className={style.quantityControls}>
         <Button
           type="button"
-          variant="secondary"
+          variant="clear"
           onClick={() => onChange({ newValue: -1, product, products, setValue })}
         >
           −
@@ -37,6 +37,7 @@ export const ProductQuantity = ({
 
         <Input
           type="number"
+          variant="secondary"
           min={0}
           className={style.quantityInput}
           value={quantity}
@@ -54,7 +55,7 @@ export const ProductQuantity = ({
 
         <Button
           type="button"
-          variant="secondary"
+          variant="clear"
           onClick={() => onChange({ newValue: 1, product, products, setValue })}
         >
           +

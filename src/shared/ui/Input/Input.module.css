@@ -10,7 +10,7 @@
 .primary {
     padding: .6rem;
     width: 100%;
-    border: .2rem solid var(--color-green-500);
+    border: .2rem solid var(--color-green-600);
     border-radius: .4rem;
 }
 

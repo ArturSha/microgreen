@@ -8,6 +8,7 @@ export interface Order {
   isDelivered: boolean;
   isPaid: boolean;
   id: string;
+  deliveryDate: Date;
 }
 
 export type OrderPostForm = Omit<Order, 'id'>;

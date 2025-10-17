@@ -5,6 +5,10 @@
     width: 100%;
 } 
 
+.wrapper {
+    display: flex;
+}
+
 .btnContainer {
     display: flex;
     justify-content: center;

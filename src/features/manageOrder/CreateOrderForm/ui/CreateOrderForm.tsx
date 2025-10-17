@@ -6,6 +6,7 @@ import { ProductQuantity, useGetProductsListQuery } from '@/entities/product';
 import { CURRENCY } from '@/shared/const';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
+import { Input } from '@/shared/ui/Input';
 import { Text } from '@/shared/ui/Text';
 import { handleQuantityChange } from '../lib/handleQuantityChange';
 import style from './CreateOrderForm.module.css';
@@ -31,6 +32,7 @@ export const CreateOrderForm = () => {
       console.log(error);
     }
   };
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <>
@@ -48,6 +50,7 @@ export const CreateOrderForm = () => {
         <FormProvider {...methods}>
           <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
             <CustomerSelect name="customer" />
+            <Input aria-label="Date" type="date" min={today} />
             <div className={style.productContainer}>
               {productList?.map((product) => {
                 const item = products?.find((p) => p.name === product.name);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { CustomerSelect } from '@/entities/customer';
-import type { OrderPostForm } from '@/entities/order';
+import { usePostOrderMutation, type OrderPostForm } from '@/entities/order';
 import { ProductQuantity, useGetProductsListQuery } from '@/entities/product';
 import { CURRENCY } from '@/shared/const';
 import { Button } from '@/shared/ui/Button';
@@ -14,6 +14,7 @@ import style from './CreateOrderForm.module.css';
 export const CreateOrderForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: productList } = useGetProductsListQuery({});
+  const [postOrderTrigger, { isLoading }] = usePostOrderMutation();
   const methods = useForm<OrderPostForm>({
     defaultValues: {
       customer: undefined,
@@ -26,13 +27,17 @@ export const CreateOrderForm = () => {
     },
   });
 
-  const { handleSubmit, setValue, watch } = methods;
+  const { handleSubmit, setValue, watch, reset } = methods;
   const products = watch('products');
+  const onCloseHandler = () => {
+    reset();
+    setIsModalOpen(false);
+  };
 
   const onSubmit = async (data: OrderPostForm) => {
     try {
-      const filteredProducts = data.products?.filter((p) => p.quantity > 0);
-      console.log('Отправляем:', { ...data, products: filteredProducts });
+      await postOrderTrigger(data).unwrap();
+      onCloseHandler();
     } catch (error) {
       console.log(error);
     }
@@ -47,9 +52,10 @@ export const CreateOrderForm = () => {
       <Dialog
         maxWidth="40rem"
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={onCloseHandler}
         closeButton
         panelClassName={style.panel}
+        isLoading={isLoading}
       >
         <FormProvider {...methods}>
           <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
@@ -83,8 +89,10 @@ export const CreateOrderForm = () => {
             </Text>
 
             <div className={style.btnContainer}>
-              <Button type="submit">Оформить заказ</Button>
-              <Button type="button" variant="danger" onClick={() => setIsModalOpen(false)}>
+              <Button type="submit" isLoading={isLoading} disabled={isLoading}>
+                Оформить заказ
+              </Button>
+              <Button disabled={isLoading} type="button" variant="danger" onClick={onCloseHandler}>
                 Отменить
               </Button>
             </div>

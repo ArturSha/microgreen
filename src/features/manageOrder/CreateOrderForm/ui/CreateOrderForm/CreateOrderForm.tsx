@@ -29,6 +29,7 @@ export const CreateOrderForm = () => {
 
   const { handleSubmit, setValue, watch, reset } = methods;
   const products = watch('products');
+  const totalPrice = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
   const onCloseHandler = () => {
     reset();
     setIsModalOpen(false);
@@ -36,7 +37,7 @@ export const CreateOrderForm = () => {
 
   const onSubmit = async (data: OrderPostForm) => {
     try {
-      await postOrderTrigger(data).unwrap();
+      await postOrderTrigger({ ...data, totalPrice }).unwrap();
       onCloseHandler();
     } catch (error) {
       console.log(error);
@@ -61,7 +62,6 @@ export const CreateOrderForm = () => {
           <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={style.wrapper}>
               <CustomerSelect name="customer" />
-
               <DatePickerRHF />
             </div>
 
@@ -82,11 +82,7 @@ export const CreateOrderForm = () => {
                 );
               })}
             </div>
-            <Text className={style.padding10}>
-              {'Стоимость заказа: ' +
-                products.reduce((acc, p) => acc + p.price * p.quantity, 0) +
-                CURRENCY}
-            </Text>
+            <Text className={style.padding10}>{'Стоимость заказа: ' + totalPrice + CURRENCY}</Text>
 
             <div className={style.btnContainer}>
               <Button type="submit" isLoading={isLoading} disabled={isLoading}>

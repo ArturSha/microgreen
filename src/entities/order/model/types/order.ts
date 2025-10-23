@@ -11,8 +11,9 @@ export interface Order {
   deliveryDate: Date;
 }
 
-export type OrderPostForm = Omit<Order, 'id'>;
-export type PatchOrder = Partial<OrderPostForm> & { id: string };
+export type OrderPostForm = Omit<Order, 'id' | 'isPaid' | 'isDelivered' | 'totalPrice'>;
+export type OrderPostBody = Omit<Order, 'id'>;
+export type PatchOrder = Partial<OrderPostBody> & { id: string };
 
 export interface OrderResponse {
   customer: Customer;

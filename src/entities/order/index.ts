@@ -4,5 +4,5 @@ export {
   useDeleteOrderMutation,
   usePatchOrderMutation,
 } from './api/orderApi';
-export type { OrderPostForm } from './model/types/order';
+export type { OrderPostForm, OrderPostBody } from './model/types/order';
 export { OrderCard } from './ui/orderCard/OrderCard';

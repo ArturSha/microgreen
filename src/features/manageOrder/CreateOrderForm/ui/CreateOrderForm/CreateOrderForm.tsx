@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { CustomerSelect } from '@/entities/customer';
-import { usePostOrderMutation, type OrderPostForm } from '@/entities/order';
+import { usePostOrderMutation, type OrderPostBody, type OrderPostForm } from '@/entities/order';
 import { ProductQuantity, useGetProductsListQuery } from '@/entities/product';
 import { CURRENCY } from '@/shared/const';
 import { Button } from '@/shared/ui/Button';
@@ -36,8 +36,9 @@ export const CreateOrderForm = () => {
   };
 
   const onSubmit = async (data: OrderPostForm) => {
+    const preparedData: OrderPostBody = { isDelivered: false, isPaid: false, totalPrice, ...data };
     try {
-      await postOrderTrigger({ ...data, totalPrice }).unwrap();
+      await postOrderTrigger(preparedData).unwrap();
       onCloseHandler();
     } catch (error) {
       console.log(error);

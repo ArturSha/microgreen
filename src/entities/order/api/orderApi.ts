@@ -1,6 +1,6 @@
 import { ApiTags, baseApi, type BaseGetParams } from '@/shared/api';
 import { mapOrder } from '../lib/mapOrder';
-import type { Order, OrderPostForm, OrderResponse, PatchOrder } from '../model/types/order';
+import type { Order, OrderPostBody, OrderResponse, PatchOrder } from '../model/types/order';
 
 export const orderApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -14,7 +14,7 @@ export const orderApi = baseApi.injectEndpoints({
         response.map((customer) => mapOrder(customer)),
       providesTags: [ApiTags.ORDERS],
     }),
-    postOrder: build.mutation<Order, OrderPostForm>({
+    postOrder: build.mutation<Order, OrderPostBody>({
       query: (body) => ({
         url: '/orders',
         method: 'POST',

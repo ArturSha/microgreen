@@ -9,6 +9,7 @@ import style from './DeleteOrder.module.css';
 interface DeleteOrderProps {
   id: string;
   isDelivered: boolean;
+  isPaid: boolean;
 }
 
 export const DeleteOrder = ({ id, isDelivered }: DeleteOrderProps) => {

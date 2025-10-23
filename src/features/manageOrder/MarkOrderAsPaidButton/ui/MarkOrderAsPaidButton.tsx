@@ -9,6 +9,7 @@ import style from './MarkOrderAsPaidButton.module.css';
 interface MarkOrderAsPaidButtonProps {
   id: string;
   isDelivered: boolean;
+  isPaid: boolean;
 }
 
 export const MarkOrderAsPaidButton = ({ id, isDelivered }: MarkOrderAsPaidButtonProps) => {

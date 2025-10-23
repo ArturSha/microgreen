@@ -18,8 +18,12 @@ export const OrderList = () => {
           children={
             <div className={style.btnContainer}>
               {!order.isDelivered && <MarkOrderAsDeliveredButton id={order.id} />}
-              <MarkOrderAsPaidButton id={order.id} isDelivered={order.isDelivered} />
-              <DeleteOrder id={order.id} isDelivered={order.isDelivered} />
+              <MarkOrderAsPaidButton
+                id={order.id}
+                isDelivered={order.isDelivered}
+                isPaid={order.isPaid}
+              />
+              <DeleteOrder id={order.id} isDelivered={order.isDelivered} isPaid={order.isPaid} />
             </div>
           }
         />

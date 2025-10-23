@@ -1,3 +1,8 @@
-export { useGetOrderListQuery, usePostOrderMutation } from './api/orderApi';
+export {
+  useGetOrderListQuery,
+  usePostOrderMutation,
+  useDeleteOrderMutation,
+  usePatchOrderMutation,
+} from './api/orderApi';
 export type { OrderPostForm } from './model/types/order';
 export { OrderCard } from './ui/orderCard/OrderCard';

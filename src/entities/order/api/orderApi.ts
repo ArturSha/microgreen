@@ -1,5 +1,6 @@
 import { ApiTags, baseApi, type BaseGetParams } from '@/shared/api';
-import type { Order, OrderPostForm } from '../model/types/order';
+import { mapOrder } from '../lib/mapOrder';
+import type { Order, OrderPostForm, OrderResponse, PatchOrder } from '../model/types/order';
 
 export const orderApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -9,8 +10,8 @@ export const orderApi = baseApi.injectEndpoints({
         method: 'GET',
         params,
       }),
-      //   transformResponse: (response: CustomerResponse[]) =>
-      //     response.map((customer) => mapCustomer(customer)),
+      transformResponse: (response: OrderResponse[]) =>
+        response.map((customer) => mapOrder(customer)),
       providesTags: [ApiTags.ORDERS],
     }),
     postOrder: build.mutation<Order, OrderPostForm>({
@@ -19,11 +20,29 @@ export const orderApi = baseApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      //   transformResponse: (response: CustomerResponse[]) =>
-      //     response.map((customer) => mapCustomer(customer)),
+      invalidatesTags: [ApiTags.ORDERS],
+    }),
+    patchOrder: build.mutation<Order, PatchOrder>({
+      query: ({ id, ...rest }) => ({
+        url: `/orders/${id}`,
+        method: 'PATCH',
+        body: rest,
+      }),
+      invalidatesTags: [ApiTags.ORDERS],
+    }),
+    deleteOrder: build.mutation<Order, { id: string }>({
+      query: ({ id }) => ({
+        url: `/orders/${id}`,
+        method: 'DELETE',
+      }),
       invalidatesTags: [ApiTags.ORDERS],
     }),
   }),
 });
 
-export const { useGetOrderListQuery, usePostOrderMutation } = orderApi;
+export const {
+  useGetOrderListQuery,
+  usePostOrderMutation,
+  useDeleteOrderMutation,
+  usePatchOrderMutation,
+} = orderApi;

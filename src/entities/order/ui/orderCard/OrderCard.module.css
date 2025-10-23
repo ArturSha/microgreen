@@ -19,10 +19,12 @@
     justify-content: space-between;
     padding: .2rem .4rem;
     border-bottom: .1rem solid var(--color-black-500);
+    background-color: var(--color-brown-400);
 }
 
 .price {
     margin-right: 1rem;
+    padding: 0 .8rem;
     background-color: var(--color-brown-500);
 }
 

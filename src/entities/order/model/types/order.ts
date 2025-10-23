@@ -12,3 +12,14 @@ export interface Order {
 }
 
 export type OrderPostForm = Omit<Order, 'id'>;
+export type PatchOrder = Partial<OrderPostForm> & { id: string };
+
+export interface OrderResponse {
+  customer: Customer;
+  products: Product[];
+  totalPrice: number;
+  isDelivered: boolean;
+  isPaid: boolean;
+  _id: string;
+  deliveryDate: Date;
+}

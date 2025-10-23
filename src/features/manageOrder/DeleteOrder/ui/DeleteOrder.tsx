@@ -1,14 +1,17 @@
+import classNames from 'classnames';
 import { useState } from 'react';
 import { useDeleteOrderMutation } from '@/entities/order';
 import DeleteSvg from '@/shared/assets/icons/delete.svg?react';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
 import style from './DeleteOrder.module.css';
+
 interface DeleteOrderProps {
   id: string;
+  isDelivered: boolean;
 }
 
-export const DeleteOrder = ({ id }: DeleteOrderProps) => {
+export const DeleteOrder = ({ id, isDelivered }: DeleteOrderProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteOrderTrigger, { isLoading }] = useDeleteOrderMutation();
   const onDelete = async () => {
@@ -21,7 +24,11 @@ export const DeleteOrder = ({ id }: DeleteOrderProps) => {
 
   return (
     <>
-      <Button variant="clear" style={{ width: '2.8rem' }} onClick={() => setIsModalOpen(true)}>
+      <Button
+        variant="clear"
+        className={classNames(style.btn, { [style.white]: isDelivered })}
+        onClick={() => setIsModalOpen(true)}
+      >
         <DeleteSvg />
       </Button>
       <Dialog

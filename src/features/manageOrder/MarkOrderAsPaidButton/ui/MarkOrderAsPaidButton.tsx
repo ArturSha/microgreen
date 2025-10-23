@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useState } from 'react';
 import { usePatchOrderMutation } from '@/entities/order';
 import PaidSvg from '@/shared/assets/icons/paid.svg?react';
@@ -7,9 +8,10 @@ import style from './MarkOrderAsPaidButton.module.css';
 
 interface MarkOrderAsPaidButtonProps {
   id: string;
+  isDelivered: boolean;
 }
 
-export const MarkOrderAsPaidButton = ({ id }: MarkOrderAsPaidButtonProps) => {
+export const MarkOrderAsPaidButton = ({ id, isDelivered }: MarkOrderAsPaidButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState('');
 
@@ -17,7 +19,8 @@ export const MarkOrderAsPaidButton = ({ id }: MarkOrderAsPaidButtonProps) => {
 
   const onPaid = async () => {
     try {
-      await paidTrigger({ id, isPaid: true });
+      await paidTrigger({ id, isPaid: true }).unwrap();
+      setIsModalOpen(false);
     } catch (error) {
       setError('Не удалось поменять статус заказа');
       console.error(error);
@@ -26,7 +29,11 @@ export const MarkOrderAsPaidButton = ({ id }: MarkOrderAsPaidButtonProps) => {
 
   return (
     <>
-      <Button variant="clear" style={{ width: '2.8rem' }} onClick={() => setIsModalOpen(true)}>
+      <Button
+        variant="clear"
+        className={classNames(style.btn, { [style.white]: isDelivered })}
+        onClick={() => setIsModalOpen(true)}
+      >
         <PaidSvg />
       </Button>
       <Dialog

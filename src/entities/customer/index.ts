@@ -1,6 +1,7 @@
 export {
   usePostClientMutation,
   useGetClientListQuery,
+  useGetClientQuery,
   usePutClientMutation,
   useDeleteClientMutation,
 } from './api/customersApi';

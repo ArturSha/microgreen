@@ -7,6 +7,7 @@ import style from './MarkOrderAsDeliveredButton.module.css';
 
 interface MarkOrderAsDeliveredButtonProps {
   id: string;
+  isPaid: boolean;
 }
 
 export const MarkOrderAsDeliveredButton = ({ id }: MarkOrderAsDeliveredButtonProps) => {

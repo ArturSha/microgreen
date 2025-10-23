@@ -14,6 +14,15 @@ export const customersApi = baseApi.injectEndpoints({
         response.map((customer) => mapCustomer(customer)),
       providesTags: [ApiTags.CLIENTS],
     }),
+    getClient: build.query<Customer, { params: BaseGetParams; id: string }>({
+      query: ({ params, id }) => ({
+        url: `/clients/${id}`,
+        method: 'GET',
+        params,
+      }),
+      transformResponse: (response: CustomerResponse) => mapCustomer(response),
+      providesTags: [ApiTags.CLIENTS],
+    }),
     postClient: build.mutation<Customer, CustomerPostForm>({
       query: (body) => ({
         url: '/clients',
@@ -43,6 +52,7 @@ export const customersApi = baseApi.injectEndpoints({
 
 export const {
   useGetClientListQuery,
+  useGetClientQuery,
   usePostClientMutation,
   usePutClientMutation,
   useDeleteClientMutation,

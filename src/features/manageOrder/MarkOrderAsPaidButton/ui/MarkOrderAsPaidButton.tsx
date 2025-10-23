@@ -50,7 +50,9 @@ export const MarkOrderAsPaidButton = ({ id, isDelivered }: MarkOrderAsPaidButton
         <Button isLoading={isLoading} disabled={isLoading} onClick={onPaid}>
           Да
         </Button>
-        <Button disabled={isLoading}>Нет</Button>
+        <Button variant="secondary" disabled={isLoading}>
+          Нет
+        </Button>
       </Dialog>
     </>
   );

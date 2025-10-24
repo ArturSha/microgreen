@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { CustomerSelect } from '@/entities/customer';
+import { CustomerSelect, usePatchClientMutation } from '@/entities/customer';
 import { usePostOrderMutation, type OrderPostBody, type OrderPostForm } from '@/entities/order';
 import { ProductQuantity, useGetProductsListQuery } from '@/entities/product';
 import { CURRENCY } from '@/shared/const';
@@ -13,8 +13,12 @@ import style from './CreateOrderForm.module.css';
 
 export const CreateOrderForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState('');
   const { data: productList } = useGetProductsListQuery({});
-  const [postOrderTrigger, { isLoading }] = usePostOrderMutation();
+  const [postOrder, { isLoading: isLoadingOrder }] = usePostOrderMutation();
+  const [updateDebt, { isLoading: isUpdatingDebt }] = usePatchClientMutation();
+
+  const isLoading = isLoadingOrder || isUpdatingDebt;
   const methods = useForm<OrderPostForm>({
     defaultValues: {
       customer: undefined,
@@ -36,12 +40,23 @@ export const CreateOrderForm = () => {
   };
 
   const onSubmit = async (data: OrderPostForm) => {
+    setError('');
     const preparedData: OrderPostBody = { isDelivered: false, isPaid: false, totalPrice, ...data };
     try {
-      await postOrderTrigger(preparedData).unwrap();
-      onCloseHandler();
+      await postOrder(preparedData).unwrap();
+      try {
+        await updateDebt({
+          id: data.customer.id,
+          body: { debt: data.customer.debt - totalPrice },
+        }).unwrap();
+        onCloseHandler();
+      } catch (error) {
+        console.error(error);
+        setError('Не удалось произвести списание');
+      }
     } catch (error) {
-      console.log(error);
+      setError('Не удалось создать заказ');
+      console.error(error);
     }
   };
 
@@ -58,6 +73,7 @@ export const CreateOrderForm = () => {
         closeButton
         panelClassName={style.panel}
         isLoading={isLoading}
+        errorText={error}
       >
         <FormProvider {...methods}>
           <form className={style.form} onSubmit={handleSubmit(onSubmit)}>

@@ -18,11 +18,7 @@ export const OrderList = () => {
           children={
             <div className={style.btnContainer}>
               {!order.isDelivered && (
-                <MarkOrderAsDeliveredButton
-                  id={order.id}
-                  isPaid={order.isPaid}
-                  customer={order.customer}
-                />
+                <MarkOrderAsDeliveredButton id={order.id} isPaid={order.isPaid} />
               )}
               {!order.isPaid && (
                 <MarkOrderAsPaidButton

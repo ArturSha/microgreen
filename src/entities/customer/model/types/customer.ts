@@ -11,6 +11,7 @@ export interface Customer {
 }
 
 export type CustomerPostForm = Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>;
+export type CustomerPatch = Partial<CustomerPostForm>;
 
 export interface CustomerResponse {
   address?: string;

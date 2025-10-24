@@ -1,6 +1,11 @@
 import { ApiTags, baseApi, type BaseGetParams } from '@/shared/api';
 import { mapCustomer } from '../lib/mapCustomer';
-import type { Customer, CustomerPostForm, CustomerResponse } from '../model/types/customer';
+import type {
+  Customer,
+  CustomerPatch,
+  CustomerPostForm,
+  CustomerResponse,
+} from '../model/types/customer';
 
 export const customersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -40,6 +45,14 @@ export const customersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [ApiTags.CLIENTS],
     }),
+    patchClient: build.mutation<Customer, { body: CustomerPatch; id: string }>({
+      query: ({ body, id }) => ({
+        url: `/clients/${id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: [ApiTags.CLIENTS],
+    }),
     deleteClient: build.mutation<Customer, { id: string }>({
       query: ({ id }) => ({
         url: `/clients/${id}`,
@@ -54,6 +67,7 @@ export const {
   useGetClientListQuery,
   useGetClientQuery,
   usePostClientMutation,
+  usePatchClientMutation,
   usePutClientMutation,
   useDeleteClientMutation,
 } = customersApi;

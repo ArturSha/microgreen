@@ -1,6 +1,7 @@
 export {
   usePostClientMutation,
   useGetClientListQuery,
+  usePatchClientMutation,
   useGetClientQuery,
   usePutClientMutation,
   useDeleteClientMutation,

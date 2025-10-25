@@ -21,33 +21,36 @@ export const MarkOrderAsPaidButton = ({
   orderPrice,
 }: MarkOrderAsPaidButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [error, setError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const [paidTrigger, { isLoading: isPaidLoading }] = usePatchOrderMutation();
-  const [updateClient, { isLoading: isUpdatingClientLoading }] = usePatchClientMutation();
-  const { data: clientData, isLoading: isClientLoading } = useGetClientQuery(
+  const [patchOrder, { isLoading: isUpdatingOrderLoading }] = usePatchOrderMutation();
+  const [patchClientDebt, { isLoading: isUpdatingClientDebtLoading }] = usePatchClientMutation();
+  const { data: fetchedClient, isLoading: isClientLoading } = useGetClientQuery(
     { id: client.id },
     { skip: !isModalOpen },
   );
-  const isLoading = isPaidLoading || isUpdatingClientLoading || isClientLoading;
+  const isLoading = isUpdatingOrderLoading || isUpdatingClientDebtLoading || isClientLoading;
 
-  const onPaid = async () => {
-    if (!clientData) {
-      setError('Не удалось загрузить информацию о клиенте');
+  const handleMarkAsPaid = async () => {
+    if (!fetchedClient) {
+      setErrorMessage('Не удалось загрузить информацию о клиенте');
       return;
     }
-    setError('');
+    setErrorMessage('');
     try {
-      await updateClient({ id: client.id, body: { debt: clientData.debt + orderPrice } }).unwrap();
+      await patchClientDebt({
+        id: client.id,
+        body: { debt: fetchedClient.debt + orderPrice },
+      }).unwrap();
       try {
-        await paidTrigger({ id, isPaid: true }).unwrap();
+        await patchOrder({ id, isPaid: true }).unwrap();
         setIsModalOpen(false);
       } catch (error) {
-        setError('Не удалось поменять статус заказа');
+        setErrorMessage('Не удалось поменять статус заказа');
         console.error(error);
       }
     } catch (error) {
-      setError('Не удалось списать долг');
+      setErrorMessage('Не удалось списать долг');
       console.error(error);
     }
   };
@@ -69,9 +72,9 @@ export const MarkOrderAsPaidButton = ({
         title="Оплачено?"
         isLoading={isLoading}
         className={style.btnContainer}
-        errorText={error}
+        errorText={errorMessage}
       >
-        <Button isLoading={isLoading} disabled={isLoading} onClick={onPaid}>
+        <Button isLoading={isLoading} disabled={isLoading} onClick={handleMarkAsPaid}>
           Да
         </Button>
         <Button variant="secondary" disabled={isLoading}>

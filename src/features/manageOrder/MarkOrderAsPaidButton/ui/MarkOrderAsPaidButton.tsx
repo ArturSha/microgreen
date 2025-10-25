@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
+import { useGetClientQuery, usePatchClientMutation, type Customer } from '@/entities/customer';
 import { usePatchOrderMutation } from '@/entities/order';
 import PaidSvg from '@/shared/assets/icons/paid.svg?react';
 import { Button } from '@/shared/ui/Button';
@@ -9,21 +10,44 @@ import style from './MarkOrderAsPaidButton.module.css';
 interface MarkOrderAsPaidButtonProps {
   id: string;
   isDelivered: boolean;
-  isPaid: boolean;
+  client: Customer;
+  orderPrice: number;
 }
 
-export const MarkOrderAsPaidButton = ({ id, isDelivered }: MarkOrderAsPaidButtonProps) => {
+export const MarkOrderAsPaidButton = ({
+  id,
+  isDelivered,
+  client,
+  orderPrice,
+}: MarkOrderAsPaidButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState('');
 
-  const [paidTrigger, { isLoading }] = usePatchOrderMutation();
+  const [paidTrigger, { isLoading: isPaidLoading }] = usePatchOrderMutation();
+  const [updateClient, { isLoading: isUpdatingClientLoading }] = usePatchClientMutation();
+  const { data: clientData, isLoading: isClientLoading } = useGetClientQuery(
+    { id: client.id },
+    { skip: !isModalOpen },
+  );
+  const isLoading = isPaidLoading || isUpdatingClientLoading || isClientLoading;
 
   const onPaid = async () => {
+    if (!clientData) {
+      setError('Не удалось загрузить информацию о клиенте');
+      return;
+    }
+    setError('');
     try {
-      await paidTrigger({ id, isPaid: true }).unwrap();
-      setIsModalOpen(false);
+      await updateClient({ id: client.id, body: { debt: clientData.debt + orderPrice } }).unwrap();
+      try {
+        await paidTrigger({ id, isPaid: true }).unwrap();
+        setIsModalOpen(false);
+      } catch (error) {
+        setError('Не удалось поменять статус заказа');
+        console.error(error);
+      }
     } catch (error) {
-      setError('Не удалось поменять статус заказа');
+      setError('Не удалось списать долг');
       console.error(error);
     }
   };

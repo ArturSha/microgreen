@@ -24,7 +24,8 @@ export const OrderList = () => {
                 <MarkOrderAsPaidButton
                   id={order.id}
                   isDelivered={order.isDelivered}
-                  isPaid={order.isPaid}
+                  client={order.customer}
+                  orderPrice={order.totalPrice}
                 />
               )}
               <DeleteOrder id={order.id} isDelivered={order.isDelivered} isPaid={order.isPaid} />

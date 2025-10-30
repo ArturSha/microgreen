@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useGetClientQuery, usePatchClientMutation, type Customer } from '@/entities/customer';
-import { usePatchOrderMutation } from '@/entities/order';
+import { useDeleteOrderMutation, usePatchOrderMutation } from '@/entities/order';
 import PaidSvg from '@/shared/assets/icons/paid.svg?react';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
@@ -25,18 +25,20 @@ export const MarkOrderAsPaidButton = ({
 
   const [patchOrder, { isLoading: isUpdatingOrderLoading }] = usePatchOrderMutation();
   const [patchClientDebt, { isLoading: isUpdatingClientDebtLoading }] = usePatchClientMutation();
+  const [deleteOrder, { isLoading: isDeletingOrder }] = useDeleteOrderMutation();
   const { data: fetchedClient, isLoading: isClientLoading } = useGetClientQuery(
     { id: client.id },
     { skip: !isModalOpen },
   );
-  const isLoading = isUpdatingOrderLoading || isUpdatingClientDebtLoading || isClientLoading;
+  const isLoading =
+    isUpdatingOrderLoading || isUpdatingClientDebtLoading || isClientLoading || isDeletingOrder;
 
   const handleMarkAsPaid = async () => {
+    setErrorMessage('');
     if (!fetchedClient) {
       setErrorMessage('Не удалось загрузить информацию о клиенте');
       return;
     }
-    setErrorMessage('');
     try {
       await patchClientDebt({
         id: client.id,
@@ -44,6 +46,9 @@ export const MarkOrderAsPaidButton = ({
       }).unwrap();
       try {
         await patchOrder({ id, isPaid: true }).unwrap();
+        if (isDelivered) {
+          await deleteOrder({ id }).unwrap();
+        }
         setIsModalOpen(false);
       } catch (error) {
         setErrorMessage('Не удалось поменять статус заказа');

@@ -4,7 +4,7 @@ import { LoaderSimple } from '@/shared/ui/Loader';
 import style from './CustomerList.module.css';
 
 export const CustomerList = () => {
-  const { data, isFetching } = useGetClientListQuery({ metafields: true });
+  const { data, isFetching } = useGetClientListQuery({ metafields: true, sort: 'name' });
 
   return (
     <div>

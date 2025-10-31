@@ -7,7 +7,7 @@ import { OrderCard, useGetOrderListQuery } from '@/entities/order';
 import style from './OrderList.module.css';
 
 export const OrderList = () => {
-  const { data } = useGetOrderListQuery({ sort: 'deliveryDate' });
+  const { data } = useGetOrderListQuery({ sort: ['isDelivered', 'deliveryDate'], dir: [1, 1] });
 
   return (
     <div className={style.orderList}>

@@ -10,6 +10,19 @@ const baseQuery = fetchBaseQuery({
     }
     return headers;
   },
+  paramsSerializer: (params) => {
+    const searchParams = new URLSearchParams();
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((v) => searchParams.append(key, v));
+      } else if (value !== undefined && value !== null) {
+        searchParams.append(key, String(value));
+      }
+    });
+
+    return searchParams.toString();
+  },
 });
 
 export const baseApi = createApi({

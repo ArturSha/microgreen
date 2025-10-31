@@ -11,7 +11,7 @@ interface CustomerSelectProps<T extends FieldValues> {
 
 export const CustomerSelect = <T extends FieldValues>({ name }: CustomerSelectProps<T>) => {
   const { control } = useFormContext<T>();
-  const { data: customerList, isLoading } = useGetClientListQuery({});
+  const { data: customerList, isLoading } = useGetClientListQuery({ sort: 'name' });
 
   const formattedOptions = customerList?.map((customer) => ({
     label: customer.name,

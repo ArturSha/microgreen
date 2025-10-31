@@ -28,7 +28,9 @@ export const OrderList = () => {
                   orderPrice={order.totalPrice}
                 />
               )}
-              <DeleteOrder id={order.id} isDelivered={order.isDelivered} isPaid={order.isPaid} />
+              {!order.isDelivered && !order.isPaid && (
+                <DeleteOrder id={order.id} isDelivered={order.isDelivered} isPaid={order.isPaid} />
+              )}
             </div>
           }
         />

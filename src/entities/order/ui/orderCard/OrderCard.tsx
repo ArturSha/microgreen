@@ -27,7 +27,7 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
         <div>
           <Text> {customer.address}</Text>
           <Text>
-            {customer.contactPerson + ': '}
+            {customer.contactPerson ? customer.contactPerson + ': ' : ''}
             <Link className={style.phoneLink} to={`tel:${customer.phone}`}>
               {customer.phone}
             </Link>

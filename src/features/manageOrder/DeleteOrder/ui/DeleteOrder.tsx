@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
+import { useGetClientQuery, usePatchClientMutation, type Customer } from '@/entities/customer';
 import { useDeleteOrderMutation } from '@/entities/order';
 import DeleteSvg from '@/shared/assets/icons/delete.svg?react';
 import { Button } from '@/shared/ui/Button';
@@ -9,20 +10,42 @@ import style from './DeleteOrder.module.css';
 interface DeleteOrderProps {
   id: string;
   isDelivered: boolean;
-  isPaid: boolean;
+  client: Customer;
+  orderPrice: number;
 }
 
-export const DeleteOrder = ({ id, isDelivered }: DeleteOrderProps) => {
+export const DeleteOrder = ({ id, isDelivered, client, orderPrice }: DeleteOrderProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [errorText, setErrorText] = useState('');
-  const [deleteOrderTrigger, { isLoading }] = useDeleteOrderMutation();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [deleteOrderTrigger, { isLoading: isDeleting }] = useDeleteOrderMutation();
+  const [updateDebt, { isLoading: isUpdatingDebt }] = usePatchClientMutation();
+  const { data: fetchedClient, isLoading: isClientLoading } = useGetClientQuery(
+    { id: client.id },
+    { skip: !isModalOpen },
+  );
+  const isLoading = isDeleting || isUpdatingDebt || isClientLoading;
+
   const onDelete = async () => {
+    setErrorMessage('');
+    if (!fetchedClient) {
+      setErrorMessage('Не удалось загрузить информацию о клиенте');
+      return;
+    }
     try {
-      await deleteOrderTrigger({ id }).unwrap();
-      setIsModalOpen(false);
+      await updateDebt({
+        id: client.id,
+        body: { debt: fetchedClient.debt + orderPrice },
+      }).unwrap();
+      try {
+        await deleteOrderTrigger({ id }).unwrap();
+        setIsModalOpen(false);
+      } catch (error) {
+        console.log(error);
+        setErrorMessage('Не удалось удалить заказ');
+      }
     } catch (error) {
-      console.log(error);
-      setErrorText('Не удалось удалить заказ');
+      console.error(error);
+      setErrorMessage('Не удалось списать долг');
     }
   };
 
@@ -43,7 +66,7 @@ export const DeleteOrder = ({ id, isDelivered }: DeleteOrderProps) => {
         title="Удалить заказ?"
         className={style.btnContainer}
         isLoading={isLoading}
-        errorText={errorText}
+        errorText={errorMessage}
       >
         <Button isLoading={isLoading} disabled={isLoading} onClick={onDelete} variant="danger">
           Да

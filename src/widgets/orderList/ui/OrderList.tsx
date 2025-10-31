@@ -23,13 +23,18 @@ export const OrderList = () => {
               {!order.isPaid && (
                 <MarkOrderAsPaidButton
                   id={order.id}
-                  isDelivered={order.isDelivered}
                   client={order.customer}
                   orderPrice={order.totalPrice}
+                  isDelivered={order.isDelivered}
                 />
               )}
               {!order.isDelivered && !order.isPaid && (
-                <DeleteOrder id={order.id} isDelivered={order.isDelivered} isPaid={order.isPaid} />
+                <DeleteOrder
+                  id={order.id}
+                  client={order.customer}
+                  orderPrice={order.totalPrice}
+                  isDelivered={order.isDelivered}
+                />
               )}
             </div>
           }

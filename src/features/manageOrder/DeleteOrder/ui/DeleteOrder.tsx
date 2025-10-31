@@ -14,12 +14,15 @@ interface DeleteOrderProps {
 
 export const DeleteOrder = ({ id, isDelivered }: DeleteOrderProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorText, setErrorText] = useState('');
   const [deleteOrderTrigger, { isLoading }] = useDeleteOrderMutation();
   const onDelete = async () => {
     try {
       await deleteOrderTrigger({ id }).unwrap();
+      setIsModalOpen(false);
     } catch (error) {
       console.log(error);
+      setErrorText('Не удалось удалить заказ');
     }
   };
 
@@ -40,6 +43,7 @@ export const DeleteOrder = ({ id, isDelivered }: DeleteOrderProps) => {
         title="Удалить заказ?"
         className={style.btnContainer}
         isLoading={isLoading}
+        errorText={errorText}
       >
         <Button isLoading={isLoading} disabled={isLoading} onClick={onDelete} variant="danger">
           Да

@@ -1,3 +1,7 @@
+.text {
+    line-break: anywhere;
+}
+
 .black {
     color: var(--color-black-500);
 }

@@ -15,7 +15,11 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
   const { customer, deliveryDate, isDelivered, products, totalPrice } = data;
   return (
     <div className={style.orderCard}>
-      <div className={classNames(style.infoContainer, { [style.delivered]: isDelivered })}>
+      <div
+        className={classNames(style.infoContainer, style.borderRadiusTop, {
+          [style.delivered]: isDelivered,
+        })}
+      >
         <Text>{customer.name}</Text>
         <Text>{new Date(deliveryDate).toLocaleDateString()}</Text>
       </div>
@@ -23,7 +27,10 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
         <div>
           <Text> {customer.address}</Text>
           <Text>
-            {customer.contactPerson} <Link to={`tel:${customer.phone}`}>{customer.phone}</Link>
+            {customer.contactPerson + ': '}
+            <Link className={style.phoneLink} to={`tel:${customer.phone}`}>
+              {customer.phone}
+            </Link>
           </Text>
         </div>
         {children}

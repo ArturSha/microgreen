@@ -102,7 +102,7 @@ export const CreateOrderForm = () => {
             <Text className={style.padding10}>{'Стоимость заказа: ' + totalPrice + CURRENCY}</Text>
 
             <div className={style.btnContainer}>
-              <Button type="submit" isLoading={isLoading} disabled={isLoading}>
+              <Button type="submit" isLoading={isLoading} disabled={isLoading || !totalPrice}>
                 Оформить заказ
               </Button>
               <Button disabled={isLoading} type="button" variant="danger" onClick={onCloseHandler}>

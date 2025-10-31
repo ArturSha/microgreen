@@ -1,5 +1,5 @@
 .orderCard {
-    overflow: hidden;
+    max-width: 40rem;
     border-radius: 1.2rem;
 }
 
@@ -8,6 +8,11 @@
     justify-content: space-between;
     padding: .4rem;
     background-color: var(--color-brown-500);
+}
+
+.borderRadiusTop {
+    border-top-left-radius: 1.2rem;
+    border-top-right-radius: 1.2rem;
 }
 
 .delivered {
@@ -32,5 +37,11 @@
     display: flex;
     justify-content: space-between;
     padding: .2rem .4rem;
+    border-bottom-right-radius: 1.2rem;
+    border-bottom-left-radius: 1.2rem;
     background-color: var(--color-brown-500);
+}
+
+.phoneLink {
+    text-decoration: underline;
 }

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useGetClientQuery, usePatchClientMutation, type Customer } from '@/entities/customer';
+import { usePatchClientMutation, type Customer } from '@/entities/customer';
 import { useDeleteOrderMutation, usePatchOrderMutation } from '@/entities/order';
 import PaidSvg from '@/shared/assets/icons/paid.svg?react';
 import { Button } from '@/shared/ui/Button';
@@ -26,27 +26,20 @@ export const MarkOrderAsPaidButton = ({
   const [patchOrder, { isLoading: isUpdatingOrderLoading }] = usePatchOrderMutation();
   const [patchClientDebt, { isLoading: isUpdatingClientDebtLoading }] = usePatchClientMutation();
   const [deleteOrder, { isLoading: isDeletingOrder }] = useDeleteOrderMutation();
-  const { data: fetchedClient, isLoading: isClientLoading } = useGetClientQuery(
-    { id: client.id },
-    { skip: !isModalOpen },
-  );
-  const isLoading =
-    isUpdatingOrderLoading || isUpdatingClientDebtLoading || isClientLoading || isDeletingOrder;
+
+  const isLoading = isUpdatingOrderLoading || isUpdatingClientDebtLoading || isDeletingOrder;
 
   const handleMarkAsPaid = async () => {
     setErrorMessage('');
-    if (!fetchedClient) {
-      setErrorMessage('Не удалось загрузить информацию о клиенте');
-      return;
-    }
     try {
       await patchClientDebt({
         id: client.id,
-        body: { debt: fetchedClient.debt + orderPrice },
+        body: { $inc: { debt: orderPrice } },
       }).unwrap();
       try {
-        await patchOrder({ id, isPaid: true }).unwrap();
-        if (isDelivered) {
+        if (!isDelivered) {
+          await patchOrder({ id, isPaid: true }).unwrap();
+        } else {
           await deleteOrder({ id }).unwrap();
         }
         setIsModalOpen(false);

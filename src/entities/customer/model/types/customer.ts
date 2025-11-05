@@ -1,3 +1,5 @@
+import type { MongoUpdateOperators } from '@/shared/api';
+
 export interface Customer {
   address?: string;
   contactPerson?: string;
@@ -11,7 +13,7 @@ export interface Customer {
 }
 
 export type CustomerPostForm = Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>;
-export type CustomerPatch = Partial<CustomerPostForm>;
+export type CustomerPatch = Partial<CustomerPostForm> | MongoUpdateOperators<CustomerPostForm>;
 
 export interface CustomerResponse {
   address?: string;

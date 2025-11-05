@@ -20,8 +20,9 @@ export const MarkOrderAsDeliveredButton = ({ id, isPaid }: MarkOrderAsDeliveredB
   const handleMarkAsDelivered = async () => {
     setError('');
     try {
-      await updateOrder({ id, isDelivered: true }).unwrap();
-      if (isPaid) {
+      if (!isPaid) {
+        await updateOrder({ id, isDelivered: true }).unwrap();
+      } else {
         await deleteOrder({ id }).unwrap();
       }
       setIsModalOpen(false);

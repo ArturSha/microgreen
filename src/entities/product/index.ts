@@ -1,4 +1,8 @@
-export { useGetProductsListQuery, usePostProductMutation } from './api/productApi';
+export {
+  useGetProductsListQuery,
+  usePostProductMutation,
+  useUpdateProductListMutation,
+} from './api/productApi';
 export { ProductCard } from './ui/productCard/ProductCard';
-export type { ProductPostForm, Product } from './model/types/product';
+export type { ProductPostForm, Product, ProductUpdateForm } from './model/types/product';
 export { ProductQuantity } from './ui/productQuantity/ProductQuantity';

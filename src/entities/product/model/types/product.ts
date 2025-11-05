@@ -5,6 +5,7 @@ export interface Product {
   id: string;
 }
 
+export type ProductUpdateForm = Omit<Product, 'id'> & { _id: string };
 export type ProductPostForm = Omit<Product, 'id'>;
 
 export interface ProductResponse {

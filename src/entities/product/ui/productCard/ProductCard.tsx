@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { CURRENCY } from '@/shared/const';
+import { useDebounce } from '@/shared/hooks';
 import { Button } from '@/shared/ui/Button';
 import { Text } from '@/shared/ui/Text';
 import type { Product } from '../../model/types/product';
@@ -10,6 +12,15 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { name, price, quantity } = product;
+  const [productQuantity, setProductQuantity] = useState(quantity);
+  const debounce = useDebounce(productQuantity);
+
+  useEffect(() => {
+    if (debounce) {
+      console.log('Отправляем запрос:', debounce);
+    }
+  }, [debounce]);
+
   return (
     <div className={style.productCard}>
       <Text className={style.cell} as="span">
@@ -19,9 +30,13 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         {price} {CURRENCY}
       </Text>
       <div className={style.controlPanel}>
-        <Button variant="clear">-</Button>
-        <Text as="span">{quantity}</Text>
-        <Button variant="clear">+</Button>
+        <Button variant="clear" onClick={() => setProductQuantity((prev) => prev - 1)}>
+          -
+        </Button>
+        <Text as="span">{productQuantity}</Text>
+        <Button variant="clear" onClick={() => setProductQuantity((prev) => prev + 1)}>
+          +
+        </Button>
       </div>
     </div>
   );

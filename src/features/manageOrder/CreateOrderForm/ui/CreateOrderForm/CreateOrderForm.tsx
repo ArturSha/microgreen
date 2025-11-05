@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { CustomerSelect, usePatchClientMutation } from '@/entities/customer';
 import { usePostOrderMutation, type OrderPostBody, type OrderPostForm } from '@/entities/order';
-import { ProductQuantity, useGetProductsListQuery } from '@/entities/product';
+import {
+  ProductQuantity,
+  useGetProductsListQuery,
+  useUpdateProductListMutation,
+  type ProductUpdateForm,
+} from '@/entities/product';
 import { CURRENCY } from '@/shared/const';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
@@ -14,9 +19,10 @@ import style from './CreateOrderForm.module.css';
 export const CreateOrderForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState('');
-  const { data: productList } = useGetProductsListQuery({});
+  const { data: productList } = useGetProductsListQuery({}, { skip: !isModalOpen });
   const [postOrder, { isLoading: isLoadingOrder }] = usePostOrderMutation();
   const [updateDebt, { isLoading: isUpdatingDebt }] = usePatchClientMutation();
+  const [updateProduct] = useUpdateProductListMutation();
 
   const isLoading = isLoadingOrder || isUpdatingDebt;
   const methods = useForm<OrderPostForm>({
@@ -39,15 +45,43 @@ export const CreateOrderForm = () => {
     setIsModalOpen(false);
   };
 
+  const updateProductList = async (data: OrderPostForm) => {
+    if (!productList) return;
+
+    const updatedProducts = data.products
+      .map((orderProduct) => {
+        const product = productList.find((p) => p.id === orderProduct.id);
+        if (!product) return null;
+
+        const { id, quantity, ...rest } = product;
+        return {
+          ...rest,
+          _id: id,
+          quantity: quantity - orderProduct.quantity,
+        };
+      })
+      .filter(Boolean) as ProductUpdateForm[];
+
+    if (!updatedProducts.length) return;
+
+    try {
+      await updateProduct(updatedProducts).unwrap();
+    } catch (error) {
+      console.error('Ошибка при обновлении продуктов:', error);
+      setError('Ошибка при обновлении продуктов');
+    }
+  };
+
   const onSubmit = async (data: OrderPostForm) => {
     setError('');
     const preparedData: OrderPostBody = { isDelivered: false, isPaid: false, totalPrice, ...data };
     try {
       await postOrder(preparedData).unwrap();
       try {
+        updateProductList(data);
         await updateDebt({
           id: data.customer.id,
-          body: { debt: data.customer.debt - totalPrice },
+          body: { $inc: { debt: -totalPrice } },
         }).unwrap();
         onCloseHandler();
       } catch (error) {

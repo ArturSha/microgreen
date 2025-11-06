@@ -53,11 +53,12 @@ export const CreateOrderForm = () => {
         const product = productList.find((p) => p.id === orderProduct.id);
         if (!product) return null;
 
-        const { id, quantity, ...rest } = product;
+        const { id, quantity, name, price } = product;
         return {
-          ...rest,
           _id: id,
+          price,
           quantity: quantity - orderProduct.quantity,
+          name,
         };
       })
       .filter(Boolean) as ProductUpdateForm[];

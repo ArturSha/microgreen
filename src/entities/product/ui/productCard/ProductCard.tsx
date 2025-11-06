@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { CURRENCY } from '@/shared/const';
 import { useDebounce } from '@/shared/hooks';
 import { Button } from '@/shared/ui/Button';
+import { Input } from '@/shared/ui/Input';
 import { Text } from '@/shared/ui/Text';
+import { usePatchProductMutation } from '../../api/productApi';
 import type { Product } from '../../model/types/product';
 import style from './ProductCard.module.css';
 
@@ -11,15 +13,39 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { name, price, quantity } = product;
+  const { name, price, quantity, id } = product;
   const [productQuantity, setProductQuantity] = useState(quantity);
+  const [errorMessage, setErrorMessage] = useState('');
   const debounce = useDebounce(productQuantity);
+  const [updateProductQuantity] = usePatchProductMutation();
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    if (debounce) {
-      console.log('Отправляем запрос:', debounce);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
     }
-  }, [debounce]);
+    const update = async () => {
+      try {
+        setErrorMessage('');
+        await updateProductQuantity({ body: { quantity: debounce }, id }).unwrap();
+      } catch (error) {
+        console.error(error);
+        setErrorMessage('Не удалось обновить кол-во');
+      }
+    };
+    update();
+  }, [debounce, updateProductQuantity, id]);
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (!/^\d*$/.test(value)) return;
+
+    const parsed = value === '' ? 0 : Number(value);
+
+    setProductQuantity(Math.max(0, parsed));
+  };
 
   return (
     <div className={style.productCard}>
@@ -29,14 +55,22 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       <Text className={style.cell} as="span">
         {price} {CURRENCY}
       </Text>
-      <div className={style.controlPanel}>
-        <Button variant="clear" onClick={() => setProductQuantity((prev) => prev - 1)}>
-          -
-        </Button>
-        <Text as="span">{productQuantity}</Text>
-        <Button variant="clear" onClick={() => setProductQuantity((prev) => prev + 1)}>
-          +
-        </Button>
+      <div>
+        <div className={style.controlPanel}>
+          <Button variant="clear" onClick={() => setProductQuantity((prev) => prev - 1)}>
+            -
+          </Button>
+          <Input
+            className={style.input}
+            variant="secondary"
+            value={productQuantity}
+            onChange={handleInput}
+          />
+          <Button variant="clear" onClick={() => setProductQuantity((prev) => prev + 1)}>
+            +
+          </Button>
+        </div>
+        <Text variant="error">{errorMessage}</Text>
       </div>
     </div>
   );

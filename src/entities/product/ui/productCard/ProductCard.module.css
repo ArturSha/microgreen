@@ -5,6 +5,9 @@
     background-color: var(--color-brown-400);
 }
 
+.input {
+    max-width: 4rem;
+}
 
 .cell {
     display: flex;

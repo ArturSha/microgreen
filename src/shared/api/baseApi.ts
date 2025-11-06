@@ -1,10 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiTags, type ApiTag } from './types/apiTags';
 
+const isLocalDev = import.meta.env.VITE_IS_LOCAL === 'true';
+console.log(import.meta.env.VITE_IS_LOCAL);
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_BASE_API_URL,
+  baseUrl: isLocalDev ? import.meta.env.VITE_BASE_API_URL_DEV : import.meta.env.VITE_BASE_API_URL,
   prepareHeaders: (headers) => {
-    const apiKey = import.meta.env.VITE_BASE_API_KEY;
+    const apiKey = isLocalDev
+      ? import.meta.env.VITE_BASE_API_KEY_DEV
+      : import.meta.env.VITE_BASE_API_KEY;
     if (apiKey) {
       headers.set('x-apikey', apiKey);
     }

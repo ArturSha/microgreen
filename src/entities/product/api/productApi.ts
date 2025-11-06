@@ -12,7 +12,7 @@ export const productApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getProductsList: build.query<Product[], BaseGetParams>({
       query: (params) => ({
-        url: '/products',
+        url: '/products1',
         method: 'GET',
         params,
       }),
@@ -21,7 +21,7 @@ export const productApi = baseApi.injectEndpoints({
     }),
     postProduct: build.mutation<Product, ProductPostForm>({
       query: (body) => ({
-        url: '/products',
+        url: '/products1',
         method: 'POST',
         body,
       }),
@@ -30,21 +30,20 @@ export const productApi = baseApi.injectEndpoints({
     }),
     updateProductList: build.mutation<Product, ProductUpdateForm[]>({
       query: (body) => ({
-        url: '/products',
+        url: '/products1',
         method: 'POST',
         body,
-        params: { validate: false },
       }),
       invalidatesTags: [ApiTags.PRODUCT],
     }),
     patchProduct: build.mutation<Product, { body: ProductPatch; id: string }>({
       query: ({ body, id }) => ({
-        url: `/products/${id}`,
+        url: `/products1/${id}`,
         method: 'PATCH',
         body,
       }),
-      transformResponse: (response: ProductResponse) => mapCustomer(response),
       invalidatesTags: [ApiTags.PRODUCT],
+      transformResponse: (response: ProductResponse) => mapCustomer(response),
     }),
   }),
 });

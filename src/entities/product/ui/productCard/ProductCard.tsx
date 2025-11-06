@@ -3,6 +3,7 @@ import { CURRENCY } from '@/shared/const';
 import { useDebounce } from '@/shared/hooks';
 import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';
+import { LoaderSimple } from '@/shared/ui/Loader';
 import { PopoverButton, Popover, PopoverPanel } from '@/shared/ui/Popover';
 import { Text } from '@/shared/ui/Text';
 import { useDeleteProductMutation, usePatchProductMutation } from '../../api/productApi';
@@ -18,8 +19,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const [productQuantity, setProductQuantity] = useState(quantity);
   const [errorMessage, setErrorMessage] = useState('');
   const debounce = useDebounce(productQuantity);
-  const [updateProductQuantity] = usePatchProductMutation();
-  const [deleteProduct] = useDeleteProductMutation();
+  const [updateProductQuantity, { isLoading: isUpdatingQuantity }] = usePatchProductMutation();
+  const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
   const isFirstRender = useRef(true);
 
   const onDeleteClick = async () => {
@@ -64,7 +65,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <Text as="span">{name}</Text>
         </PopoverButton>
         <PopoverPanel anchor="bottom">
-          <Button variant="danger" onClick={onDeleteClick}>
+          <Button
+            variant="danger"
+            onClick={onDeleteClick}
+            isLoading={isDeleting}
+            disabled={isDeleting}
+          >
             Удалить "{name}"
           </Button>
         </PopoverPanel>
@@ -83,6 +89,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             value={productQuantity}
             onChange={handleInput}
           />
+          {isUpdatingQuantity && (
+            <div style={{ position: 'relative' }}>
+              <LoaderSimple />
+            </div>
+          )}
           <Button variant="clear" onClick={() => setProductQuantity((prev) => prev + 1)}>
             +
           </Button>

@@ -1,6 +1,5 @@
 import { CustomerEditorForm, DeleteCustomer } from '@/features/manageCustomer';
-import { CustomerCard, useGetClientListQuery } from '@/entities/customer';
-import { LoaderSimple } from '@/shared/ui/Loader';
+import { CustomerCard, CustomerSkeleton, useGetClientListQuery } from '@/entities/customer';
 import style from './CustomerList.module.css';
 
 export const CustomerList = () => {
@@ -9,7 +8,7 @@ export const CustomerList = () => {
   return (
     <div>
       {isFetching ? (
-        <LoaderSimple />
+        <CustomerSkeleton />
       ) : (
         <ul>
           {data?.map((customer) => (

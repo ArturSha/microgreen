@@ -37,6 +37,16 @@
     font-size: var(--font-size-l);
 }
 
+.popover {
+    display: flex;
+    border: .1rem solid var(--color-gray-500);
+}
+
+.popoverBtn {
+    border: none;
+    background-color: transparent;
+}
+
 .popoverContainer {
     display: flex;
     flex-direction: column;

@@ -3,8 +3,9 @@ import { CURRENCY } from '@/shared/const';
 import { useDebounce } from '@/shared/hooks';
 import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';
+import { PopoverButton, Popover, PopoverPanel } from '@/shared/ui/Popover';
 import { Text } from '@/shared/ui/Text';
-import { usePatchProductMutation } from '../../api/productApi';
+import { useDeleteProductMutation, usePatchProductMutation } from '../../api/productApi';
 import type { Product } from '../../model/types/product';
 import style from './ProductCard.module.css';
 
@@ -18,7 +19,16 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const [errorMessage, setErrorMessage] = useState('');
   const debounce = useDebounce(productQuantity);
   const [updateProductQuantity] = usePatchProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
   const isFirstRender = useRef(true);
+
+  const onDeleteClick = async () => {
+    try {
+      await deleteProduct(id).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -49,9 +59,16 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <div className={style.productCard}>
-      <Text className={style.cell} as="span">
-        {name}
-      </Text>
+      <Popover className={style.popover}>
+        <PopoverButton className={style.popoverBtn}>
+          <Text as="span">{name}</Text>
+        </PopoverButton>
+        <PopoverPanel anchor="bottom">
+          <Button variant="danger" onClick={onDeleteClick}>
+            Удалить "{name}"
+          </Button>
+        </PopoverPanel>
+      </Popover>
       <Text className={style.cell} as="span">
         {price} {CURRENCY}
       </Text>

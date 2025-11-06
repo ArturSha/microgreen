@@ -34,11 +34,23 @@ export const productApi = baseApi.injectEndpoints({
         body,
         params: { validate: false },
       }),
+      invalidatesTags: [ApiTags.PRODUCT],
+    }),
+    putProduct: build.mutation<Product, { body: Partial<ProductPostForm>; id: string }>({
+      query: ({ body, id }) => ({
+        url: `/products/${id}`,
+        method: 'PUT',
+        body,
+      }),
       transformResponse: (response: ProductResponse) => mapCustomer(response),
       invalidatesTags: [ApiTags.PRODUCT],
     }),
   }),
 });
 
-export const { useGetProductsListQuery, usePostProductMutation, useUpdateProductListMutation } =
-  productApi;
+export const {
+  useGetProductsListQuery,
+  usePostProductMutation,
+  useUpdateProductListMutation,
+  usePutProductMutation,
+} = productApi;

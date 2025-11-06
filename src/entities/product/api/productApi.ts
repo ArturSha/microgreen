@@ -2,6 +2,7 @@ import { ApiTags, baseApi, type BaseGetParams } from '@/shared/api';
 import { mapCustomer } from '../lib/mapProduct';
 import type {
   Product,
+  ProductPatch,
   ProductPostForm,
   ProductResponse,
   ProductUpdateForm,
@@ -36,10 +37,10 @@ export const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [ApiTags.PRODUCT],
     }),
-    putProduct: build.mutation<Product, { body: Partial<ProductPostForm>; id: string }>({
+    patchProduct: build.mutation<Product, { body: ProductPatch; id: string }>({
       query: ({ body, id }) => ({
         url: `/products/${id}`,
-        method: 'PUT',
+        method: 'PATCH',
         body,
       }),
       transformResponse: (response: ProductResponse) => mapCustomer(response),
@@ -52,5 +53,5 @@ export const {
   useGetProductsListQuery,
   usePostProductMutation,
   useUpdateProductListMutation,
-  usePutProductMutation,
+  usePatchProductMutation,
 } = productApi;

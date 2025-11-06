@@ -1,3 +1,5 @@
+import type { MongoUpdateOperators } from '@/shared/api';
+
 export interface Product {
   name: string;
   price: number;
@@ -7,6 +9,7 @@ export interface Product {
 
 export type ProductUpdateForm = Omit<Product, 'id'> & { _id: string };
 export type ProductPostForm = Omit<Product, 'id'>;
+export type ProductPatch = Partial<ProductPostForm> | MongoUpdateOperators<ProductPostForm>;
 
 export interface ProductResponse {
   name: string;

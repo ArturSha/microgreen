@@ -2,6 +2,7 @@ export {
   useGetProductsListQuery,
   usePostProductMutation,
   useUpdateProductListMutation,
+  usePatchProductMutation,
 } from './api/productApi';
 export { ProductCard } from './ui/productCard/ProductCard';
 export type { ProductPostForm, Product, ProductUpdateForm } from './model/types/product';

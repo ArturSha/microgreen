@@ -30,8 +30,9 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [clientError, setClientError] = useState('');
 
-  const [postClientTrigger] = usePostClientMutation();
-  const [putClientTrigger] = usePutClientMutation();
+  const [postClientTrigger, { isLoading: isCreatingCustomer }] = usePostClientMutation();
+  const [putClientTrigger, { isLoading: isUpdatingCustomer }] = usePutClientMutation();
+  const isLoading = isCreatingCustomer || isUpdatingCustomer;
 
   const handleDialogState = () => setIsOpen((prev) => !prev);
   const {
@@ -110,7 +111,9 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
             error={errors.phone?.message}
           />
           <Input placeholder="Заметка" {...register('notes')} error={errors.notes?.message} />
-          <Button type="submit">Сохранить</Button>
+          <Button type="submit" isLoading={isLoading} disabled={isLoading}>
+            Сохранить
+          </Button>
           {clientError && <Text variant="error">{clientError}</Text>}
         </form>
       </Dialog>

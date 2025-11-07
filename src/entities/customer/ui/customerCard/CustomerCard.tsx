@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { CURRENCY } from '@/shared/const';
 import { PopoverButton, Popover, PopoverPanel } from '@/shared/ui/Popover';
 import { Text } from '@/shared/ui/Text';
 import type { Customer } from '../../model/types/customer';
@@ -17,7 +18,7 @@ export const CustomerCard = ({ data, children }: CustomerProps) => {
       <PopoverButton>
         <div className={style.customerCard}>
           <Text as="span">{name}</Text>
-          <Text as="span">{debt}</Text>
+          <Text as="span">{debt + CURRENCY}</Text>
         </div>
       </PopoverButton>
       <PopoverPanel anchor="bottom">

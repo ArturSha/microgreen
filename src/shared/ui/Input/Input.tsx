@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useState, type ComponentProps } from 'react';
 import { Button } from '../Button';
+import { LoaderSimple } from '../Loader';
 import { Text } from '../Text';
 import style from './Input.module.css';
 
@@ -8,6 +9,7 @@ type Variant = 'primary' | 'secondary';
 interface InputProps extends ComponentProps<'input'> {
   error?: string;
   variant?: Variant;
+  isLoading?: boolean;
 }
 
 const variants: Record<Variant, string> = {
@@ -21,6 +23,7 @@ export const Input = ({
   ref,
   type = 'text',
   variant = 'primary',
+  isLoading,
   ...props
 }: InputProps) => {
   const [show, setShow] = useState<boolean>(false);
@@ -38,6 +41,11 @@ export const Input = ({
           type={inputType}
           {...props}
         />
+        {isLoading && (
+          <div className={style.loaderContainer}>
+            <LoaderSimple className={style.loader} />
+          </div>
+        )}
         {type === 'password' && (
           <Button
             className={style.toggleButton}

@@ -3,7 +3,6 @@ import { CURRENCY } from '@/shared/const';
 import { useDebounce } from '@/shared/hooks';
 import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';
-import { LoaderSimple } from '@/shared/ui/Loader';
 import { PopoverButton, Popover, PopoverPanel } from '@/shared/ui/Popover';
 import { Text } from '@/shared/ui/Text';
 import { useDeleteProductMutation, usePatchProductMutation } from '../../api/productApi';
@@ -76,7 +75,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </PopoverPanel>
       </Popover>
       <Text className={style.cell} as="span">
-        {price} {CURRENCY}
+        {price}
+        {CURRENCY}
       </Text>
       <div>
         <div className={style.controlPanel}>
@@ -88,12 +88,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             variant="secondary"
             value={productQuantity}
             onChange={handleInput}
+            isLoading={isUpdatingQuantity}
           />
-          {isUpdatingQuantity && (
-            <div style={{ position: 'relative' }}>
-              <LoaderSimple />
-            </div>
-          )}
           <Button variant="clear" onClick={() => setProductQuantity((prev) => prev + 1)}>
             +
           </Button>

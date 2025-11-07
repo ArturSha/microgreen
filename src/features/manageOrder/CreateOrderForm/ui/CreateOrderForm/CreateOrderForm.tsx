@@ -102,7 +102,7 @@ export const CreateOrderForm = () => {
       </Button>
 
       <Dialog
-        maxWidth="40rem"
+        maxWidth="50rem"
         isOpen={isModalOpen}
         onClose={onCloseHandler}
         panelClassName={style.panel}

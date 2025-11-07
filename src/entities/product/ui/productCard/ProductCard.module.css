@@ -6,7 +6,9 @@
 }
 
 .input {
+    padding: .2rem 0;
     max-width: 7rem;
+    text-align: center;
 }
 
 .cell {
@@ -43,8 +45,10 @@
 }
 
 .popoverBtn {
+    padding-left: .4rem;
     border: none;
     background-color: transparent;
+    text-align: start;
 }
 
 .popoverContainer {

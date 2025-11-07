@@ -1,9 +1,14 @@
+import classNames from 'classnames';
 import style from './LoaderSimple.module.css';
 
-export const LoaderSimple = () => {
+interface LoaderSimpleProps {
+  className?: string;
+}
+
+export const LoaderSimple = ({ className }: LoaderSimpleProps) => {
   return (
     <div className={style.loaderContainer}>
-      <div className={style.loading}></div>
+      <div className={classNames(style.loading, className)}></div>
     </div>
   );
 };

@@ -36,7 +36,6 @@ export const ProductQuantity = ({
         </Button>
 
         <Input
-          type="number"
           variant="secondary"
           min={0}
           className={style.quantityInput}

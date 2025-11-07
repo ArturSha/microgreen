@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useGetClientQuery, usePatchClientMutation, type Customer } from '@/entities/customer';
+import { usePatchClientMutation, type Customer } from '@/entities/customer';
 import { useDeleteOrderMutation } from '@/entities/order';
 import DeleteSvg from '@/shared/assets/icons/delete.svg?react';
 import { Button } from '@/shared/ui/Button';
@@ -19,22 +19,14 @@ export const DeleteOrder = ({ id, isDelivered, client, orderPrice }: DeleteOrder
   const [errorMessage, setErrorMessage] = useState('');
   const [deleteOrderTrigger, { isLoading: isDeleting }] = useDeleteOrderMutation();
   const [updateDebt, { isLoading: isUpdatingDebt }] = usePatchClientMutation();
-  const { data: fetchedClient, isLoading: isClientLoading } = useGetClientQuery(
-    { id: client.id },
-    { skip: !isModalOpen },
-  );
-  const isLoading = isDeleting || isUpdatingDebt || isClientLoading;
+  const isLoading = isDeleting || isUpdatingDebt;
 
   const onDelete = async () => {
     setErrorMessage('');
-    if (!fetchedClient) {
-      setErrorMessage('Не удалось загрузить информацию о клиенте');
-      return;
-    }
     try {
       await updateDebt({
         id: client.id,
-        body: { debt: fetchedClient.debt + orderPrice },
+        body: { $inc: { debt: orderPrice } },
       }).unwrap();
       try {
         await deleteOrderTrigger({ id }).unwrap();

@@ -1,5 +1,6 @@
 .tab {
     padding: 0.4rem 0.8rem;
+    width: 100%;
     border: .1rem solid var(--color-green-600);
     background-color: var(--color-brown-500);
     color: var(--color-green-600);

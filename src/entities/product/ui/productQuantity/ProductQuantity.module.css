@@ -12,6 +12,8 @@
     gap: .6rem;
 }
 
-.quantityInput {
+.quantityInput { 
+    padding: .2rem 0;
     max-width: 6rem;
+    text-align: center;
 }

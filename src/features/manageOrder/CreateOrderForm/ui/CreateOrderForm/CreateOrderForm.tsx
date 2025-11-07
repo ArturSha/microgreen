@@ -105,7 +105,6 @@ export const CreateOrderForm = () => {
         maxWidth="40rem"
         isOpen={isModalOpen}
         onClose={onCloseHandler}
-        closeButton
         panelClassName={style.panel}
         isLoading={isLoading}
         errorText={error}

@@ -42,11 +42,9 @@ export const CustomerSelect = <T extends FieldValues>({ name }: CustomerSelectPr
                   {`${selectedCustomer?.contactPerson ?? ''} ${selectedCustomer?.phone ?? ''}`}
                 </Text>
                 {selectedCustomer?.address && (
-                  <Text color="green">{'Адрес: ' + selectedCustomer?.address}</Text>
+                  <Text color="green">{selectedCustomer?.address}</Text>
                 )}
-                {selectedCustomer?.notes && (
-                  <Text color="green">{'Заметка: ' + selectedCustomer?.notes}</Text>
-                )}
+                {selectedCustomer?.notes && <Text color="green">{selectedCustomer?.notes}</Text>}
               </div>
             )}
             {error && <Text variant="error">{error.message}</Text>}

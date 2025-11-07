@@ -3,5 +3,9 @@
 }
 
 .btn {
-    width: 2.8rem;
+    width: 4rem;
+}
+
+.btn svg {
+    fill: var(--color-green-600);
 }

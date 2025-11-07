@@ -10,7 +10,7 @@ import style from './MainPage.module.css';
 const MainPage = () => {
   return (
     <section className={style.mainPage}>
-      <TabGroup>
+      <TabGroup style={{ width: '100%' }}>
         <TabList>
           <Tab>Заказы</Tab>
           <Tab>Заведения</Tab>

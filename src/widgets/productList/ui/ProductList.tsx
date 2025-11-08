@@ -1,14 +1,16 @@
-import { ProductCard, useGetProductsListQuery } from '@/entities/product';
+import { ProductCard, ProductSkeleton, useGetProductsListQuery } from '@/entities/product';
 import style from './ProductList.module.css';
 
 export const ProductList = () => {
-  const { data: productList } = useGetProductsListQuery({ sort: 'name' });
+  const { data: productList, isLoading } = useGetProductsListQuery({ sort: 'name' });
 
   return (
     <div className={style.productList}>
-      {productList?.map((product) => (
-        <ProductCard product={product} key={product.id} />
-      ))}
+      {isLoading ? (
+        <ProductSkeleton />
+      ) : (
+        productList?.map((product) => <ProductCard product={product} key={product.id} />)
+      )}
     </div>
   );
 };

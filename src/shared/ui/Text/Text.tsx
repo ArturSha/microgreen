@@ -4,7 +4,7 @@ import style from './Text.module.css';
 
 type Variant = 'error' | 'default';
 type Color = 'black' | 'green' | 'beige' | 'blue';
-type FontSize = 's' | 'l';
+type FontSize = 's' | 'm' | 'l';
 
 type TextProps<T extends ElementType> = {
   as?: T;
@@ -23,6 +23,7 @@ const styles: Record<Variant, string> = {
 
 const sizes: Record<FontSize, string> = {
   s: style.s,
+  m: style.m,
   l: style.l,
 };
 

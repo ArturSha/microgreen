@@ -23,7 +23,7 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
         <Text fontSize="l" color={isDelivered ? 'blue' : 'beige'} bold>
           {customer.name}
         </Text>
-        <Text bold color={isDelivered ? 'blue' : 'beige'}>
+        <Text bold fontSize="m" color={isDelivered ? 'blue' : 'beige'}>
           {new Date(deliveryDate).toLocaleDateString()}
         </Text>
       </div>

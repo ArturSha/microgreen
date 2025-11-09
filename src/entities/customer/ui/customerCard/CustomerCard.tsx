@@ -17,8 +17,12 @@ export const CustomerCard = ({ data, children }: CustomerProps) => {
     <Popover>
       <PopoverButton>
         <div className={style.customerCard}>
-          <Text as="span">{name}</Text>
-          <Text as="span">{debt + CURRENCY}</Text>
+          <Text bold as="span">
+            {name}
+          </Text>
+          <Text bold as="span">
+            {debt + CURRENCY}
+          </Text>
         </div>
       </PopoverButton>
       <PopoverPanel anchor="bottom">

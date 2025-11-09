@@ -1,9 +1,9 @@
 .customerCard {
     display: flex;
     justify-content: space-between;
-    padding: .6rem 1rem;
-    border-bottom: .1rem solid var(--color-gray-500);
-    background-color: var(--color-brown-400);
+    padding: .6rem 2.4rem;
+    border-bottom: .2rem solid var(--color-blue-300);
+    background-color: var(--color-beige-300);
 }
 
 .popoverContainer {

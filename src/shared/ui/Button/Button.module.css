@@ -28,6 +28,7 @@
 }
 
 .tertiary {
+  border-radius: 0;
   background: var(--color-blue-400);
   color: var(--color-beige-300);
   text-transform: uppercase;

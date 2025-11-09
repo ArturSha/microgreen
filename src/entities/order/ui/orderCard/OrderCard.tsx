@@ -16,7 +16,7 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
   return (
     <div className={style.orderCard}>
       <div
-        className={classNames(style.infoContainer, style.borderRadiusTop, {
+        className={classNames(style.infoContainer, style.header, {
           [style.delivered]: isDelivered,
         })}
       >
@@ -41,7 +41,10 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
       </div>
       <div>
         {products.map((product) => (
-          <div className={style.productContainer} key={product.id}>
+          <div
+            className={classNames(style.productContainer, { [style.deliveredBorder]: isDelivered })}
+            key={product.id}
+          >
             <Text bold color={isDelivered ? 'blue' : 'black'}>
               {product.name}
             </Text>

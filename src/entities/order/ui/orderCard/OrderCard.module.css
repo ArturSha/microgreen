@@ -1,30 +1,37 @@
 .orderCard {
     max-width: 50rem;
-    border-radius: 1.2rem;
+    overflow: hidden;
+    border-radius: 4rem;
     background-color: var(--color-blue-400);
 }
 
 .infoContainer {
     display: flex;
     justify-content: space-between;
-    padding: .4rem 1.8rem;
+    align-items: center;
+    padding: .2rem 2.4rem .4rem;
 }
 
-.borderRadiusTop {
-    border-top-left-radius: 1.2rem;
-    border-top-right-radius: 1.2rem;
+.header {
+    padding-top: 1.4rem;
+    padding-bottom: 0;
 }
 
 .productContainer {
     display: flex;
     justify-content: space-between;
-    padding: .6rem 1.8rem;
-    border-bottom: .2rem solid var(--color-brown-400);
+    padding: .6rem 2.4rem;
+    border-bottom: .2rem solid var(--color-blue-300);
     background-color: var(--color-beige-300);
 }
 
+.productContainer:last-child {
+    border-bottom: none;
+
+}
+
 .quantity {
-    min-width: 4rem;
+    min-width: 6rem;
     background-color: var(--color-blue-300);
     text-align: center;
 }
@@ -32,14 +39,12 @@
 .priceContainer {
     display: flex;
     justify-content: space-between;
-    padding: .6rem 1.8rem;
-    border-bottom-right-radius: 1.2rem;
-    border-bottom-left-radius: 1.2rem;
+    padding: .6rem 2.4rem 1rem;
     background-color: var(--color-blue-400);
 }
 
 .price {
-    min-width: 4rem;
+    min-width: 6rem;
     text-align: center;
 }
 
@@ -50,4 +55,8 @@
 
 .phoneLink {
     text-decoration: underline;
+}
+
+.deliveredBorder {
+    border-bottom-color: var(--color-blue-200);
 }

@@ -4,12 +4,16 @@
     --color-orange-500:#fd9250;
     --color-white-500:#fff;
     --color-black-500:#000;
+    --color-black-600:#29150c;
     --color-gray-300:#F6F6F3;
     --color-gray-400:#dadad8;
     --color-gray-500:#a0a0a0;
+    --color-beige-300:#fef6eb;
     --color-brown-400:#f2e4c4;
     --color-brown-500:#dcc99c;
-    --color-green-400:#63ce45a4;
+    --color-blue-200:#c8d8d8;
+    --color-blue-300:#b1bfc4;
+    --color-blue-400:#7696a5;
     --color-green-500:#62CE45;
     --color-green-600:#2a5b1e;
     --color-green-700:#050605;
@@ -27,7 +31,7 @@
     --font-size-m: 1.8rem;
     --font-size-l: 2rem;
     --font-size-xl: 3.2rem;
-    --font-family: sans-serif;
+    --font-family: system-ui, sans-serif;
 }
 
 body {

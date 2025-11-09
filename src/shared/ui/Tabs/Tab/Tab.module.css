@@ -1,15 +1,15 @@
 .tab {
     padding: 0.4rem 0.8rem;
     width: 100%;
-    border: .1rem solid var(--color-green-600);
-    background-color: var(--color-brown-500);
-    color: var(--color-green-600);
+    border: .1rem solid var(--color-blue-400);
+    background-color: var(--color-beige-300);
+    color: var(--color-black-600);
     font-weight: var(--font-weight-600);
     font-size: var(--font-size-m);
     cursor: pointer;
 }
 
 .tab[aria-selected="true"] {
-    background-color: var(--color-green-600);
-    color: var(--color-brown-500);
+    background-color: var(--color-blue-400);
+    color: var(--color-beige-300);
 }

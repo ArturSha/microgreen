@@ -3,7 +3,7 @@
 }
 
 .black {
-    color: var(--color-black-500);
+    color: var(--color-black-600);
 }
 
 .bold {
@@ -14,7 +14,23 @@
     color: var(--color-green-600);
 }
 
+.beige {
+    color: var(--color-beige-300);
+}
+
+.blue {
+    color: var(--color-blue-400);
+}
+
 .error {
     color: var(--color-red-500);
     font-size: var(--font-size-xxs);
+}
+
+.s {
+    font-size: var(--font-size-s);
+}
+
+.l {
+    font-size: var(--font-size-l);
 }

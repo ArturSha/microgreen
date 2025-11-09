@@ -4,6 +4,7 @@ import { CustomerSelect, usePatchClientMutation } from '@/entities/customer';
 import { usePostOrderMutation, type OrderPostBody, type OrderPostForm } from '@/entities/order';
 import {
   ProductQuantity,
+  ProductSkeleton,
   useGetProductsListQuery,
   useUpdateProductListMutation,
   type ProductUpdateForm,
@@ -19,7 +20,10 @@ import style from './CreateOrderForm.module.css';
 export const CreateOrderForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState('');
-  const { data: productList } = useGetProductsListQuery({}, { skip: !isModalOpen });
+  const { data: productList, isLoading: isProductListLoading } = useGetProductsListQuery(
+    {},
+    { skip: !isModalOpen },
+  );
   const [postOrder, { isLoading: isLoadingOrder }] = usePostOrderMutation();
   const [updateDebt, { isLoading: isUpdatingDebt }] = usePatchClientMutation();
   const [updateProduct] = useUpdateProductListMutation();
@@ -97,7 +101,7 @@ export const CreateOrderForm = () => {
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)} className={style.width}>
+      <Button variant="tertiary" onClick={() => setIsModalOpen(true)} className={style.width}>
         Добавить новый заказ
       </Button>
 
@@ -117,21 +121,25 @@ export const CreateOrderForm = () => {
             </div>
 
             <div className={style.productContainer}>
-              {productList?.map((product) => {
-                const item = products?.find((p) => p.name === product.name);
-                const quantity = item?.quantity || 0;
+              {isProductListLoading ? (
+                <ProductSkeleton />
+              ) : (
+                productList?.map((product) => {
+                  const item = products?.find((p) => p.name === product.name);
+                  const quantity = item?.quantity || 0;
 
-                return (
-                  <ProductQuantity
-                    key={product.id}
-                    product={product}
-                    quantity={quantity}
-                    products={products}
-                    setValue={setValue}
-                    onChange={handleQuantityChange}
-                  />
-                );
-              })}
+                  return (
+                    <ProductQuantity
+                      key={product.id}
+                      product={product}
+                      quantity={quantity}
+                      products={products}
+                      setValue={setValue}
+                      onChange={handleQuantityChange}
+                    />
+                  );
+                })
+              )}
             </div>
             <Text className={style.padding10}>{'Стоимость заказа: ' + totalPrice + CURRENCY}</Text>
 

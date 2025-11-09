@@ -17,6 +17,7 @@ export const ProductForm = () => {
     register,
     setError,
     clearErrors,
+    reset,
     formState: { errors },
   } = useForm<ProductPostForm>();
 
@@ -26,6 +27,7 @@ export const ProductForm = () => {
     clearErrors();
     try {
       await postProductTrigger(data).unwrap();
+      reset();
       setIsOpen(false);
     } catch (error) {
       const err = error as ValidationErrorResponse;
@@ -39,7 +41,7 @@ export const ProductForm = () => {
   };
   return (
     <>
-      <Button className={style.width} onClick={() => setIsOpen(true)}>
+      <Button variant="tertiary" className={style.width} onClick={() => setIsOpen(true)}>
         Добавить новую культуру
       </Button>
       <Dialog

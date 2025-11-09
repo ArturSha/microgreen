@@ -5,7 +5,7 @@ import EyeClosed from '../../assets/icons/EyeClosed.svg?react';
 import Eye from '../../assets/icons/EyeOpened.svg?react';
 import style from './Button.module.css';
 
-type Variant = 'primary' | 'secondary' | 'danger' | 'clear';
+type Variant = 'primary' | 'secondary' | 'tertiary' | 'danger' | 'clear';
 type IconType = 'eyeClosed' | 'eye';
 
 interface ButtonI extends ComponentProps<'button'> {
@@ -23,6 +23,7 @@ const icons: Record<IconType, ReactNode> = {
 const variantClasses: Record<Variant, string> = {
   primary: style.primary,
   secondary: style.secondary,
+  tertiary: style.tertiary,
   danger: style.danger,
   clear: style.clear,
 };

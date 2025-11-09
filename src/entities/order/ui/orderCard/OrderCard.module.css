@@ -1,13 +1,13 @@
 .orderCard {
     max-width: 50rem;
     border-radius: 1.2rem;
+    background-color: var(--color-blue-400);
 }
 
 .infoContainer {
     display: flex;
     justify-content: space-between;
-    padding: .4rem;
-    background-color: var(--color-brown-500);
+    padding: .4rem 1.8rem;
 }
 
 .borderRadiusTop {
@@ -15,31 +15,37 @@
     border-top-right-radius: 1.2rem;
 }
 
-.delivered {
-    background-color: var(--color-green-600);
-}
-
 .productContainer {
     display: flex;
     justify-content: space-between;
-    padding: .2rem .4rem;
-    border-bottom: .1rem solid var(--color-black-500);
-    background-color: var(--color-brown-400);
+    padding: .6rem 1.8rem;
+    border-bottom: .2rem solid var(--color-brown-400);
+    background-color: var(--color-beige-300);
+}
+
+.quantity {
+    min-width: 4rem;
+    background-color: var(--color-blue-300);
+    text-align: center;
+}
+
+.priceContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: .6rem 1.8rem;
+    border-bottom-right-radius: 1.2rem;
+    border-bottom-left-radius: 1.2rem;
+    background-color: var(--color-blue-400);
 }
 
 .price {
-    margin-right: 1rem;
-    padding: 0 .8rem;
-    background-color: var(--color-brown-500);
+    min-width: 4rem;
+    text-align: center;
 }
 
-.totalPrice {
-    display: flex;
-    justify-content: space-between;
-    padding: .2rem .4rem;
-    border-bottom-right-radius: 1.2rem;
-    border-bottom-left-radius: 1.2rem;
-    background-color: var(--color-brown-500);
+.delivered {
+    background-color: var(--color-blue-200);
+    color: var(--color-blue-400);
 }
 
 .phoneLink {

@@ -45,7 +45,7 @@ export const DeleteOrder = ({ id, isDelivered, client, orderPrice }: DeleteOrder
     <>
       <Button
         variant="clear"
-        className={classNames(style.btn, { [style.white]: isDelivered })}
+        className={classNames(style.btn, { [style.blue]: isDelivered })}
         onClick={() => setIsModalOpen(true)}
       >
         <DeleteSvg />

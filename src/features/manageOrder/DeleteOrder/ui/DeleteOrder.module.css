@@ -7,9 +7,9 @@
 }
 
 .btn svg {
-    fill: var(--color-green-600);
+    fill: var(--color-beige-300);
 }
 
-.btn.white svg {
-    fill: var(--color-white-500);
+.btn.blue svg {
+    fill: var(--color-blue-400);
 }

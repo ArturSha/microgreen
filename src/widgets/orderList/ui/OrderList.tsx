@@ -10,6 +10,8 @@ export const OrderList = () => {
   const { data, isLoading } = useGetOrderListQuery({
     sort: ['isDelivered', 'deliveryDate'],
     dir: [1, 1],
+    totals: true,
+    max: 20,
   });
 
   return (
@@ -17,7 +19,7 @@ export const OrderList = () => {
       {isLoading ? (
         <OrderSkeleton />
       ) : (
-        data?.map((order) => (
+        data?.data.map((order) => (
           <OrderCard
             key={order.id}
             data={order}

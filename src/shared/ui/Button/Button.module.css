@@ -1,6 +1,6 @@
 .button {
   position: relative;
-  padding: .8rem 1.6rem;
+  padding: 1rem 1.6rem;
   overflow: hidden;
   border: none;
   border-radius: .8rem;
@@ -18,13 +18,20 @@
 }
 
 .primary {
-  background: var(--color-green-600);
-  color: var(--color-brown-500);
+  background: var(--color-blue-400);
+  color: var(--color-beige-300);
 }
 
 .secondary {
   background: var(--color-gray-300);
   color: var(--color-black-500);
+}
+
+.tertiary {
+  background: var(--color-blue-400);
+  color: var(--color-beige-300);
+  text-transform: uppercase;
+  font-weight: var(--font-weight-700);
 }
 
 .danger {

@@ -82,7 +82,7 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
 
   return (
     <>
-      <Button className={style.width} onClick={handleDialogState}>
+      <Button variant="tertiary" className={style.width} onClick={handleDialogState}>
         {variant === 'post' ? 'Добавить новое заведение' : 'Редактировать заведение'}
       </Button>
       <Dialog

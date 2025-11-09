@@ -3,7 +3,8 @@ import { type ElementType, type ComponentProps, type ReactNode } from 'react';
 import style from './Text.module.css';
 
 type Variant = 'error' | 'default';
-type Color = 'black' | 'green';
+type Color = 'black' | 'green' | 'beige' | 'blue';
+type FontSize = 's' | 'l';
 
 type TextProps<T extends ElementType> = {
   as?: T;
@@ -12,6 +13,7 @@ type TextProps<T extends ElementType> = {
   variant?: Variant;
   bold?: boolean;
   color?: Color;
+  fontSize?: FontSize;
 } & Omit<ComponentProps<T>, 'as' | 'children' | 'className'>;
 
 const styles: Record<Variant, string> = {
@@ -19,9 +21,16 @@ const styles: Record<Variant, string> = {
   error: style.error,
 };
 
+const sizes: Record<FontSize, string> = {
+  s: style.s,
+  l: style.l,
+};
+
 const colors: Record<Color, string> = {
   black: style.black,
   green: style.green,
+  beige: style.beige,
+  blue: style.blue,
 };
 
 export const Text = <T extends ElementType = 'p'>({
@@ -31,6 +40,7 @@ export const Text = <T extends ElementType = 'p'>({
   bold,
   variant = 'default',
   color = 'black',
+  fontSize = 's',
   ...rest
 }: TextProps<T>) => {
   const Component = as || 'p';
@@ -41,6 +51,7 @@ export const Text = <T extends ElementType = 'p'>({
         style.text,
         styles[variant],
         colors[color],
+        sizes[fontSize],
         { [style.bold]: bold },
         className,
       )}

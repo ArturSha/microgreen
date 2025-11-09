@@ -57,7 +57,7 @@ export const MarkOrderAsPaidButton = ({
     <>
       <Button
         variant="clear"
-        className={classNames(style.btn, { [style.white]: isDelivered })}
+        className={classNames(style.btn, { [style.blue]: isDelivered })}
         onClick={() => setIsModalOpen(true)}
       >
         <PaidSvg />

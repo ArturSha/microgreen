@@ -38,12 +38,12 @@ export const CustomerSelect = <T extends FieldValues>({ name }: CustomerSelectPr
             />
             {selectedCustomer && (
               <div>
-                <Text color="green">
-                  {`${selectedCustomer?.contactPerson ?? ''} ${selectedCustomer?.phone ?? ''}`}
-                </Text>
                 {selectedCustomer?.address && (
                   <Text color="green">{selectedCustomer?.address}</Text>
                 )}
+                <Text color="green">
+                  {`${selectedCustomer?.contactPerson ?? ''} ${selectedCustomer?.phone ?? ''}`}
+                </Text>
                 {selectedCustomer?.notes && <Text color="green">{selectedCustomer?.notes}</Text>}
               </div>
             )}

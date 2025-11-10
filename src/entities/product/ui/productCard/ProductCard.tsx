@@ -61,7 +61,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     <div className={style.productCard}>
       <Popover className={style.popover}>
         <PopoverButton className={style.popoverBtn}>
-          <Text as="span">{name}</Text>
+          <Text bold as="span">
+            {name}
+          </Text>
         </PopoverButton>
         <PopoverPanel anchor="bottom">
           <Button
@@ -74,15 +76,18 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           </Button>
         </PopoverPanel>
       </Popover>
-      <Text className={style.cell} as="span">
+      <Text bold className={style.cell}>
         {price}
         {CURRENCY}
       </Text>
       <div>
         <div className={style.controlPanel}>
-          <Button variant="clear" onClick={() => setProductQuantity((prev) => prev - 1)}>
-            -
-          </Button>
+          <Button
+            variant="clear"
+            onClick={() => setProductQuantity((prev) => prev - 1)}
+            icon="minus"
+          />
+
           <Input
             className={style.input}
             variant="secondary"
@@ -90,9 +95,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             onChange={handleInput}
             isLoading={isUpdatingQuantity}
           />
-          <Button variant="clear" onClick={() => setProductQuantity((prev) => prev + 1)}>
-            +
-          </Button>
+          <Button
+            variant="clear"
+            onClick={() => setProductQuantity((prev) => prev + 1)}
+            icon="plus"
+          />
         </div>
         <Text variant="error">{errorMessage}</Text>
       </div>

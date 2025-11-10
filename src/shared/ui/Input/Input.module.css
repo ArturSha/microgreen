@@ -17,7 +17,8 @@
 .secondary {
     padding: .2rem 0 .2rem .4rem;
     border: none;
-    background-color: var(--color-brown-500);
+    background-color: var(--color-blue-300);
+    font-weight: var(--font-weight-700);
 }
 
 .marginRight {

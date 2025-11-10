@@ -1,3 +1,8 @@
+.dialog {
+    background-color: var(--color-blue-400);
+    color: var(--color-beige-300);
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -7,4 +12,15 @@
 
 .width {
     width: 100%;
+}
+
+.input {
+    padding: .6rem;
+    background-color: var(--color-beige-300);
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }

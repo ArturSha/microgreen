@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { CURRENCY } from '@/shared/const';
@@ -9,21 +10,20 @@ import style from './CustomerCard.module.css';
 interface CustomerProps {
   data: Customer;
   children: ReactNode;
+  className?: string;
 }
 
-export const CustomerCard = ({ data, children }: CustomerProps) => {
+export const CustomerCard = ({ data, className, children }: CustomerProps) => {
   const { name, debt, address, contactPerson, phone, notes } = data;
   return (
     <Popover>
-      <PopoverButton>
-        <div className={style.customerCard}>
-          <Text bold as="span">
-            {name}
-          </Text>
-          <Text bold as="span">
-            {debt + CURRENCY}
-          </Text>
-        </div>
+      <PopoverButton className={classNames(style.customerCard, className)}>
+        <Text bold as="span">
+          {name}
+        </Text>
+        <Text bold as="span">
+          {debt + CURRENCY}
+        </Text>
       </PopoverButton>
       <PopoverPanel anchor="bottom">
         <div className={style.popoverContainer}>

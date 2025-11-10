@@ -16,6 +16,7 @@
 
 .secondary {
     padding: .2rem 0 .2rem .4rem;
+    width: 100%;
     border: none;
     background-color: var(--color-blue-300);
     color: var(--color-black-600);

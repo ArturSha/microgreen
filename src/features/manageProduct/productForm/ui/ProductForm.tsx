@@ -23,12 +23,16 @@ export const ProductForm = () => {
 
   const [postProductTrigger, { isLoading }] = usePostProductMutation();
 
+  const handleClose = () => {
+    reset();
+    setIsOpen(false);
+  };
+
   const onSubmit = async (data: ProductPostForm) => {
     clearErrors();
     try {
       await postProductTrigger(data).unwrap();
-      reset();
-      setIsOpen(false);
+      handleClose();
     } catch (error) {
       const err = error as ValidationErrorResponse;
       if (err?.data?.name === 'ValidationError') {
@@ -45,35 +49,50 @@ export const ProductForm = () => {
         Добавить новую культуру
       </Button>
       <Dialog
-        onClose={() => setIsOpen(false)}
-        title="Данные о культуре"
+        onClose={handleClose}
         isOpen={isOpen}
-        closeButton
         maxWidth="40rem"
         isLoading={isLoading}
-        className={style.productForm}
+        panelClassName={style.dialog}
       >
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <Input
+            variant="secondary"
+            className={style.input}
             placeholder="Название культуры"
             {...register('name')}
             error={errors.name?.message}
           />
           <Input
+            variant="secondary"
+            className={style.input}
             type="number"
             placeholder="Стоимость"
             {...register('price')}
             error={errors.price?.message}
           />
           <Input
+            variant="secondary"
+            className={style.input}
             type="number"
             placeholder="Кол-во на складе"
             {...register('quantity')}
             error={errors.quantity?.message}
           />
-          <Button isLoading={isLoading} disabled={isLoading} type="submit">
-            Сохранить
-          </Button>
+          <div className={style.btnContainer}>
+            <Button isLoading={isLoading} disabled={isLoading} type="submit">
+              Сохранить
+            </Button>
+            <Button
+              isLoading={isLoading}
+              disabled={isLoading}
+              variant="danger"
+              type="submit"
+              onClick={handleClose}
+            >
+              Отменить
+            </Button>
+          </div>
         </form>
         {clientError && <Text variant="error">{clientError}</Text>}
       </Dialog>

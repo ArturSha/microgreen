@@ -10,16 +10,20 @@ export const CustomerList = () => {
       {isFetching ? (
         <CustomerSkeleton />
       ) : (
-        <ul>
-          {data?.map((customer) => (
-            <CustomerCard data={customer} key={customer.id}>
+        <div>
+          {data?.map((customer, index) => (
+            <CustomerCard
+              data={customer}
+              key={customer.id}
+              className={data.length === index + 1 ? style.border : undefined}
+            >
               <div className={style.wrapper}>
                 <CustomerEditorForm id={customer.id} client={customer} variant="put" />
                 <DeleteCustomer id={customer.id} name={customer.name} />
               </div>
             </CustomerCard>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

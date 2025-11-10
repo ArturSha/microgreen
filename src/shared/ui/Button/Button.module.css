@@ -18,8 +18,8 @@
 }
 
 .primary {
-  background: var(--color-blue-400);
-  color: var(--color-beige-300);
+  background: var(--color-green-500);
+  color: var(--color-white-500);
 }
 
 .secondary {

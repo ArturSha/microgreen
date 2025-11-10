@@ -1,0 +1,5 @@
+.calendar {
+    color: var(--color-beige-300);
+    font-weight: var(--font-weight-700);
+    font-size: var(--font-size-m);
+}

@@ -37,14 +37,18 @@ export const CustomerSelect = <T extends FieldValues>({ name }: CustomerSelectPr
               value={formattedOptions?.find((opt) => opt.value?.id === field.value?.id) || null}
             />
             {selectedCustomer && (
-              <div>
+              <div className={style.infoContainer}>
                 {selectedCustomer?.address && (
-                  <Text color="green">{selectedCustomer?.address}</Text>
+                  <Text color="beige">{selectedCustomer?.address}</Text>
                 )}
-                <Text color="green">
+                <Text color="beige">
                   {`${selectedCustomer?.contactPerson ?? ''} ${selectedCustomer?.phone ?? ''}`}
                 </Text>
-                {selectedCustomer?.notes && <Text color="green">{selectedCustomer?.notes}</Text>}
+                {selectedCustomer?.notes && (
+                  <Text fontSize="xxs" color="beige" className={style.note}>
+                    *{selectedCustomer?.notes}
+                  </Text>
+                )}
               </div>
             )}
             {error && <Text variant="error">{error.message}</Text>}

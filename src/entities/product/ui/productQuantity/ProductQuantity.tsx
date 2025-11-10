@@ -24,16 +24,15 @@ export const ProductQuantity = ({
 }: ProductQuantityProps) => {
   return (
     <div className={style.productRow}>
-      <Text>{product.name}</Text>
+      <Text bold>{product.name}</Text>
 
       <div className={style.quantityControls}>
         <Button
           type="button"
           variant="clear"
           onClick={() => onChange({ newValue: -1, product, products, setValue })}
-        >
-          −
-        </Button>
+          icon="minus"
+        />
 
         <Input
           variant="secondary"
@@ -56,9 +55,8 @@ export const ProductQuantity = ({
           type="button"
           variant="clear"
           onClick={() => onChange({ newValue: 1, product, products, setValue })}
-        >
-          +
-        </Button>
+          icon="plus"
+        />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 :root {
     /* color palette */
-    --color-red-500:#f00;
+    --color-red-500:#c20404;
     --color-orange-500:#fd9250;
     --color-white-500:#fff;
     --color-black-500:#000;
@@ -14,10 +14,10 @@
     --color-blue-200:#c8d8d8;
     --color-blue-300:#b1bfc4;
     --color-blue-400:#7696a5;
-    --color-green-500:#62CE45;
+    --color-green-500:#075a0b;
     --color-green-600:#2a5b1e;
     --color-green-700:#050605;
-    --color-blue-500:#146cef;
+    --color-blue-500:#146cef; 
 
     /* dimensions */
     --font-weight-400: 400;

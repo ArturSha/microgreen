@@ -27,6 +27,10 @@
     font-size: var(--font-size-xxs);
 }
 
+.xxs {
+    font-size: var(--font-size-xxs);
+}
+
 .s {
     font-size: var(--font-size-s);
 }

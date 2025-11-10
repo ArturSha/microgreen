@@ -7,6 +7,7 @@
 
 .wrapper {
     display: flex;
+    padding-right: 2.4rem;
 }
 
 .btnContainer {
@@ -18,13 +19,17 @@
 .panel {
     padding: 3rem 0;
     border: none;
-    background-color: var(--color-brown-500);
+    background-color: var(--color-blue-400);
 }
 
 .productContainer {
     background-color: var(--color-brown-400);
 }
 
+.productContainer > div:last-child {
+    border-bottom: none;
+}
+
 .padding10 {
-    padding: 0 1rem;
+    padding: 0 2rem;
 }

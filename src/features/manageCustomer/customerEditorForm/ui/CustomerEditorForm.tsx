@@ -34,7 +34,10 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
   const [putClientTrigger, { isLoading: isUpdatingCustomer }] = usePutClientMutation();
   const isLoading = isCreatingCustomer || isUpdatingCustomer;
 
-  const handleDialogState = () => setIsOpen((prev) => !prev);
+  const handleCloseDialog = () => {
+    reset();
+    setIsOpen(false);
+  };
   const {
     register,
     handleSubmit,
@@ -67,8 +70,7 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
       } else {
         await postClientTrigger(postData).unwrap();
       }
-      reset();
-      setIsOpen(false);
+      handleCloseDialog();
     } catch (error) {
       const err = error as ValidationErrorResponse;
       if (err?.data?.name === 'ValidationError') {
@@ -82,38 +84,61 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
 
   return (
     <>
-      <Button variant="tertiary" className={style.width} onClick={handleDialogState}>
+      <Button variant="tertiary" className={style.width} onClick={() => setIsOpen(true)}>
         {variant === 'post' ? 'Добавить новое заведение' : 'Редактировать заведение'}
       </Button>
       <Dialog
         maxWidth="40rem"
         isOpen={isOpen}
-        closeButton
-        onClose={handleDialogState}
-        title="Данные о заказчике"
+        onClose={handleCloseDialog}
+        panelClassName={style.dialog}
       >
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <Input
+            variant="secondary"
+            className={style.input}
             placeholder="Название заведения"
             {...register('name', { required: 'Это поле является обязательным' })}
             error={errors.name?.message}
           />
-          <Input placeholder="Адрес" {...register('address')} error={errors.address?.message} />
           <Input
+            variant="secondary"
+            className={style.input}
+            placeholder="Адрес"
+            {...register('address')}
+            error={errors.address?.message}
+          />
+          <Input
+            variant="secondary"
+            className={style.input}
             placeholder="Контактное лицо"
             {...register('contactPerson')}
             error={errors.contactPerson?.message}
           />
           <Input
+            variant="secondary"
+            className={style.input}
             placeholder="Номер телефона"
             type="tel"
             {...register('phone')}
             error={errors.phone?.message}
           />
-          <Input placeholder="Заметка" {...register('notes')} error={errors.notes?.message} />
-          <Button type="submit" isLoading={isLoading} disabled={isLoading}>
-            Сохранить
-          </Button>
+          <Input
+            variant="secondary"
+            className={style.input}
+            placeholder="Заметка"
+            {...register('notes')}
+            error={errors.notes?.message}
+          />
+
+          <div className={style.btnContainer}>
+            <Button type="submit" isLoading={isLoading} disabled={isLoading}>
+              Сохранить
+            </Button>
+            <Button variant="danger" onClick={handleCloseDialog}>
+              Отменить
+            </Button>
+          </div>
           {clientError && <Text variant="error">{clientError}</Text>}
         </form>
       </Dialog>

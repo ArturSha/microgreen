@@ -67,7 +67,7 @@ export const MarkOrderAsPaidButton = ({
         maxWidth="40rem"
         closeButton
         onClose={() => setIsModalOpen(false)}
-        title="Оплачено?"
+        title="Заказ оплачен?"
         isLoading={isLoading}
         className={style.btnContainer}
         errorText={errorMessage}

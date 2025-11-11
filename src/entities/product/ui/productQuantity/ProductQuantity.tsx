@@ -38,6 +38,7 @@ export const ProductQuantity = ({
         <Input
           variant="secondary"
           min={0}
+          inputMode="numeric"
           className={style.quantityInput}
           value={quantity}
           onChange={(e) => {

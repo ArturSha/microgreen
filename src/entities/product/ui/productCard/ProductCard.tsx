@@ -90,6 +90,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
           <Input
             className={style.input}
+            inputMode="numeric"
             variant="secondary"
             value={productQuantity}
             onChange={handleInput}

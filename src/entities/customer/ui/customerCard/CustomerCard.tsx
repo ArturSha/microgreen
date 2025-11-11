@@ -25,23 +25,27 @@ export const CustomerCard = ({ data, className, children }: CustomerProps) => {
           {debt + CURRENCY}
         </Text>
       </PopoverButton>
-      <PopoverPanel anchor="bottom">
-        <div className={style.popoverContainer}>
-          <div>
-            <Text bold>{name}</Text>
-            {address && <Text>{address}</Text>}
-            {contactPerson && <Text>{contactPerson}</Text>}
-            {phone && (
-              <Text>
-                <Link className={style.phoneLink} to={`tel:${phone}`}>
-                  {phone}
-                </Link>
-              </Text>
-            )}
-            {notes && <Text>{notes}</Text>}
-          </div>
-          {children}
+      <PopoverPanel anchor="bottom" className={style.popoverContainer}>
+        <div className={style.infoContainer}>
+          <Text fontSize="m" bold>
+            {name}
+          </Text>
+          {address && <Text>{address}</Text>}
+          {contactPerson && <Text>{contactPerson}</Text>}
+          {phone && (
+            <Text>
+              <Link className={style.phoneLink} to={`tel:${phone}`}>
+                {phone}
+              </Link>
+            </Text>
+          )}
+          {notes && (
+            <Text fontSize="xxs" className={style.mt4}>
+              *{notes}
+            </Text>
+          )}
         </div>
+        {children}
       </PopoverPanel>
     </Popover>
   );

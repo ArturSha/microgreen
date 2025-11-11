@@ -17,7 +17,8 @@ export const DeleteCustomer = ({ id, name }: DeleteCustomerProps) => {
     try {
       await deleteTrigger({ id }).unwrap();
       setIsModalOpen(false);
-    } catch {
+    } catch (error) {
+      console.error(error);
       setIsError('Упс... Что-от пошло не так');
     }
   };
@@ -33,7 +34,7 @@ export const DeleteCustomer = ({ id, name }: DeleteCustomerProps) => {
       </Button>
       <Dialog
         isOpen={isModalOpen}
-        title={`Удалить заведение: ${name}`}
+        title={`Удалить заведение "${name}"`}
         onClose={() => setIsModalOpen(false)}
         closeButton
         maxWidth="40rem"
@@ -41,11 +42,11 @@ export const DeleteCustomer = ({ id, name }: DeleteCustomerProps) => {
         isLoading={isLoading}
         errorText={isError}
       >
-        <Button variant="danger" onClick={submit} isLoading={isLoading} disabled={isLoading}>
-          Удалить
+        <Button onClick={submit} isLoading={isLoading} disabled={isLoading}>
+          Да
         </Button>
-        <Button variant="secondary" onClick={() => setIsModalOpen(false)} disabled={isLoading}>
-          Отмена
+        <Button variant="danger" onClick={() => setIsModalOpen(false)} disabled={isLoading}>
+          Нет
         </Button>
       </Dialog>
     </>

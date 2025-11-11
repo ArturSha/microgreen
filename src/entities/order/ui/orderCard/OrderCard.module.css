@@ -60,3 +60,7 @@
 .deliveredBorder {
     border-bottom-color: var(--color-blue-200);
 }
+
+.mt4 {
+    margin-top: .4rem;
+}

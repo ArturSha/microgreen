@@ -36,6 +36,11 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
               {customer.phone}
             </Link>
           </Text>
+          {customer.notes && (
+            <Text fontSize="xxs" color={isDelivered ? 'blue' : 'beige'} className={style.mt4}>
+              *{customer.notes}
+            </Text>
+          )}
         </div>
         {children}
       </div>

@@ -32,6 +32,7 @@ export const ProductQuantity = ({
           variant="clear"
           onClick={() => onChange({ newValue: -1, product, products, setValue })}
           icon="minus"
+          className={style.button}
         />
 
         <Input
@@ -56,6 +57,7 @@ export const ProductQuantity = ({
           variant="clear"
           onClick={() => onChange({ newValue: 1, product, products, setValue })}
           icon="plus"
+          className={style.button}
         />
       </div>
     </div>

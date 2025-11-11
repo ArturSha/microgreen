@@ -60,10 +60,12 @@ export const DeleteOrder = ({ id, isDelivered, client, orderPrice }: DeleteOrder
         isLoading={isLoading}
         errorText={errorMessage}
       >
-        <Button isLoading={isLoading} disabled={isLoading} onClick={onDelete} variant="danger">
+        <Button isLoading={isLoading} disabled={isLoading} onClick={onDelete}>
           Да
         </Button>
-        <Button disabled={isLoading}>Нет</Button>
+        <Button disabled={isLoading} variant="danger" onClick={() => setIsModalOpen(false)}>
+          Нет
+        </Button>
       </Dialog>
     </>
   );

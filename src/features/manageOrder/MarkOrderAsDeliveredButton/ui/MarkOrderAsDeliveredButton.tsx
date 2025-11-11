@@ -49,7 +49,7 @@ export const MarkOrderAsDeliveredButton = ({ id, isPaid }: MarkOrderAsDeliveredB
         <Button onClick={handleMarkAsDelivered} isLoading={isLoading} disabled={isLoading}>
           Да
         </Button>
-        <Button disabled={isLoading} variant="secondary" onClick={() => setIsModalOpen(false)}>
+        <Button disabled={isLoading} variant="danger" onClick={() => setIsModalOpen(false)}>
           Нет
         </Button>
       </Dialog>

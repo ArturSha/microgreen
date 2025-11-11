@@ -75,7 +75,7 @@ export const MarkOrderAsPaidButton = ({
         <Button isLoading={isLoading} disabled={isLoading} onClick={handleMarkAsPaid}>
           Да
         </Button>
-        <Button variant="secondary" disabled={isLoading}>
+        <Button variant="danger" disabled={isLoading} onClick={() => setIsModalOpen(false)}>
           Нет
         </Button>
       </Dialog>

@@ -2,7 +2,7 @@
 //@ts-nocheck
 
 const baseColor = '#7696a5';
-const controlColor = '#b1bfc4';
+const controlColor = '#a5b4ba';
 const optionsColorFocused = '#c8d8d8';
 const beigeColor = '#efe7df';
 
@@ -62,5 +62,6 @@ export const selectStyle = {
   dropdownIndicator: (baseStyles) => ({
     ...baseStyles,
     padding: window.innerWidth < 768 ? '2px' : '4px',
+    color: beigeColor,
   }),
 };

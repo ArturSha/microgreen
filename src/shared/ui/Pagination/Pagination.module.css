@@ -1,0 +1,30 @@
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: .6rem;
+  margin-top: 1.6rem;
+}
+
+.navButton,
+.pageButton {
+  padding: .6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: .4rem;
+  font-size: var(--font-size-s);
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+
+.navButton:disabled,
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.navButton:hover:not(:disabled),
+.pageButton:hover:not(:disabled) {
+  background: #f2f2f2;
+}

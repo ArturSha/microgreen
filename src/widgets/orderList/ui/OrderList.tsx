@@ -1,22 +1,42 @@
+import { useState } from 'react';
 import {
   DeleteOrder,
   MarkOrderAsDeliveredButton,
   MarkOrderAsPaidButton,
 } from '@/features/manageOrder';
 import { OrderCard, OrderSkeleton, useGetOrderListQuery } from '@/entities/order';
+import type { PaginationMeta } from '@/shared/api';
+import { Pagination } from '@/shared/ui/Pagination';
 import style from './OrderList.module.css';
 
+const limit = 50;
+
 export const OrderList = () => {
-  const { data, isLoading } = useGetOrderListQuery({
+  const [page, setPage] = useState(1);
+
+  const skip = (page - 1) * limit;
+  const { data, isFetching } = useGetOrderListQuery({
     sort: ['isDelivered', 'deliveryDate'],
     dir: [1, 1],
     totals: true,
-    max: 20,
+    max: limit,
+    skip,
   });
+
+  const pagination: PaginationMeta = data?.totals ?? {
+    count: 0,
+    total: 0,
+    skip,
+    max: limit,
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
   return (
     <div className={style.orderList}>
-      {isLoading ? (
+      {isFetching ? (
         <OrderSkeleton />
       ) : (
         data?.data.map((order) => (
@@ -49,6 +69,7 @@ export const OrderList = () => {
           />
         ))
       )}
+      <Pagination {...pagination} onPageChange={handlePageChange} />
     </div>
   );
 };

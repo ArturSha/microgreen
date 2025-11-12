@@ -1,23 +1,18 @@
 :root {
     /* color palette */
     --color-red-500:#c20404;
-    --color-orange-500:#fd9250;
     --color-white-500:#fff;
-    --color-black-500:#000;
     --color-black-600:#29150c;
     --color-gray-300:#F6F6F3;
     --color-gray-400:#dadad8;
     --color-gray-500:#a0a0a0;
     --color-beige-300:#efe7df;
-    --color-brown-400:#f2e4c4;
-    --color-brown-500:#dcc99c;
     --color-blue-200:#c8d8d8;
     --color-blue-300:#b1bfc4;
     --color-blue-400:#7696a5;
     --color-green-500:#075a0b;
     --color-green-600:#2a5b1e;
     --color-green-700:#050605;
-    --color-blue-500:#146cef; 
 
     /* dimensions */
     --font-weight-400: 400;

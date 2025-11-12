@@ -1,2 +1,2 @@
-export const getRouteLogin = () => '/microgreen';
-export const getRouteMain = () => '/microgreen/main';
+export const getRouteLogin = () => '/';
+export const getRouteMain = () => '/main';

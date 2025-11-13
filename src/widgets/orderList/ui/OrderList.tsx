@@ -9,7 +9,7 @@ import type { PaginationMeta } from '@/shared/api';
 import { Pagination } from '@/shared/ui/Pagination';
 import style from './OrderList.module.css';
 
-const limit = 2;
+const limit = 50;
 
 export const OrderList = () => {
   const [page, setPage] = useState(1);

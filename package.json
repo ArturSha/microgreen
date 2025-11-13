@@ -2,11 +2,10 @@
   "name": "microgreen",
   "private": true,
   "homepage": "https://ArturSha.github.io/microgreen/",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "type": "module",
   "scripts": {
     "start": "vite --open",
-    "start:dev": "npx cross-env VITE_IS_LOCAL=true vite --open",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "build": "tsc -b && vite build",

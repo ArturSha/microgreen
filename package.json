@@ -2,7 +2,7 @@
   "name": "microgreen",
   "private": true,
   "homepage": "https://ArturSha.github.io/microgreen/",
-  "version": "0.0.12",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "start": "vite --open",

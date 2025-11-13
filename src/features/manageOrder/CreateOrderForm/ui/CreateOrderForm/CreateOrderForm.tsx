@@ -21,7 +21,7 @@ export const CreateOrderForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState('');
   const { data: productList, isLoading: isProductListLoading } = useGetProductsListQuery(
-    {},
+    { sort: 'name' },
     { skip: !isModalOpen },
   );
 

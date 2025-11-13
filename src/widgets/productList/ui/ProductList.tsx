@@ -2,11 +2,11 @@ import { ProductCard, ProductSkeleton, useGetProductsListQuery } from '@/entitie
 import style from './ProductList.module.css';
 
 export const ProductList = () => {
-  const { data: productList, isFetching } = useGetProductsListQuery({ sort: 'name' });
+  const { data: productList, isLoading } = useGetProductsListQuery({ sort: 'name' });
 
   return (
     <div className={style.productList}>
-      {isFetching ? (
+      {isLoading ? (
         <ProductSkeleton />
       ) : (
         productList?.map((product) => <ProductCard product={product} key={product.id} />)

@@ -24,6 +24,7 @@ export const CreateOrderForm = () => {
     {},
     { skip: !isModalOpen },
   );
+
   const [postOrder, { isLoading: isLoadingOrder }] = usePostOrderMutation();
   const [updateDebt, { isLoading: isUpdatingDebt }] = usePatchClientMutation();
   const [updateProduct] = useUpdateProductListMutation();

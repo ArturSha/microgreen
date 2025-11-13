@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { usePatchClientMutation, type Customer } from '@/entities/customer';
-import { useDeleteOrderMutation } from '@/entities/order';
+import { useDeleteOrderMutation, useUpdateOrderListCache } from '@/entities/order';
 import DeleteSvg from '@/shared/assets/icons/delete.svg?react';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
@@ -17,6 +17,8 @@ interface DeleteOrderProps {
 export const DeleteOrder = ({ id, isDelivered, client, orderPrice }: DeleteOrderProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { removeOrderFromCache } = useUpdateOrderListCache();
+
   const [deleteOrderTrigger, { isLoading: isDeleting }] = useDeleteOrderMutation();
   const [updateDebt, { isLoading: isUpdatingDebt }] = usePatchClientMutation();
   const isLoading = isDeleting || isUpdatingDebt;
@@ -30,6 +32,7 @@ export const DeleteOrder = ({ id, isDelivered, client, orderPrice }: DeleteOrder
       }).unwrap();
       try {
         await deleteOrderTrigger({ id }).unwrap();
+        removeOrderFromCache(id);
         setIsModalOpen(false);
       } catch (error) {
         console.log(error);

@@ -1,7 +1,11 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { usePatchClientMutation, type Customer } from '@/entities/customer';
-import { useDeleteOrderMutation, usePatchOrderMutation } from '@/entities/order';
+import {
+  useDeleteOrderMutation,
+  usePatchOrderMutation,
+  useUpdateOrderListCache,
+} from '@/entities/order';
 import PaidSvg from '@/shared/assets/icons/paid.svg?react';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
@@ -23,6 +27,8 @@ export const MarkOrderAsPaidButton = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const { updateOrderInCache, removeOrderFromCache } = useUpdateOrderListCache();
+
   const [patchOrder, { isLoading: isUpdatingOrderLoading }] = usePatchOrderMutation();
   const [patchClientDebt, { isLoading: isUpdatingClientDebtLoading }] = usePatchClientMutation();
   const [deleteOrder, { isLoading: isDeletingOrder }] = useDeleteOrderMutation();
@@ -39,8 +45,10 @@ export const MarkOrderAsPaidButton = ({
       try {
         if (!isDelivered) {
           await patchOrder({ id, isPaid: true }).unwrap();
+          updateOrderInCache(id, { isPaid: true });
         } else {
           await deleteOrder({ id }).unwrap();
+          removeOrderFromCache(id);
         }
         setIsModalOpen(false);
       } catch (error) {

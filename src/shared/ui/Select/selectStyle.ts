@@ -23,7 +23,6 @@ export const selectStyle = {
     ...baseStyles,
     paddingTop: window.innerWidth < 768 ? '0' : '0',
     paddingBottom: window.innerWidth < 768 ? '0' : '0',
-    fontSize: window.innerWidth < 768 ? '1.4rem' : '1.6rem',
     color: beigeColor,
     fontSize: '20px',
   }),

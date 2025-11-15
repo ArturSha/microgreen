@@ -60,6 +60,7 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
       ...(data.address ? { address: data.address } : {}),
       ...(data.contactPerson ? { contactPerson: data.contactPerson } : {}),
       ...(data.phone ? { phone: data.phone } : {}),
+      ...(data.clientCode ? { clientCode: data.clientCode } : {}),
       ...(data.notes ? { notes: data.notes } : {}),
       debt: variant === 'put' ? client.debt : 0,
     };
@@ -125,6 +126,14 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
             placeholder="Номер телефона"
             type="tel"
             {...register('phone')}
+            error={errors.phone?.message}
+          />
+          <Input
+            variant="secondary"
+            className={style.input}
+            placeholder="Код компании"
+            inputMode="numeric"
+            {...register('clientCode')}
             error={errors.phone?.message}
           />
           <Input

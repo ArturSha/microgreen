@@ -3,6 +3,7 @@ import type { MongoUpdateOperators } from '@/shared/api';
 export interface Customer {
   address?: string;
   contactPerson?: string;
+  clientCode?: string;
   debt: number;
   name: string;
   notes?: string;
@@ -18,6 +19,7 @@ export type CustomerPatch = Partial<CustomerPostForm> | MongoUpdateOperators<Cus
 export interface CustomerResponse {
   address?: string;
   contactPerson?: string;
+  clientCode?: string;
   debt: number;
   name: string;
   notes?: string;

@@ -35,7 +35,7 @@ export const DeleteOrder = ({ id, isDelivered, client, orderPrice }: DeleteOrder
         removeOrderFromCache(id);
         setIsModalOpen(false);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setErrorMessage('Не удалось удалить заказ');
       }
     } catch (error) {

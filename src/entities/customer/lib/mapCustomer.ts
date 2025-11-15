@@ -5,6 +5,7 @@ export const mapCustomer = (data: CustomerResponse): Customer => ({
   name: data.name,
   address: data.address,
   contactPerson: data.contactPerson,
+  clientCode: data.clientCode,
   phone: data.phone,
   debt: data.debt,
   notes: data.notes,

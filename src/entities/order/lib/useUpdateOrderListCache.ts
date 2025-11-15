@@ -41,10 +41,8 @@ export const useUpdateOrderListCache = () => {
 
   const removeOrderFromCache = (id: string) => {
     if (!queryArg) {
-      console.log(queryArg);
       return;
     }
-    console.log('disp');
 
     dispatch(
       orderApi.util.updateQueryData('getOrderList', queryArg, (draft) => {

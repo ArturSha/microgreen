@@ -14,7 +14,8 @@ interface CustomerProps {
 }
 
 export const CustomerCard = ({ data, className, children }: CustomerProps) => {
-  const { name, debt, address, contactPerson, phone, notes } = data;
+  const { name, debt, address, contactPerson, phone, notes, clientCode } = data;
+
   return (
     <Popover>
       <PopoverButton className={classNames(style.customerCard, className)}>
@@ -39,6 +40,7 @@ export const CustomerCard = ({ data, className, children }: CustomerProps) => {
               </Link>
             </Text>
           )}
+          {clientCode && <Text className={style.mt4}>{clientCode}</Text>}
           {notes && (
             <Text fontSize="xxs" className={style.mt4}>
               *{notes}

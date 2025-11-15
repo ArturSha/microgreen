@@ -17,7 +17,7 @@ export const OrderList = () => {
   const skip = (page - 1) * limit;
   const { data, isFetching } = useGetOrderListQuery({
     sort: ['isDelivered', 'deliveryDate'],
-    dir: [1, 1],
+    dir: [1, -1],
     totals: true,
     max: limit,
     skip,

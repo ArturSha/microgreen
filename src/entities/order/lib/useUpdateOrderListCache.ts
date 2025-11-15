@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/shared/model';
+import { useAppDispatch, useAppSelector } from '@/shared/model/hooks';
 import { orderApi } from '../api/orderApi';
 import type { Order } from '../model/types/order';
 

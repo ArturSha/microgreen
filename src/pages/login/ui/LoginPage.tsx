@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { setIsLoggedIn, useLazyGetUserQuery } from '@/entities/auth';
 import { getRouteMain } from '@/shared/const/router';
 import { LocalStorageHelper } from '@/shared/helpers';
-import { useAppDispatch } from '@/shared/model';
+import { useAppDispatch } from '@/shared/model/hooks';
 import { Button } from '@/shared/ui/Button';
 import { Checkbox } from '@/shared/ui/Checkbox';
 import { Input } from '@/shared/ui/Input';

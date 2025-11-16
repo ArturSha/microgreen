@@ -15,6 +15,7 @@ const MainPage = () => {
           <Tab>Заказы</Tab>
           <Tab>Заведения</Tab>
           <Tab>Наличие</Tab>
+          <Tab>Архив</Tab>
         </TabList>
         <TabPanels>
           <TabPanel className={style.tabPanel}>
@@ -29,6 +30,7 @@ const MainPage = () => {
             <ProductForm />
             <ProductList />
           </TabPanel>
+          <TabPanel className={style.tabPanel}></TabPanel>
         </TabPanels>
       </TabGroup>
     </section>

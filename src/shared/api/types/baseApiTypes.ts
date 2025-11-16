@@ -1,4 +1,5 @@
 export interface BaseGetParams {
+  q?: string;
   metafields?: boolean;
   sort?: string | string[];
   dir?: number[];

@@ -23,7 +23,7 @@ export const MarkOrderAsPaidButton = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { updateOrderInCache } = useUpdateOrderListCache();
+  const { updateOrderInCache, removeOrderFromCache } = useUpdateOrderListCache();
 
   const [patchOrder, { isLoading: isUpdatingOrderLoading }] = usePatchOrderMutation();
   const [patchClientDebt, { isLoading: isUpdatingClientDebtLoading }] = usePatchClientMutation();
@@ -40,6 +40,9 @@ export const MarkOrderAsPaidButton = ({
       try {
         await patchOrder({ id, isPaid: true }).unwrap();
         updateOrderInCache(id, { isPaid: true });
+        if (isDelivered) {
+          removeOrderFromCache(id);
+        }
         setIsModalOpen(false);
       } catch (error) {
         setErrorMessage('Не удалось поменять статус заказа');

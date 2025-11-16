@@ -7,12 +7,13 @@ import style from './MarkOrderAsDeliveredButton.module.css';
 
 interface MarkOrderAsDeliveredButtonProps {
   id: string;
+  isPaid: boolean;
 }
 
-export const MarkOrderAsDeliveredButton = ({ id }: MarkOrderAsDeliveredButtonProps) => {
+export const MarkOrderAsDeliveredButton = ({ id, isPaid }: MarkOrderAsDeliveredButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState('');
-  const { updateOrderInCache } = useUpdateOrderListCache();
+  const { updateOrderInCache, removeOrderFromCache } = useUpdateOrderListCache();
   const [updateOrder, { isLoading }] = usePatchOrderMutation();
 
   const handleMarkAsDelivered = async () => {
@@ -20,6 +21,9 @@ export const MarkOrderAsDeliveredButton = ({ id }: MarkOrderAsDeliveredButtonPro
     try {
       await updateOrder({ id, isDelivered: true }).unwrap();
       updateOrderInCache(id, { isDelivered: true });
+      if (isPaid) {
+        removeOrderFromCache(id);
+      }
       setIsModalOpen(false);
     } catch (error) {
       console.error(error);

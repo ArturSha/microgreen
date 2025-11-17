@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { CustomerSelect, usePatchClientMutation } from '@/entities/customer';
+import { CustomerSelectRHF, usePatchClientMutation } from '@/entities/customer';
 import { usePostOrderMutation, type OrderPostBody, type OrderPostForm } from '@/entities/order';
 import {
   ProductQuantity,
@@ -117,7 +117,7 @@ export const CreateOrderForm = () => {
         <FormProvider {...methods}>
           <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={style.wrapper}>
-              <CustomerSelect name="customer" />
+              <CustomerSelectRHF name="customer" />
               <DatePickerRHF />
             </div>
 

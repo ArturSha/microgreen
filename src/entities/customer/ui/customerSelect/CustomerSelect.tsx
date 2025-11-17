@@ -1,60 +1,26 @@
-import { Controller, useFormContext, type FieldValues, type Path } from 'react-hook-form';
 import { Select, selectStyle } from '@/shared/ui/Select';
-import { Text } from '@/shared/ui/Text';
 import { useGetClientListQuery } from '../../api/customersApi';
 import type { Customer } from '../../model/types/customer';
-import style from './CustomerSelect.module.css';
 
-interface CustomerSelectProps<T extends FieldValues> {
-  name: Path<T>;
+interface CustomerSelectProps {
+  setCustomer: (customer: Customer | null) => void;
 }
 
-export const CustomerSelect = <T extends FieldValues>({ name }: CustomerSelectProps<T>) => {
-  const { control } = useFormContext<T>();
+export const CustomerSelect = ({ setCustomer }: CustomerSelectProps) => {
   const { data: customerList, isLoading } = useGetClientListQuery({ sort: 'name' });
 
   const formattedOptions = customerList?.map((customer) => ({
     label: customer.name,
     value: customer,
   }));
-
   return (
-    <Controller
-      name={name}
-      control={control}
-      rules={{ required: { message: 'Это поле является обязательным', value: true } }}
-      render={({ field, fieldState: { error } }) => {
-        const selectedCustomer = field.value as Customer;
-        return (
-          <div className={style.container}>
-            <Select
-              {...field}
-              styles={selectStyle}
-              isLoading={isLoading}
-              options={formattedOptions}
-              placeholder="Выбрать заведение"
-              onChange={(option) => field.onChange(option?.value)}
-              value={formattedOptions?.find((opt) => opt.value?.id === field.value?.id) || null}
-            />
-            {selectedCustomer && (
-              <div className={style.infoContainer}>
-                {selectedCustomer?.address && (
-                  <Text color="beige">{selectedCustomer?.address}</Text>
-                )}
-                <Text color="beige">
-                  {`${selectedCustomer?.contactPerson ?? ''} ${selectedCustomer?.phone ?? ''}`}
-                </Text>
-                {selectedCustomer?.notes && (
-                  <Text fontSize="xxs" color="beige" className={style.note}>
-                    *{selectedCustomer?.notes}
-                  </Text>
-                )}
-              </div>
-            )}
-            {error && <Text variant="error">{error.message}</Text>}
-          </div>
-        );
-      }}
-    />
+    <Select
+      isLoading={isLoading}
+      styles={selectStyle}
+      placeholder="Выбрать заведение"
+      options={formattedOptions}
+      onChange={(option) => setCustomer(option?.value ?? null)}
+      isClearable
+    ></Select>
   );
 };

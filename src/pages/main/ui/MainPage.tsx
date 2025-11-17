@@ -1,5 +1,6 @@
 import { CustomerList } from '@/widgets/customerList';
 import { OrderList } from '@/widgets/orderList';
+import { OrderListArchive } from '@/widgets/orderListArchive';
 import { ProductList } from '@/widgets/productList';
 import { CustomerEditorForm } from '@/features/manageCustomer';
 import { CreateOrderForm } from '@/features/manageOrder';
@@ -30,7 +31,9 @@ const MainPage = () => {
             <ProductForm />
             <ProductList />
           </TabPanel>
-          <TabPanel className={style.tabPanel}></TabPanel>
+          <TabPanel className={style.tabPanel}>
+            <OrderListArchive />
+          </TabPanel>
         </TabPanels>
       </TabGroup>
     </section>

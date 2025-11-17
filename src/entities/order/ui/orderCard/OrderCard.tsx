@@ -8,10 +8,11 @@ import style from './OrderCard.module.css';
 
 interface OrderCardProps {
   data: Order;
+  short?: boolean;
   children: ReactNode;
 }
 
-export const OrderCard = ({ data, children }: OrderCardProps) => {
+export const OrderCard = ({ data, short = false, children }: OrderCardProps) => {
   const { customer, deliveryDate, isDelivered, products, totalPrice } = data;
   return (
     <div className={style.orderCard}>
@@ -28,20 +29,22 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
         </Text>
       </div>
       <div className={classNames(style.infoContainer, { [style.delivered]: isDelivered })}>
-        <div>
-          <Text color={isDelivered ? 'blue' : 'beige'}> {customer.address}</Text>
-          <Text color={isDelivered ? 'blue' : 'beige'}>
-            {customer.contactPerson ? customer.contactPerson + ': ' : ''}
-            <Link className={style.phoneLink} to={`tel:${customer.phone}`}>
-              {customer.phone}
-            </Link>
-          </Text>
-          {customer.notes && (
-            <Text fontSize="xxs" color={isDelivered ? 'blue' : 'beige'} className={style.mt4}>
-              *{customer.notes}
+        {!short && (
+          <div>
+            <Text color={isDelivered ? 'blue' : 'beige'}> {customer.address}</Text>
+            <Text color={isDelivered ? 'blue' : 'beige'}>
+              {customer.contactPerson ? customer.contactPerson + ': ' : ''}
+              <Link className={style.phoneLink} to={`tel:${customer.phone}`}>
+                {customer.phone}
+              </Link>
             </Text>
-          )}
-        </div>
+            {customer.notes && (
+              <Text fontSize="xxs" color={isDelivered ? 'blue' : 'beige'} className={style.mt4}>
+                *{customer.notes}
+              </Text>
+            )}
+          </div>
+        )}
         {children}
       </div>
       <div>

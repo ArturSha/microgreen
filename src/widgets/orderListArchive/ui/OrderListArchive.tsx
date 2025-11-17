@@ -40,8 +40,8 @@ export const OrderListArchive = () => {
         <OrderSkeleton />
       ) : (
         data?.data.map((order) => (
-          <OrderCard key={order.id} data={order}>
-            ''
+          <OrderCard key={order.id} data={order} short>
+            {null}
           </OrderCard>
         ))
       )}

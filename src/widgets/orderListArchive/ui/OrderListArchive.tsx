@@ -4,15 +4,17 @@ import { type Customer } from '@/entities/customer';
 import {
   OrderCard,
   OrderSkeleton,
-  useBulkDeleteOrdersMutation,
+  // useBulkDeleteOrdersMutation,
   useGetOrderListQuery,
 } from '@/entities/order';
 import type { PaginationMeta } from '@/shared/api';
+import { formatDate } from '@/shared/lib/helpers';
 import { Button } from '@/shared/ui/Button';
 import { Pagination } from '@/shared/ui/Pagination';
+import { Text } from '@/shared/ui/Text';
 import style from './OrderListArchive.module.css';
 
-const limit = 50;
+const limit = 100;
 
 export const OrderListArchive = () => {
   const [page, setPage] = useState(1);
@@ -21,9 +23,10 @@ export const OrderListArchive = () => {
   const [dateEnd, setDateEnd] = useState<Date | null>(null);
   const [showPaid, setShowPaid] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
 
   const skip = (page - 1) * limit;
-  const { data, isFetching } = useGetOrderListQuery(
+  const { data: orderList, isFetching } = useGetOrderListQuery(
     {
       q: JSON.stringify({
         $and: [
@@ -46,15 +49,15 @@ export const OrderListArchive = () => {
     },
     { skip: !dateStart },
   );
-  const [deleteOrders] = useBulkDeleteOrdersMutation();
+  // const [deleteOrders] = useBulkDeleteOrdersMutation();
 
-  const handleDelete = async () => {
-    try {
-      await deleteOrders(selectedIds).unwrap();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleDelete = async () => {
+  //   try {
+  //     await deleteOrders(selectedIds).unwrap();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const toggleSelect = (id: string) => {
     setSelectedIds((prev) =>
@@ -66,7 +69,7 @@ export const OrderListArchive = () => {
     setPage(newPage);
   };
 
-  const pagination: PaginationMeta = data?.totals ?? {
+  const pagination: PaginationMeta = orderList?.totals ?? {
     count: 0,
     total: 0,
     skip,
@@ -74,27 +77,38 @@ export const OrderListArchive = () => {
   };
   return (
     <div className={style.orderListArchive}>
-      <div className={style.btnContainer}>
-        <OrderFiltersDialog
-          setDateEnd={setDateEnd}
-          setCustomer={setCustomer}
-          setDateStart={setDateStart}
-          setShowPaid={setShowPaid}
-        />
-        <Button variant="tertiary" onClick={handleDelete}>
-          Выбрать
-        </Button>
-      </div>
+      <OrderFiltersDialog
+        setDateEnd={setDateEnd}
+        setCustomer={setCustomer}
+        setDateStart={setDateStart}
+        setShowPaid={setShowPaid}
+      />
+
+      {orderList && (
+        <div className={style.infoContainer}>
+          <div>
+            <Text>{customer?.name}</Text>
+            <div className={style.dateContainer}>
+              <Text color="blue">с {formatDate(dateStart)}</Text>
+              <Text color="blue">по {formatDate(dateEnd)}</Text>
+            </div>
+            <Text color="blue">Кол-во заказов: {orderList.totals.total}</Text>
+          </div>
+          <div>
+            <Button onClick={() => setIsDeleteMode(true)}>Выбрать</Button>
+          </div>
+        </div>
+      )}
       {isFetching ? (
         <OrderSkeleton />
       ) : (
-        data?.data.map((order) => (
+        orderList?.data.map((order) => (
           <OrderCard
             key={order.id}
             data={order}
             short
             selected={selectedIds.includes(order.id)}
-            onClick={() => toggleSelect(order.id)}
+            onClick={isDeleteMode ? () => toggleSelect(order.id) : undefined}
           >
             {!order.isPaid && (
               <MarkOrderAsPaidButton

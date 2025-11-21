@@ -4,13 +4,14 @@
     gap: 1rem;
 }
 
-.btnContainer {
+.infoContainer {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
 }
 
-.btnContainer button {
-    width: 100%;
+.dateContainer {
+    display: flex;
+    gap: 1rem;
 }
 
 .paidBtn {

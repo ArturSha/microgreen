@@ -11,7 +11,7 @@ interface OrderCardProps {
   short?: boolean;
   selected?: boolean;
   children: ReactNode;
-  onClick?: () => void;
+  onClick?: () => void | null;
 }
 
 export const OrderCard = ({
@@ -25,14 +25,10 @@ export const OrderCard = ({
   return (
     <div className={style.orderCard} onClick={onClick}>
       <div
-        className={classNames(
-          style.infoContainer,
-          style.header,
-          {
-            [style.delivered]: isDelivered,
-          },
-          { [style.selected]: selected },
-        )}
+        className={classNames(style.infoContainer, style.header, {
+          [style.delivered]: isDelivered,
+          [style.selected]: selected,
+        })}
       >
         <Text fontSize="l" color={isDelivered ? 'blue' : 'beige'} bold>
           {customer.name}
@@ -42,7 +38,12 @@ export const OrderCard = ({
         </Text>
       </div>
 
-      <div className={classNames(style.infoContainer, { [style.delivered]: isDelivered })}>
+      <div
+        className={classNames(style.infoContainer, {
+          [style.delivered]: isDelivered,
+          [style.selected]: selected,
+        })}
+      >
         {!short && (
           <div>
             <Text color={isDelivered ? 'blue' : 'beige'}> {customer.address}</Text>

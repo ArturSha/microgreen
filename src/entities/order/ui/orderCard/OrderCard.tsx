@@ -9,17 +9,30 @@ import style from './OrderCard.module.css';
 interface OrderCardProps {
   data: Order;
   short?: boolean;
+  selected?: boolean;
   children: ReactNode;
+  onClick?: () => void;
 }
 
-export const OrderCard = ({ data, short = false, children }: OrderCardProps) => {
+export const OrderCard = ({
+  data,
+  short = false,
+  onClick,
+  selected = false,
+  children,
+}: OrderCardProps) => {
   const { customer, deliveryDate, isDelivered, products, totalPrice } = data;
   return (
-    <div className={style.orderCard}>
+    <div className={style.orderCard} onClick={onClick}>
       <div
-        className={classNames(style.infoContainer, style.header, {
-          [style.delivered]: isDelivered,
-        })}
+        className={classNames(
+          style.infoContainer,
+          style.header,
+          {
+            [style.delivered]: isDelivered,
+          },
+          { [style.selected]: selected },
+        )}
       >
         <Text fontSize="l" color={isDelivered ? 'blue' : 'beige'} bold>
           {customer.name}
@@ -28,8 +41,8 @@ export const OrderCard = ({ data, short = false, children }: OrderCardProps) => 
           {new Date(deliveryDate).toLocaleDateString()}
         </Text>
       </div>
-      <div className={classNames(style.infoContainer, { [style.delivered]: isDelivered })}>
-        {!short && (
+      {!short && (
+        <div className={classNames(style.infoContainer, { [style.delivered]: isDelivered })}>
           <div>
             <Text color={isDelivered ? 'blue' : 'beige'}> {customer.address}</Text>
             <Text color={isDelivered ? 'blue' : 'beige'}>
@@ -44,9 +57,10 @@ export const OrderCard = ({ data, short = false, children }: OrderCardProps) => 
               </Text>
             )}
           </div>
-        )}
-        {children}
-      </div>
+
+          {children}
+        </div>
+      )}
       <div>
         {products.map((product) => (
           <div

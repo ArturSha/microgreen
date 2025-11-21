@@ -3,6 +3,7 @@ export {
   usePostOrderMutation,
   useDeleteOrderMutation,
   usePatchOrderMutation,
+  useBulkDeleteOrdersMutation,
   orderApi,
 } from './api/orderApi';
 export type { OrderPostForm, OrderPostBody } from './model/types/order';

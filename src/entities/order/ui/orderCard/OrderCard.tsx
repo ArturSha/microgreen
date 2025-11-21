@@ -41,8 +41,9 @@ export const OrderCard = ({
           {new Date(deliveryDate).toLocaleDateString()}
         </Text>
       </div>
-      {!short && (
-        <div className={classNames(style.infoContainer, { [style.delivered]: isDelivered })}>
+
+      <div className={classNames(style.infoContainer, { [style.delivered]: isDelivered })}>
+        {!short && (
           <div>
             <Text color={isDelivered ? 'blue' : 'beige'}> {customer.address}</Text>
             <Text color={isDelivered ? 'blue' : 'beige'}>
@@ -57,10 +58,11 @@ export const OrderCard = ({
               </Text>
             )}
           </div>
+        )}
 
-          {children}
-        </div>
-      )}
+        {children}
+      </div>
+
       <div>
         {products.map((product) => (
           <div
@@ -76,7 +78,13 @@ export const OrderCard = ({
           </div>
         ))}
       </div>
-      <div className={classNames(style.priceContainer, { [style.delivered]: isDelivered })}>
+      <div
+        className={classNames(
+          style.priceContainer,
+          { [style.delivered]: isDelivered },
+          { [style.selected]: selected },
+        )}
+      >
         <Text bold color={isDelivered ? 'blue' : 'beige'}>
           Стоимость:
         </Text>

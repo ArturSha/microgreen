@@ -12,6 +12,7 @@ interface MarkOrderAsPaidButtonProps {
   client: Customer;
   orderPrice: number;
   isDelivered: boolean;
+  className?: string;
 }
 
 export const MarkOrderAsPaidButton = ({
@@ -19,6 +20,7 @@ export const MarkOrderAsPaidButton = ({
   client,
   orderPrice,
   isDelivered,
+  className,
 }: MarkOrderAsPaidButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -58,7 +60,7 @@ export const MarkOrderAsPaidButton = ({
     <>
       <Button
         variant="clear"
-        className={classNames(style.btn, { [style.blue]: isDelivered })}
+        className={classNames(style.btn, { [style.blue]: isDelivered }, className)}
         onClick={() => setIsModalOpen(true)}
       >
         <PaidSvg />

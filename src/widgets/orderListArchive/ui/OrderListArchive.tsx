@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { OrderFiltersDialog } from '@/features/manageOrder';
+import { MarkOrderAsPaidButton, OrderFiltersDialog } from '@/features/manageOrder';
 import { type Customer } from '@/entities/customer';
 import {
   OrderCard,
@@ -96,7 +96,15 @@ export const OrderListArchive = () => {
             selected={selectedIds.includes(order.id)}
             onClick={() => toggleSelect(order.id)}
           >
-            {null}
+            {!order.isPaid && (
+              <MarkOrderAsPaidButton
+                client={order.customer}
+                id={order.id}
+                isDelivered={order.isDelivered}
+                orderPrice={order.totalPrice}
+                className={style.paidBtn}
+              />
+            )}
           </OrderCard>
         ))
       )}

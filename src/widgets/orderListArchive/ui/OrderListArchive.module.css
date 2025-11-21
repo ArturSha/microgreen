@@ -12,3 +12,7 @@
 .btnContainer button {
     width: 100%;
 }
+
+.paidBtn {
+    margin-left: auto;
+}

@@ -3,7 +3,7 @@ import { type ElementType, type ComponentProps, type ReactNode } from 'react';
 import style from './Text.module.css';
 
 type Variant = 'error' | 'default';
-type Color = 'black' | 'green' | 'beige' | 'blue';
+type Color = 'black' | 'green' | 'beige' | 'blue' | 'red';
 type FontSize = 'xxs' | 's' | 'm' | 'l';
 
 type TextProps<T extends ElementType> = {
@@ -33,6 +33,7 @@ const colors: Record<Color, string> = {
   green: style.green,
   beige: style.beige,
   blue: style.blue,
+  red: style.red,
 };
 
 export const Text = <T extends ElementType = 'p'>({

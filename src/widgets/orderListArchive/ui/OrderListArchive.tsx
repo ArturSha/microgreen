@@ -4,8 +4,10 @@ import { type Customer } from '@/entities/customer';
 import {
   OrderCard,
   OrderSkeleton,
-  // useBulkDeleteOrdersMutation,
+  useBulkDeleteOrdersMutation,
   useGetOrderListQuery,
+  useGetOrderSumQuery,
+  type Order,
 } from '@/entities/order';
 import type { PaginationMeta } from '@/shared/api';
 import { formatDate } from '@/shared/lib/helpers';
@@ -23,6 +25,8 @@ export const OrderListArchive = () => {
   const [dateEnd, setDateEnd] = useState<Date | null>(null);
   const [showPaid, setShowPaid] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [selectedTotal, setSelectedTotal] = useState(0);
+
   const [isDeleteMode, setIsDeleteMode] = useState(false);
 
   const skip = (page - 1) * limit;
@@ -49,20 +53,48 @@ export const OrderListArchive = () => {
     },
     { skip: !dateStart },
   );
-  // const [deleteOrders] = useBulkDeleteOrdersMutation();
 
-  // const handleDelete = async () => {
-  //   try {
-  //     await deleteOrders(selectedIds).unwrap();
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const { data: totalPrice } = useGetOrderSumQuery(
+    {
+      q: JSON.stringify({
+        $and: [
+          { isPaid: showPaid },
+          { isDelivered: true },
+          { 'customer.id': customer?.id },
+          {
+            deliveryDate: {
+              $gt: { $date: dateStart },
+              $lt: { $date: dateEnd },
+            },
+          },
+        ],
+      }),
+    },
+    { skip: !dateStart },
+  );
 
-  const toggleSelect = (id: string) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
-    );
+  const [deleteOrders, { isLoading: isDeleting }] = useBulkDeleteOrdersMutation();
+
+  const handleDelete = async () => {
+    try {
+      await deleteOrders(selectedIds).unwrap();
+      setSelectedIds([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const toggleSelect = (order: Order) => {
+    setSelectedIds((prev) => {
+      const alreadySelected = prev.includes(order.id);
+      if (alreadySelected) {
+        setSelectedTotal((prevTotal) => prevTotal - order.totalPrice);
+        return prev.filter((item) => item !== order.id);
+      } else {
+        setSelectedTotal((prevTotal) => prevTotal + order.totalPrice);
+        return [...prev, order.id];
+      }
+    });
   };
 
   const handlePageChange = (newPage: number) => {
@@ -85,17 +117,46 @@ export const OrderListArchive = () => {
       />
 
       {orderList && (
-        <div className={style.infoContainer}>
-          <div>
-            <Text>{customer?.name}</Text>
+        <div className={style.flex}>
+          <div className={style.infoContainer}>
+            <Text color="blue" bold>
+              {customer?.name}
+            </Text>
             <div className={style.dateContainer}>
-              <Text color="blue">с {formatDate(dateStart)}</Text>
-              <Text color="blue">по {formatDate(dateEnd)}</Text>
+              <Text color="blue">С {formatDate(dateStart)}</Text>
+              <Text color="blue">По {formatDate(dateEnd)}</Text>
             </div>
-            <Text color="blue">Кол-во заказов: {orderList.totals.total}</Text>
+            <Text color={isDeleteMode ? 'red' : 'blue'}>
+              Кол-во заказов: {isDeleteMode ? selectedIds.length : orderList.totals.total}
+            </Text>
+            <Text color={isDeleteMode ? 'red' : 'blue'}>
+              Общая стоимость: {isDeleteMode ? selectedTotal : totalPrice?.sumTotalPrice}
+            </Text>
           </div>
-          <div>
-            <Button onClick={() => setIsDeleteMode(true)}>Выбрать</Button>
+          <div className={style.flexColumn}>
+            {!isDeleteMode && <Button onClick={() => setIsDeleteMode(true)}>Выбрать</Button>}
+            {isDeleteMode && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  setIsDeleteMode(false);
+                  setSelectedIds([]);
+                  setSelectedTotal(0);
+                }}
+              >
+                Отменить
+              </Button>
+            )}
+            {isDeleteMode && (
+              <Button
+                disabled={selectedIds.length === 0 || isDeleting}
+                isLoading={isDeleting}
+                variant="danger"
+                onClick={handleDelete}
+              >
+                Удалить
+              </Button>
+            )}
           </div>
         </div>
       )}
@@ -108,7 +169,7 @@ export const OrderListArchive = () => {
             data={order}
             short
             selected={selectedIds.includes(order.id)}
-            onClick={isDeleteMode ? () => toggleSelect(order.id) : undefined}
+            onClick={isDeleteMode ? () => toggleSelect(order) : undefined}
           >
             {!order.isPaid && (
               <MarkOrderAsPaidButton

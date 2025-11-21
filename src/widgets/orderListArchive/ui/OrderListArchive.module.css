@@ -4,9 +4,20 @@
     gap: 1rem;
 }
 
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
 .infoContainer {
     display: flex;
     flex-direction: column;
+}
+
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .dateContainer {

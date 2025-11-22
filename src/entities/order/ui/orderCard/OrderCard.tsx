@@ -8,16 +8,26 @@ import style from './OrderCard.module.css';
 
 interface OrderCardProps {
   data: Order;
+  short?: boolean;
+  selected?: boolean;
   children: ReactNode;
+  onClick?: () => void;
 }
 
-export const OrderCard = ({ data, children }: OrderCardProps) => {
+export const OrderCard = ({
+  data,
+  short = false,
+  onClick,
+  selected = false,
+  children,
+}: OrderCardProps) => {
   const { customer, deliveryDate, isDelivered, products, totalPrice } = data;
   return (
-    <div className={style.orderCard}>
+    <div className={style.orderCard} onClick={onClick}>
       <div
         className={classNames(style.infoContainer, style.header, {
           [style.delivered]: isDelivered,
+          [style.selected]: selected,
         })}
       >
         <Text fontSize="l" color={isDelivered ? 'blue' : 'beige'} bold>
@@ -27,23 +37,33 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
           {new Date(deliveryDate).toLocaleDateString()}
         </Text>
       </div>
-      <div className={classNames(style.infoContainer, { [style.delivered]: isDelivered })}>
-        <div>
-          <Text color={isDelivered ? 'blue' : 'beige'}> {customer.address}</Text>
-          <Text color={isDelivered ? 'blue' : 'beige'}>
-            {customer.contactPerson ? customer.contactPerson + ': ' : ''}
-            <Link className={style.phoneLink} to={`tel:${customer.phone}`}>
-              {customer.phone}
-            </Link>
-          </Text>
-          {customer.notes && (
-            <Text fontSize="xxs" color={isDelivered ? 'blue' : 'beige'} className={style.mt4}>
-              *{customer.notes}
+
+      <div
+        className={classNames(style.infoContainer, {
+          [style.delivered]: isDelivered,
+          [style.selected]: selected,
+        })}
+      >
+        {!short && (
+          <div>
+            <Text color={isDelivered ? 'blue' : 'beige'}> {customer.address}</Text>
+            <Text color={isDelivered ? 'blue' : 'beige'}>
+              {customer.contactPerson ? customer.contactPerson + ': ' : ''}
+              <Link className={style.phoneLink} to={`tel:${customer.phone}`}>
+                {customer.phone}
+              </Link>
             </Text>
-          )}
-        </div>
+            {customer.notes && (
+              <Text fontSize="xxs" color={isDelivered ? 'blue' : 'beige'} className={style.mt4}>
+                *{customer.notes}
+              </Text>
+            )}
+          </div>
+        )}
+
         {children}
       </div>
+
       <div>
         {products.map((product) => (
           <div
@@ -59,7 +79,13 @@ export const OrderCard = ({ data, children }: OrderCardProps) => {
           </div>
         ))}
       </div>
-      <div className={classNames(style.priceContainer, { [style.delivered]: isDelivered })}>
+      <div
+        className={classNames(
+          style.priceContainer,
+          { [style.delivered]: isDelivered },
+          { [style.selected]: selected },
+        )}
+      >
         <Text bold color={isDelivered ? 'blue' : 'beige'}>
           Стоимость:
         </Text>

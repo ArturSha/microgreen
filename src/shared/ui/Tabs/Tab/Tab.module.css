@@ -5,7 +5,7 @@
     background-color: var(--color-beige-300);
     color: var(--color-black-600);
     font-weight: var(--font-weight-600);
-    font-size: var(--font-size-m);
+    font-size: var(--font-size-s);
     cursor: pointer;
 }
 

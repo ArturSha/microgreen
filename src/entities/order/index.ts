@@ -1,11 +1,13 @@
 export {
   useGetOrderListQuery,
+  useGetOrderSumQuery,
   usePostOrderMutation,
   useDeleteOrderMutation,
   usePatchOrderMutation,
+  useBulkDeleteOrdersMutation,
   orderApi,
 } from './api/orderApi';
-export type { OrderPostForm, OrderPostBody } from './model/types/order';
+export type { OrderPostForm, OrderPostBody, Order } from './model/types/order';
 export { OrderCard } from './ui/orderCard/OrderCard';
 export { OrderSkeleton } from './ui/orderSkeleton/OrderSkeleton';
 export { useUpdateOrderListCache } from './lib/useUpdateOrderListCache';

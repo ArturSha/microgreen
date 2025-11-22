@@ -3,3 +3,4 @@ export type { HandleQuantityChangeProps } from './CreateOrderForm/lib/handleQuan
 export { DeleteOrder } from './DeleteOrder/ui/DeleteOrder';
 export { MarkOrderAsDeliveredButton } from './MarkOrderAsDeliveredButton/ui/MarkOrderAsDeliveredButton';
 export { MarkOrderAsPaidButton } from './MarkOrderAsPaidButton/ui/MarkOrderAsPaidButton';
+export { OrderFiltersDialog } from './OrderFilters/ui/OrderFiltersDialog';

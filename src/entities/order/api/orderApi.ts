@@ -13,6 +13,17 @@ export const orderApi = baseApi.injectEndpoints({
       transformResponse: (response: RestDBResponse<OrderResponse>) => mapOrder(response),
       providesTags: [ApiTags.ORDERS],
     }),
+    getOrderSum: build.query<{ sumTotalPrice: number }, BaseGetParams>({
+      query: (params) => ({
+        url: '/orders',
+        method: 'GET',
+        params: { ...params, h: JSON.stringify({ $aggregate: ['SUM:totalPrice'] }) },
+      }),
+      transformResponse: (res: Record<string, number>) => ({
+        sumTotalPrice: res['SUM totalPrice'],
+      }),
+      providesTags: [ApiTags.ORDERS],
+    }),
     postOrder: build.mutation<Order, OrderPostBody>({
       query: (body) => ({
         url: '/orders',
@@ -34,12 +45,22 @@ export const orderApi = baseApi.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    bulkDeleteOrders: build.mutation<string[], string[]>({
+      query: (ids) => ({
+        url: '/orders/*',
+        method: 'DELETE',
+        body: ids,
+      }),
+      invalidatesTags: [ApiTags.ORDERS],
+    }),
   }),
 });
 
 export const {
   useGetOrderListQuery,
+  useGetOrderSumQuery,
   usePostOrderMutation,
   useDeleteOrderMutation,
   usePatchOrderMutation,
+  useBulkDeleteOrdersMutation,
 } = orderApi;

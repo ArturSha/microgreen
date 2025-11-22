@@ -1,11 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { usePatchClientMutation, type Customer } from '@/entities/customer';
-import {
-  useDeleteOrderMutation,
-  usePatchOrderMutation,
-  useUpdateOrderListCache,
-} from '@/entities/order';
+import { usePatchOrderMutation, useUpdateOrderListCache } from '@/entities/order';
 import PaidSvg from '@/shared/assets/icons/paid.svg?react';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
@@ -13,16 +9,18 @@ import style from './MarkOrderAsPaidButton.module.css';
 
 interface MarkOrderAsPaidButtonProps {
   id: string;
-  isDelivered: boolean;
   client: Customer;
   orderPrice: number;
+  isDelivered: boolean;
+  className?: string;
 }
 
 export const MarkOrderAsPaidButton = ({
   id,
-  isDelivered,
   client,
   orderPrice,
+  isDelivered,
+  className,
 }: MarkOrderAsPaidButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -31,9 +29,8 @@ export const MarkOrderAsPaidButton = ({
 
   const [patchOrder, { isLoading: isUpdatingOrderLoading }] = usePatchOrderMutation();
   const [patchClientDebt, { isLoading: isUpdatingClientDebtLoading }] = usePatchClientMutation();
-  const [deleteOrder, { isLoading: isDeletingOrder }] = useDeleteOrderMutation();
 
-  const isLoading = isUpdatingOrderLoading || isUpdatingClientDebtLoading || isDeletingOrder;
+  const isLoading = isUpdatingOrderLoading || isUpdatingClientDebtLoading;
 
   const handleMarkAsPaid = async () => {
     setErrorMessage('');
@@ -43,11 +40,9 @@ export const MarkOrderAsPaidButton = ({
         body: { $inc: { debt: orderPrice } },
       }).unwrap();
       try {
-        if (!isDelivered) {
-          await patchOrder({ id, isPaid: true }).unwrap();
-          updateOrderInCache(id, { isPaid: true });
-        } else {
-          await deleteOrder({ id }).unwrap();
+        await patchOrder({ id, isPaid: true }).unwrap();
+        updateOrderInCache(id, { isPaid: true });
+        if (isDelivered) {
           removeOrderFromCache(id);
         }
         setIsModalOpen(false);
@@ -65,7 +60,7 @@ export const MarkOrderAsPaidButton = ({
     <>
       <Button
         variant="clear"
-        className={classNames(style.btn, { [style.blue]: isDelivered })}
+        className={classNames(style.btn, { [style.blue]: isDelivered }, className)}
         onClick={() => setIsModalOpen(true)}
       >
         <PaidSvg />

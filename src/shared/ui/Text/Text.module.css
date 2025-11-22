@@ -22,6 +22,11 @@
     color: var(--color-blue-400);
 }
 
+.red {
+    color: var(--color-red-500);
+
+}
+
 .error {
     color: var(--color-red-500);
     font-size: var(--font-size-xxs);

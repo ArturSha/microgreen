@@ -1,5 +1,6 @@
 import { CustomerList } from '@/widgets/customerList';
 import { OrderList } from '@/widgets/orderList';
+import { OrderListArchive } from '@/widgets/orderListArchive';
 import { ProductList } from '@/widgets/productList';
 import { CustomerEditorForm } from '@/features/manageCustomer';
 import { CreateOrderForm } from '@/features/manageOrder';
@@ -15,6 +16,7 @@ const MainPage = () => {
           <Tab>Заказы</Tab>
           <Tab>Заведения</Tab>
           <Tab>Наличие</Tab>
+          <Tab>Архив</Tab>
         </TabList>
         <TabPanels>
           <TabPanel className={style.tabPanel}>
@@ -28,6 +30,9 @@ const MainPage = () => {
           <TabPanel className={style.tabPanel}>
             <ProductForm />
             <ProductList />
+          </TabPanel>
+          <TabPanel className={style.tabPanel}>
+            <OrderListArchive />
           </TabPanel>
         </TabPanels>
       </TabGroup>

@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-  useDeleteOrderMutation,
-  usePatchOrderMutation,
-  useUpdateOrderListCache,
-} from '@/entities/order';
+import { usePatchOrderMutation, useUpdateOrderListCache } from '@/entities/order';
 import DeliveredSvg from '@/shared/assets/icons/delivered.svg?react';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
@@ -18,18 +14,14 @@ export const MarkOrderAsDeliveredButton = ({ id, isPaid }: MarkOrderAsDeliveredB
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState('');
   const { updateOrderInCache, removeOrderFromCache } = useUpdateOrderListCache();
-  const [updateOrder, { isLoading: isDeliveredLoading }] = usePatchOrderMutation();
-  const [deleteOrder, { isLoading: isDeleteLoading }] = useDeleteOrderMutation();
-  const isLoading = isDeliveredLoading || isDeleteLoading;
+  const [updateOrder, { isLoading }] = usePatchOrderMutation();
 
   const handleMarkAsDelivered = async () => {
     setError('');
     try {
-      if (!isPaid) {
-        await updateOrder({ id, isDelivered: true }).unwrap();
-        updateOrderInCache(id, { isDelivered: true });
-      } else {
-        await deleteOrder({ id }).unwrap();
+      await updateOrder({ id, isDelivered: true }).unwrap();
+      updateOrderInCache(id, { isDelivered: true });
+      if (isPaid) {
         removeOrderFromCache(id);
       }
       setIsModalOpen(false);

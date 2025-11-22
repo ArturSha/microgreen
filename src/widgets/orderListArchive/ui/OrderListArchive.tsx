@@ -54,7 +54,7 @@ export const OrderListArchive = () => {
     { skip: !dateStart, refetchOnMountOrArgChange: true },
   );
 
-  const { data: totalPrice } = useGetOrderSumQuery(
+  const { data: totalPrice, isFetching: isLoadingTotalPrice } = useGetOrderSumQuery(
     {
       q: JSON.stringify({
         $and: [
@@ -144,7 +144,11 @@ export const OrderListArchive = () => {
               className={style.lineHeight}
             >
               Общая стоимость:{' '}
-              {selectedIds.length === 0 ? totalPrice?.sumTotalPrice : selectedTotal}
+              {isLoadingTotalPrice
+                ? 'Ведем подсчет'
+                : selectedIds.length === 0
+                  ? totalPrice?.sumTotalPrice
+                  : selectedTotal}
             </Text>
           </div>
           <div className={style.flexColumn}>

@@ -23,7 +23,7 @@ export const OrderListArchive = () => {
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [dateStart, setDateStart] = useState<Date | null>(null);
   const [dateEnd, setDateEnd] = useState<Date | null>(null);
-  const [showPaid, setShowPaid] = useState(true);
+  const [showUnPaid, setShowUnPaid] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedTotal, setSelectedTotal] = useState(0);
 
@@ -34,7 +34,7 @@ export const OrderListArchive = () => {
     {
       q: JSON.stringify({
         $and: [
-          { isPaid: showPaid },
+          showUnPaid ? { isPaid: !showUnPaid } : '',
           { isDelivered: true },
           { 'customer.id': customer?.id },
           {
@@ -51,14 +51,14 @@ export const OrderListArchive = () => {
       max: limit,
       skip,
     },
-    { skip: !dateStart },
+    { skip: !dateStart, refetchOnMountOrArgChange: true },
   );
 
   const { data: totalPrice } = useGetOrderSumQuery(
     {
       q: JSON.stringify({
         $and: [
-          { isPaid: showPaid },
+          showUnPaid ? { isPaid: !showUnPaid } : '',
           { isDelivered: true },
           { 'customer.id': customer?.id },
           {
@@ -70,7 +70,7 @@ export const OrderListArchive = () => {
         ],
       }),
     },
-    { skip: !dateStart },
+    { skip: !dateStart, refetchOnMountOrArgChange: true },
   );
 
   const [deleteOrders, { isLoading: isDeleting }] = useBulkDeleteOrdersMutation();
@@ -113,28 +113,50 @@ export const OrderListArchive = () => {
         setDateEnd={setDateEnd}
         setCustomer={setCustomer}
         setDateStart={setDateStart}
-        setShowPaid={setShowPaid}
+        setShowUnPaid={setShowUnPaid}
       />
 
       {orderList && (
         <div className={style.flex}>
           <div className={style.infoContainer}>
-            <Text color="blue" bold>
-              {customer?.name}
+            <Text color="blue" bold className={style.lineHeight}>
+              {customer?.name ? customer?.name : 'Все заведения'}
             </Text>
             <div className={style.dateContainer}>
-              <Text color="blue">С {formatDate(dateStart)}</Text>
-              <Text color="blue">По {formatDate(dateEnd)}</Text>
+              <Text color="blue" bold className={style.lineHeight}>
+                с {formatDate(dateStart)}
+              </Text>
+              <Text color="blue" bold className={style.lineHeight}>
+                по {formatDate(dateEnd)}
+              </Text>
             </div>
-            <Text color={isDeleteMode ? 'red' : 'blue'}>
-              Кол-во заказов: {isDeleteMode ? selectedIds.length : orderList.totals.total}
+            <Text
+              color={selectedIds.length === 0 ? 'blue' : 'red'}
+              bold
+              className={style.lineHeight}
+            >
+              Количество заказов:{' '}
+              {selectedIds.length === 0 ? orderList.totals.total : selectedIds.length}
             </Text>
-            <Text color={isDeleteMode ? 'red' : 'blue'}>
-              Общая стоимость: {isDeleteMode ? selectedTotal : totalPrice?.sumTotalPrice}
+            <Text
+              color={selectedIds.length === 0 ? 'blue' : 'red'}
+              bold
+              className={style.lineHeight}
+            >
+              Общая стоимость:{' '}
+              {selectedIds.length === 0 ? totalPrice?.sumTotalPrice : selectedTotal}
             </Text>
           </div>
           <div className={style.flexColumn}>
-            {!isDeleteMode && <Button onClick={() => setIsDeleteMode(true)}>Выбрать</Button>}
+            {!isDeleteMode && (
+              <Button
+                variant="tertiary"
+                onClick={() => setIsDeleteMode(true)}
+                className={style.chooseBtn}
+              >
+                Выбрать
+              </Button>
+            )}
             {isDeleteMode && (
               <Button
                 variant="primary"
@@ -167,7 +189,7 @@ export const OrderListArchive = () => {
           <OrderCard
             key={order.id}
             data={order}
-            short
+            short={order.isPaid}
             selected={selectedIds.includes(order.id)}
             onClick={isDeleteMode ? () => toggleSelect(order) : undefined}
           >

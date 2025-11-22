@@ -20,7 +20,7 @@ export const CustomerSelect = ({ setCustomer, value }: CustomerSelectProps) => {
       className={style.select}
       isLoading={isLoading}
       styles={selectStyle}
-      value={{ label: value?.name, value: value }}
+      value={value !== null ? { label: value?.name, value: value } : null}
       placeholder="Выбрать заведение"
       options={formattedOptions}
       onChange={(option) => setCustomer(option?.value ?? null)}

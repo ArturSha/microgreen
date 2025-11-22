@@ -10,18 +10,18 @@ interface OrderFiltersDialogProps {
   setCustomer: (customer: Customer | null) => void;
   setDateStart: (date: Date | null) => void;
   setDateEnd: (date: Date | null) => void;
-  setShowPaid: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowUnPaid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const OrderFiltersDialog = ({
   setCustomer,
   setDateEnd,
   setDateStart,
-  setShowPaid,
+  setShowUnPaid,
 }: OrderFiltersDialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [customerLocal, setCustomerLocal] = useState<Customer | null>(null);
-  const [showPaidLocal, setShowPaidLocal] = useState(true);
+  const [showUnPaidLocal, setShowUnPaidLocal] = useState(true);
 
   const today = new Date();
   const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -38,7 +38,7 @@ export const OrderFiltersDialog = ({
     }
     setDateEnd(end);
     setIsDialogOpen(false);
-    setShowPaid(showPaidLocal);
+    setShowUnPaid(showUnPaidLocal);
   };
 
   const resetFilters = () => {
@@ -77,8 +77,12 @@ export const OrderFiltersDialog = ({
             onChange={(value) => setDateEndLocal(value as Date | null)}
           />
         </div>
-        <Checkbox checked={showPaidLocal} onChange={setShowPaidLocal} className={style.checkbox}>
-          Показать оплаченные заказы
+        <Checkbox
+          checked={showUnPaidLocal}
+          onChange={setShowUnPaidLocal}
+          className={style.checkbox}
+        >
+          Только неоплаченные
         </Checkbox>
         <div className={style.btnContainer}>
           <Button onClick={applyFilters}>Применить</Button>

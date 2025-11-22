@@ -11,7 +11,7 @@ interface OrderCardProps {
   short?: boolean;
   selected?: boolean;
   children: ReactNode;
-  onClick?: () => void | null;
+  onClick?: () => void;
 }
 
 export const OrderCard = ({

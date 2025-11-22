@@ -14,8 +14,11 @@
 }
 
 .datePicker {
-    border: .1rem solid var(--color-beige-300);
-    color: var(--color-beige-300);
+    padding: .6rem;
+    width: 100%;
+    border-radius: 1.2rem;
+    background-color: var(--color-beige-300);
+    color: var(--color-blue-400);
     font-weight: var(--font-weight-700);
     font-size: var(--font-size-m);
 }

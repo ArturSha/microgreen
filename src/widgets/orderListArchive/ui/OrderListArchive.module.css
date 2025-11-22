@@ -12,12 +12,15 @@
 .infoContainer {
     display: flex;
     flex-direction: column;
+    padding-left: 1rem;
+    min-height: 9.2rem;
 }
 
 .flexColumn {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: .4rem;
+    min-width: 10.6rem;
 }
 
 .dateContainer {
@@ -27,4 +30,13 @@
 
 .paidBtn {
     margin-left: auto;
+}
+
+.chooseBtn {
+    border-radius: .8rem;
+    text-transform: capitalize;
+}
+
+.lineHeight {
+    line-height: 1.3;
 }

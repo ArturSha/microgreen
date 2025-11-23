@@ -113,6 +113,7 @@ export const CreateOrderForm = () => {
         panelClassName={style.panel}
         isLoading={isLoading}
         errorText={error}
+        toTopOnMobile
       >
         <FormProvider {...methods}>
           <form className={style.form} onSubmit={handleSubmit(onSubmit)}>

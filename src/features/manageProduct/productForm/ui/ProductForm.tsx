@@ -54,6 +54,7 @@ export const ProductForm = () => {
         maxWidth="40rem"
         isLoading={isLoading}
         panelClassName={style.dialog}
+        toTopOnMobile
       >
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <Input

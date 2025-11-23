@@ -3,7 +3,7 @@
     z-index: 100;
   }
   
-  .backdrop {
+.backdrop {
     position: fixed;
     inset: 0;
     display: flex;
@@ -14,7 +14,7 @@
     background-color: rgb(0 0 0 / 30%);
   }
   
-  .panel {
+.panel {
     position: relative;
     padding: 3rem;
     width: 100%;
@@ -24,14 +24,14 @@
     background-color: var(--color-white-500);
   }
   
-  .title {
+.title {
     margin-bottom: 2.3rem;
     text-align: center;
     font-weight: var(--font-weight-600);
     font-size: var(--font-size-l);
   }
 
-  .subtitle {
+.subtitle {
     margin-bottom: 3.5rem;
     color: var(--color-gray-500);
     text-align: left;
@@ -41,21 +41,27 @@
     letter-spacing: -0.02em;
   }
 
-  .actions {
+.actions {
     display: flex;
     gap: 2rem;
   }
 
-  .closeBtn {
+.closeBtn {
     position: absolute;
     top: -1rem;
     right: 1rem;
     color: var(--color-green-600);
     font-size: var(--font-size-xl);
-}
+  }
 
-  .error {
+.error {
     margin-bottom: 1rem;    
+  }
+
+  @media (max-width:600px) {
+    .toTop {
+      align-items: flex-start;
+    }
   }
 
   @media (max-width:480px) {

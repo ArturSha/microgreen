@@ -59,6 +59,7 @@ export const OrderFiltersDialog = ({
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         maxWidth="50rem"
+        toTopOnMobile
       >
         <CustomerSelect setCustomer={setCustomerLocal} value={customerLocal} />
         <div className={style.datePickerContainer}>

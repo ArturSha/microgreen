@@ -97,6 +97,7 @@ export const CustomerEditorForm = (props: CustomerEditorFormProps) => {
         isOpen={isOpen}
         onClose={handleCloseDialog}
         panelClassName={style.dialog}
+        toTopOnMobile
       >
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <Input

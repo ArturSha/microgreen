@@ -15,6 +15,7 @@ interface DialogProps {
   children?: ReactNode;
   onClose?: () => void;
   closeButton?: boolean;
+  toTopOnMobile?: boolean;
   panelClassName?: string;
   errorText?: string | null;
 }
@@ -31,6 +32,7 @@ export const Dialog = (props: DialogProps) => {
     isLoading,
     closeButton,
     errorText,
+    toTopOnMobile,
     panelClassName,
   } = props;
 
@@ -44,7 +46,7 @@ export const Dialog = (props: DialogProps) => {
       }}
       className={style.container}
     >
-      <div className={style.backdrop}>
+      <div className={classNames(style.backdrop, { [style.toTop]: toTopOnMobile })}>
         <DialogPanel
           className={classNames(style.panel, panelClassName)}
           style={{ maxWidth: `${maxWidth}` }}

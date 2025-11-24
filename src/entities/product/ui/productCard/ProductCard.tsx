@@ -48,13 +48,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   }, [debounce, updateProductQuantity, id]);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = Number(e.target.value);
 
-    if (!/^\d*$/.test(value)) return;
-
-    const parsed = value === '' ? 0 : Number(value);
-
-    setProductQuantity(Math.max(0, parsed));
+    setProductQuantity(value);
   };
 
   return (
@@ -95,6 +91,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             value={productQuantity}
             onChange={handleInput}
             isLoading={isUpdatingQuantity}
+            type="number"
           />
           <Button
             variant="clear"

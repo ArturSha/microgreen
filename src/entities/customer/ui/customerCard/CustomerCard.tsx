@@ -23,7 +23,7 @@ export const CustomerCard = ({ data, className, children }: CustomerProps) => {
           {name}
         </Text>
         <Text bold as="span">
-          {debt + CURRENCY}
+          {debt * -1 + CURRENCY}
         </Text>
       </PopoverButton>
       <PopoverPanel anchor="bottom" className={style.popoverContainer}>

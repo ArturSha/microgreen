@@ -63,6 +63,7 @@ export const OrderList = () => {
                   <DeleteOrder
                     id={order.id}
                     client={order.customer}
+                    products={order.products}
                     orderPrice={order.totalPrice}
                     isDelivered={order.isDelivered}
                   />

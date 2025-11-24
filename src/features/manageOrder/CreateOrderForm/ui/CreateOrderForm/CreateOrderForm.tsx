@@ -6,8 +6,7 @@ import {
   ProductQuantity,
   ProductSkeleton,
   useGetProductsListQuery,
-  useUpdateProductListMutation,
-  type ProductUpdateForm,
+  useUpdateProductList,
 } from '@/entities/product';
 import { CURRENCY } from '@/shared/const';
 import { Button } from '@/shared/ui/Button';
@@ -27,9 +26,9 @@ export const CreateOrderForm = () => {
 
   const [postOrder, { isLoading: isLoadingOrder }] = usePostOrderMutation();
   const [updateDebt, { isLoading: isUpdatingDebt }] = usePatchClientMutation();
-  const [updateProduct] = useUpdateProductListMutation();
+  const { updateProducts, isUpdatingProducts } = useUpdateProductList();
 
-  const isLoading = isLoadingOrder || isUpdatingDebt;
+  const isLoading = isLoadingOrder || isUpdatingDebt || isUpdatingProducts;
   const methods = useForm<OrderPostForm>({
     defaultValues: {
       customer: undefined,
@@ -50,45 +49,22 @@ export const CreateOrderForm = () => {
     setIsModalOpen(false);
   };
 
-  const updateProductList = async (data: OrderPostForm) => {
-    if (!productList) return;
-
-    const updatedProducts = data.products
-      .map((orderProduct) => {
-        const product = productList.find((p) => p.id === orderProduct.id);
-        if (!product) return null;
-
-        const { id, quantity, name, price } = product;
-        return {
-          _id: id,
-          price,
-          quantity: quantity - orderProduct.quantity,
-          name,
-        };
-      })
-      .filter(Boolean) as ProductUpdateForm[];
-
-    if (!updatedProducts.length) return;
-
-    try {
-      await updateProduct(updatedProducts).unwrap();
-    } catch (error) {
-      console.error('Ошибка при обновлении продуктов:', error);
-      setError('Ошибка при обновлении продуктов');
-    }
-  };
-
   const onSubmit = async (data: OrderPostForm) => {
     setError('');
     const preparedData: OrderPostBody = { isDelivered: false, isPaid: false, totalPrice, ...data };
     try {
       await postOrder(preparedData).unwrap();
       try {
-        updateProductList(data);
         await updateDebt({
           id: data.customer.id,
           body: { $inc: { debt: -totalPrice } },
         }).unwrap();
+        await updateProducts({
+          actualProductList: productList,
+          setError,
+          orderProducts: data.products,
+          mode: 'decrease',
+        });
         onCloseHandler();
       } catch (error) {
         console.error(error);

@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { usePatchClientMutation, type Customer } from '@/entities/customer';
 import { useDeleteOrderMutation, useUpdateOrderListCache } from '@/entities/order';
+import { useGetProductsListQuery, useUpdateProductList, type Product } from '@/entities/product';
 import DeleteSvg from '@/shared/assets/icons/delete.svg?react';
 import { Button } from '@/shared/ui/Button';
 import { Dialog } from '@/shared/ui/Dialog';
@@ -12,16 +13,30 @@ interface DeleteOrderProps {
   isDelivered: boolean;
   client: Customer;
   orderPrice: number;
+  products: Product[];
 }
 
-export const DeleteOrder = ({ id, isDelivered, client, orderPrice }: DeleteOrderProps) => {
+export const DeleteOrder = ({
+  id,
+  isDelivered,
+  client,
+  orderPrice,
+  products,
+}: DeleteOrderProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const { removeOrderFromCache } = useUpdateOrderListCache();
 
+  const { updateProducts, isUpdatingProducts } = useUpdateProductList();
+
+  const { data: actualProductList, isLoading: isProductListLoading } = useGetProductsListQuery(
+    { sort: 'name' },
+    { skip: !isModalOpen },
+  );
+
   const [deleteOrderTrigger, { isLoading: isDeleting }] = useDeleteOrderMutation();
   const [updateDebt, { isLoading: isUpdatingDebt }] = usePatchClientMutation();
-  const isLoading = isDeleting || isUpdatingDebt;
+  const isLoading = isDeleting || isUpdatingDebt || isProductListLoading || isUpdatingProducts;
 
   const onDelete = async () => {
     setErrorMessage('');
@@ -31,6 +46,12 @@ export const DeleteOrder = ({ id, isDelivered, client, orderPrice }: DeleteOrder
         body: { $inc: { debt: orderPrice } },
       }).unwrap();
       try {
+        await updateProducts({
+          actualProductList,
+          orderProducts: products,
+          setError: setErrorMessage,
+          mode: 'increase',
+        });
         await deleteOrderTrigger({ id }).unwrap();
         removeOrderFromCache(id);
         setIsModalOpen(false);

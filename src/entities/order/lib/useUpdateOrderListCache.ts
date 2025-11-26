@@ -22,7 +22,7 @@ export const useUpdateOrderListCache = () => {
       }
       const dateA = new Date(a.deliveryDate).getTime();
       const dateB = new Date(b.deliveryDate).getTime();
-      return dateA - dateB;
+      return dateB - dateA;
     });
   };
 

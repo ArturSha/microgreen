@@ -17,7 +17,6 @@
   appearance: none;
 }
 
-
 .cell {
     display: grid;
     border: .1rem solid var(--color-blue-300);

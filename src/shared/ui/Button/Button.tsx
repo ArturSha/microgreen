@@ -1,7 +1,6 @@
 import { Button as Btn } from '@headlessui/react';
 import classNames from 'classnames';
 import type { ComponentProps, ReactNode } from 'react';
-import Download from '../../assets/icons/download.svg?react';
 import EyeClosed from '../../assets/icons/EyeClosed.svg?react';
 import Eye from '../../assets/icons/EyeOpened.svg?react';
 import Minus from '../../assets/icons/minus.svg?react';
@@ -9,7 +8,7 @@ import Plus from '../../assets/icons/plus.svg?react';
 import style from './Button.module.css';
 
 type Variant = 'primary' | 'secondary' | 'tertiary' | 'danger' | 'clear';
-type IconType = 'eyeClosed' | 'eye' | 'minus' | 'plus' | 'download';
+type IconType = 'eyeClosed' | 'eye' | 'minus' | 'plus';
 
 interface ButtonI extends ComponentProps<'button'> {
   className?: string;
@@ -24,7 +23,6 @@ const icons: Record<IconType, ReactNode> = {
   eyeClosed: <EyeClosed />,
   minus: <Minus />,
   plus: <Plus />,
-  download: <Download />,
 };
 const variantClasses: Record<Variant, string> = {
   primary: style.primary,

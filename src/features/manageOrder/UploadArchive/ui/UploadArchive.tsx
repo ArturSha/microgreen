@@ -31,5 +31,13 @@ export const UploadArchive = () => {
       console.error('Не удалось загрузить данные с сервера', error);
     }
   };
-  return <Button icon="download" variant="clear" onClick={downloadExcel} />;
+  return (
+    <Button
+      style={{ borderRadius: '8px', textTransform: 'capitalize' }}
+      variant="tertiary"
+      onClick={downloadExcel}
+    >
+      Скачать
+    </Button>
+  );
 };

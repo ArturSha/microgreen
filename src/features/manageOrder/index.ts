@@ -4,3 +4,4 @@ export { DeleteOrder } from './DeleteOrder/ui/DeleteOrder';
 export { MarkOrderAsDeliveredButton } from './MarkOrderAsDeliveredButton/ui/MarkOrderAsDeliveredButton';
 export { MarkOrderAsPaidButton } from './MarkOrderAsPaidButton/ui/MarkOrderAsPaidButton';
 export { OrderFiltersDialog } from './OrderFilters/ui/OrderFiltersDialog';
+export { UploadArchive } from './UploadArchive/ui/UploadArchive';

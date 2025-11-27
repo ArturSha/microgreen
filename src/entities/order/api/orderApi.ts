@@ -1,6 +1,12 @@
 import { ApiTags, baseApi, type RestDBResponse, type BaseGetParams } from '@/shared/api';
 import { mapOrder } from '../lib/mapOrder';
-import type { Order, OrderPostBody, OrderResponse, PatchOrder } from '../model/types/order';
+import type {
+  Order,
+  OrderListGroupBy,
+  OrderPostBody,
+  OrderResponse,
+  PatchOrder,
+} from '../model/types/order';
 
 export const orderApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -21,6 +27,14 @@ export const orderApi = baseApi.injectEndpoints({
       }),
       transformResponse: (res: Record<string, number>) => ({
         sumTotalPrice: res['SUM totalPrice'],
+      }),
+      providesTags: [ApiTags.ORDERS],
+    }),
+    getOrderArchive: build.query<OrderListGroupBy, BaseGetParams>({
+      query: (params) => ({
+        url: '/orders',
+        method: 'GET',
+        params: { ...params, h: JSON.stringify({ $groupby: ['customer.name'] }) },
       }),
       providesTags: [ApiTags.ORDERS],
     }),
@@ -59,6 +73,7 @@ export const orderApi = baseApi.injectEndpoints({
 export const {
   useGetOrderListQuery,
   useGetOrderSumQuery,
+  useLazyGetOrderArchiveQuery,
   usePostOrderMutation,
   useDeleteOrderMutation,
   usePatchOrderMutation,

@@ -1,6 +1,7 @@
 export {
   useGetOrderListQuery,
   useGetOrderSumQuery,
+  useLazyGetOrderArchiveQuery,
   usePostOrderMutation,
   useDeleteOrderMutation,
   usePatchOrderMutation,

@@ -16,11 +16,13 @@ export type OrderPostBody = Omit<Order, 'id'>;
 export type PatchOrder = Partial<OrderPostBody> & { id: string };
 
 export interface OrderResponse {
-  customer: Customer;
+  _id: string;
   products: Product[];
   totalPrice: number;
   isDelivered: boolean;
   isPaid: boolean;
-  _id: string;
   deliveryDate: Date;
+  customer: Customer;
 }
+
+export type OrderListGroupBy = Record<string, OrderResponse[]>;

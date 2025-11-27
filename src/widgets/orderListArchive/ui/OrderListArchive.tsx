@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MarkOrderAsPaidButton, OrderFiltersDialog } from '@/features/manageOrder';
+import { MarkOrderAsPaidButton, OrderFiltersDialog, UploadArchive } from '@/features/manageOrder';
 import { type Customer } from '@/entities/customer';
 import {
   OrderCard,
@@ -153,13 +153,16 @@ export const OrderListArchive = () => {
           </div>
           <div className={style.flexColumn}>
             {!isDeleteMode && (
-              <Button
-                variant="tertiary"
-                onClick={() => setIsDeleteMode(true)}
-                className={style.chooseBtn}
-              >
-                Выбрать
-              </Button>
+              <>
+                <Button
+                  variant="tertiary"
+                  onClick={() => setIsDeleteMode(true)}
+                  className={style.chooseBtn}
+                >
+                  Выбрать
+                </Button>
+                <UploadArchive />
+              </>
             )}
             {isDeleteMode && (
               <Button

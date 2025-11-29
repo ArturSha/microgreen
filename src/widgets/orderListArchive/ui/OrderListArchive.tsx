@@ -161,7 +161,13 @@ export const OrderListArchive = () => {
                 >
                   Выбрать
                 </Button>
-                <UploadArchive />
+                <UploadArchive
+                  dateEnd={dateEnd}
+                  dateStart={dateStart}
+                  showUnPaid={showUnPaid}
+                  customerId={customer?.id}
+                  customerName={customer?.name}
+                />
               </>
             )}
             {isDeleteMode && (

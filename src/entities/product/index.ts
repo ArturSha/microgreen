@@ -1,5 +1,6 @@
 export {
   useGetProductsListQuery,
+  useLazyGetProductsListQuery,
   usePostProductMutation,
   useUpdateProductListMutation,
   usePatchProductMutation,

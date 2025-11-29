@@ -7,7 +7,7 @@ import { Button } from '@/shared/ui/Button';
 // interface UploadArchiveProps {}
 
 export const UploadArchive = () => {
-  const [getArchive] = useLazyGetOrderArchiveQuery({});
+  const [getArchive, { isLoading }] = useLazyGetOrderArchiveQuery({});
   const { data: productList } = useGetProductsListQuery({ sort: 'name' });
 
   const downloadExcel = async () => {
@@ -19,7 +19,7 @@ export const UploadArchive = () => {
       const workbook = utils.book_new();
       const keys = Object.keys(resp);
       keys.forEach((customerName) => {
-        const data = [
+        const data: (string | number)[][] = [
           [
             'Дата доставки',
             `Стоимость заказа, ${CURRENCY}`,
@@ -28,17 +28,25 @@ export const UploadArchive = () => {
         ];
         resp[customerName].forEach((orderData) => {
           const date = formatDate(new Date(orderData.deliveryDate));
-          const order = [date, String(orderData.totalPrice)];
+          const row: (string | number)[] = [date, orderData.totalPrice];
           orderData.products.forEach((product) => {
             const index = data[0].indexOf(product.name);
             if (index) {
-              order[index] = String(product.quantity);
+              row[index] = product.quantity;
             }
           });
-          data.push(order);
+          data.push(row);
         });
-        console.log(resp[customerName]);
+        data.push(['Итого:']);
         const worksheet = utils.aoa_to_sheet(data);
+        const lastRow = data.length;
+        for (let col = 1; col < data[0].length; col++) {
+          const colLetter = utils.encode_col(col);
+          worksheet[`${colLetter}${lastRow}`] = {
+            t: 'f',
+            f: `SUM(${colLetter}2:${colLetter}${lastRow - 1})`,
+          };
+        }
         worksheet['!cols'] = [{ wch: 15 }, { wch: 18 }];
 
         utils.book_append_sheet(workbook, worksheet, customerName);
@@ -53,6 +61,8 @@ export const UploadArchive = () => {
       style={{ borderRadius: '8px', textTransform: 'capitalize' }}
       variant="tertiary"
       onClick={downloadExcel}
+      isLoading={isLoading}
+      disabled={isLoading}
     >
       Скачать
     </Button>

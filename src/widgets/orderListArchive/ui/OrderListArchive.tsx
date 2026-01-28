@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useState } from 'react';
 import { MarkOrderAsPaidButton, OrderFiltersDialog, UploadArchive } from '@/features/manageOrder';
 import { type Customer } from '@/entities/customer';
@@ -16,7 +17,7 @@ import { Pagination } from '@/shared/ui/Pagination';
 import { Text } from '@/shared/ui/Text';
 import style from './OrderListArchive.module.css';
 
-const limit = 100;
+const LIMIT = 100;
 
 export const OrderListArchive = () => {
   const [page, setPage] = useState(1);
@@ -24,12 +25,11 @@ export const OrderListArchive = () => {
   const [dateStart, setDateStart] = useState<Date | null>(null);
   const [dateEnd, setDateEnd] = useState<Date | null>(null);
   const [showUnPaid, setShowUnPaid] = useState(true);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedTotal, setSelectedTotal] = useState(0);
 
-  const [isDeleteMode, setIsDeleteMode] = useState(false);
-
-  const skip = (page - 1) * limit;
+  const skip = (page - 1) * LIMIT;
   const { data: orderList, isFetching } = useGetOrderListQuery(
     {
       q: JSON.stringify({
@@ -48,7 +48,7 @@ export const OrderListArchive = () => {
       sort: ['deliveryDate'],
       dir: [-1],
       totals: true,
-      max: limit,
+      max: LIMIT,
       skip,
     },
     { skip: !dateStart, refetchOnMountOrArgChange: true },
@@ -101,11 +101,21 @@ export const OrderListArchive = () => {
     setPage(newPage);
   };
 
+  const handleSelectAll = () => {
+    if (!orderList?.data) return;
+
+    const allIds = orderList.data.map((order) => order.id);
+    const total = orderList.data.reduce((sum, order) => sum + order.totalPrice, 0);
+
+    setSelectedIds(allIds);
+    setSelectedTotal(total);
+  };
+
   const pagination: PaginationMeta = orderList?.totals ?? {
     count: 0,
     total: 0,
     skip,
-    max: limit,
+    max: LIMIT,
   };
   return (
     <div className={style.orderListArchive}>
@@ -171,16 +181,24 @@ export const OrderListArchive = () => {
               </>
             )}
             {isDeleteMode && (
-              <Button
-                variant="primary"
-                onClick={() => {
-                  setIsDeleteMode(false);
-                  setSelectedIds([]);
-                  setSelectedTotal(0);
-                }}
-              >
-                Отменить
-              </Button>
+              <div className={classNames(style.flex, style.gap6)}>
+                <Button
+                  variant="primary"
+                  icon="selectAll"
+                  onClick={handleSelectAll}
+                  className={classNames(style.actionBtn, style.selectAllBtn)}
+                />
+                <Button
+                  variant="primary"
+                  icon="cancel"
+                  onClick={() => {
+                    setIsDeleteMode(false);
+                    setSelectedIds([]);
+                    setSelectedTotal(0);
+                  }}
+                  className={style.actionBtn}
+                />
+              </div>
             )}
             {isDeleteMode && (
               <Button
@@ -188,9 +206,9 @@ export const OrderListArchive = () => {
                 isLoading={isDeleting}
                 variant="danger"
                 onClick={handleDelete}
-              >
-                Удалить
-              </Button>
+                className={style.actionBtn}
+                icon="delete"
+              />
             )}
           </div>
         </div>

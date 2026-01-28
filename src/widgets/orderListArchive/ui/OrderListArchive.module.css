@@ -40,3 +40,25 @@
 .lineHeight {
     line-height: 1.3;
 }
+
+.actionBtn {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 4.4rem;
+}
+
+.actionBtn svg {
+    width: 80%;
+    height: 80%;
+}
+
+.gap6 {
+    gap: .6rem;
+}
+
+.selectAllBtn svg {
+    width: 90%;
+    height: 90%;
+}
+    

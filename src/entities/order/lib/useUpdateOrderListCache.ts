@@ -5,15 +5,15 @@ import type { Order } from '../model/types/order';
 export const useUpdateOrderListCache = () => {
   const dispatch = useAppDispatch();
 
-  const getOrderListState = useAppSelector((state) => {
+  const allQueryArgs = useAppSelector((state) => {
     const queries = state.api.queries;
     const entries = Object.entries(queries).filter(([key]) => key.startsWith('getOrderList'));
-    if (entries.length === 0) return undefined;
-    const [, cache] = entries[0];
-    return cache as ReturnType<ReturnType<typeof orderApi.endpoints.getOrderList.select>>;
+    return entries.map(
+      ([, cache]) =>
+        (cache as ReturnType<ReturnType<typeof orderApi.endpoints.getOrderList.select>>)
+          .originalArgs,
+    );
   });
-
-  const queryArg = getOrderListState?.originalArgs;
 
   const sortOrders = (orders: Order[]) => {
     return orders.sort((a, b) => {
@@ -27,29 +27,36 @@ export const useUpdateOrderListCache = () => {
   };
 
   const updateOrderInCache = (id: string, updates: Partial<Order>) => {
-    if (!queryArg) return;
-    dispatch(
-      orderApi.util.updateQueryData('getOrderList', queryArg, (draft) => {
-        const order = draft.data.find((o) => o.id === id);
-        if (order) {
-          Object.assign(order, updates);
-        }
-        draft.data = sortOrders(draft.data);
-      }),
-    );
+    if (!allQueryArgs.length) return;
+
+    allQueryArgs.forEach((queryArg) => {
+      if (!queryArg) return;
+      dispatch(
+        orderApi.util.updateQueryData('getOrderList', queryArg, (draft) => {
+          const order = draft.data.find((o) => o.id === id);
+          if (order) {
+            Object.assign(order, updates);
+          }
+          draft.data = sortOrders(draft.data);
+        }),
+      );
+    });
   };
 
   const removeOrderFromCache = (id: string) => {
-    if (!queryArg) {
+    if (!allQueryArgs.length) {
       return;
     }
 
-    dispatch(
-      orderApi.util.updateQueryData('getOrderList', queryArg, (draft) => {
-        draft.data = draft.data.filter((o) => o.id !== id);
-        draft.totals.total -= 1;
-      }),
-    );
+    allQueryArgs.forEach((queryArg) => {
+      if (!queryArg) return;
+      dispatch(
+        orderApi.util.updateQueryData('getOrderList', queryArg, (draft) => {
+          draft.data = draft.data.filter((o) => o.id !== id);
+          draft.totals.total -= 1;
+        }),
+      );
+    });
   };
 
   return { updateOrderInCache, removeOrderFromCache };
